@@ -1,7 +1,11 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from pydantic import BaseModel, Field, EmailStr
+from typing import Optional, List
 import motor.motor_asyncio
+from sympy import true
+
 
 load_dotenv()
 app = FastAPI()
@@ -16,6 +20,93 @@ ingredient_type_col = database.get_collection("ingredient_type")
 
 
 ## MODEL
+
+class CommentModel(BaseModel):
+    nickname: str = Field(...)
+    profile_photo: str = Field(...)
+    content: str = Field(...)
+    score: str = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "nickname": "sun_of_ntu",
+                "profile_photo": ":)",
+                "content": "test",
+                "score": "0",
+            }
+        }
+
+
+class Cuisine(BaseModel):
+    id: int = Field(...)
+    name: str = Field(...)
+    required_ingredients: list = Field(...)
+    type: str = Field(...)
+    image_url: str = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "id": 0,
+                "name": "food",
+                "required_ingredients": [0],
+                "type": "main",
+                "image_url": "www",
+            }
+        }
+
+
+class Game(BaseModel):
+    cuisine: list = Field(...)
+    cart: list = Field(...)
+    score: int = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "cuisine": [0],
+                "cart": [0],
+                "score": 0,
+            }
+        }
+
+
+class Ingredient(BaseModel):
+    id: int = Field(...)
+    name: str = Field(...)
+    tap: bool = Field(...)
+    score: object = Field(...)
+    type: int = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "id": 0,
+                "name": "cabbage",
+                "tap": true,
+                "score": 0,
+                "type": 0,
+            }
+        }
+
+
+class Ingredient_Type(BaseModel):
+    id: int = Field(...)
+    name: str = Field(...)
+    special_requirement: bool = Field(...)
+    source: object = str(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "id": 0,
+                "name": "cabbage",
+                "special_requirement": true,
+                "source": "mountain"
+            }
+        }
+
 
 def ResponseModel(data, message="success"):
     return {
