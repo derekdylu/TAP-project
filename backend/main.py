@@ -3,25 +3,33 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from typing import List
 import motor.motor_asyncio
-from decouple import config
+from pymongo import MongoClient
 import uvicorn
-
-if __name__ == "__main__":
-    uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
 import models
 
 load_dotenv()
 app = FastAPI()
-MONGO_DETAILS = config("MONGO_DETAILS")
 
-client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_DETAILS))
-database = client.db
+MONGO_DETAILS = "mongodb://redacted.invalid/removed"
+port = 8000
+
+client = MongoClient(MONGO_DETAILS, port)
+database = client["db"]
+
+comment_col = database["comment"]
+cuisine_col = database["cuisine"]
+game_col = database["game"]
+ingredient_col = database["ingredient"]
+ingredient_type_col = database["ingredient_type"]
+
+# client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_DETAILS))
+# database = client.db
+
 comment_col = database.get_collection("comment")
 cuisine_col = database.get_collection("cuisine")
 game_col = database.get_collection("game")
 ingredient_col = database.get_collection("ingredient")
 ingredient_type_col = database.get_collection("ingredient_type")
-
 
 def ResponseModel(data, message="success"):
     return {
@@ -29,6 +37,9 @@ def ResponseModel(data, message="success"):
         "code": 200,
         "message": message,
     }
+
+def ErrorResponseModel(error, code, message):
+    return {"error": error, "code": code, "message": message}
 
 
 # API
@@ -38,14 +49,25 @@ async def test():
     return {"message": "Hello World"}
 
 
-@app.get("/comment", response_description="comments", response_model=List[models.Comment])
-async def list_comments():
+# @app.get("/comment", response_description="comment", response_model=List[models.Comment])
+# async def list_comments():
+#     list = []
+
+#     async for document in comment_col.find():
+#         list.append(models.comment_helper(document))
+
+#     return list
+
+@app.get("/comments", response_description="comments", response_model=List[models.Comment])
+def get_comments():
     list = []
 
-    async for document in comment_col.find():
+    for document in comment_col.find():
         list.append(models.comment_helper(document))
-
-    return list
+    
+    print(list)
+    
+    return comment_col
 
 
 @app.get("/cuisine", response_description="cuisine", response_model=List[models.Cuisine])
