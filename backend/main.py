@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
+from fastapi.encoders import jsonable_encoder
 from typing import List
 import motor.motor_asyncio
 from pymongo import MongoClient
@@ -49,28 +50,17 @@ async def test():
     return {"message": "Hello World"}
 
 
-# @app.get("/comment", response_description="comment", response_model=List[models.Comment])
-# async def list_comments():
-#     list = []
-
-#     async for document in comment_col.find():
-#         list.append(models.comment_helper(document))
-
-#     return list
-
-@app.get("/comments", response_description="comments", response_model=List[models.Comment])
-def get_comments():
+@app.get("/comment", response_description="list all comments", response_model=List[models.Comment])
+async def list_comments():
     list = []
 
     for document in comment_col.find():
         list.append(models.comment_helper(document))
-    
-    print(list)
-    
-    return comment_col
 
+    return list
+    
 
-@app.get("/cuisine", response_description="cuisine", response_model=List[models.Cuisine])
+@app.get("/cuisine", response_description="list all cuisine", response_model=List[models.Cuisine])
 async def list_cuisine():
     list = []
 
@@ -80,7 +70,7 @@ async def list_cuisine():
     return list
 
 
-@app.get("/game", response_description="game", response_model=List[models.Game])
+@app.get("/game", response_description="list all game", response_model=List[models.Game])
 async def list_game():
     list = []
 
@@ -90,7 +80,7 @@ async def list_game():
     return list
 
 
-@app.get("/ingredient", response_description="ingredient", response_model=List[models.Ingredient])
+@app.get("/ingredient", response_description="list all ingredient", response_model=List[models.Ingredient])
 async def list_ingredient():
     list = []
 
@@ -100,7 +90,7 @@ async def list_ingredient():
     return list
 
 
-@app.get("/ingredient_type", response_description="ingredient_type", response_model=List[models.IngredientType])
+@app.get("/ingredient_type", response_description="list all ingredient type", response_model=List[models.IngredientType])
 async def list_ingredient_type():
     list = []
 
