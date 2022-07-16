@@ -2,11 +2,16 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, Body, status
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from typing import List
 from pymongo import MongoClient
 import uvicorn
+import motor.motor_asyncio
 import models
 from fastapi.responses import JSONResponse
+
+# if __name__ == "__main__":
+#     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
 
 load_dotenv()
 app = FastAPI()
@@ -56,7 +61,15 @@ async def list_comments():
         list.append(models.comment_helper(document))
 
     return list
-    
+
+
+@app.post("/comment", response_description="add a comment", response_model=models.Comment)
+async def add_comment(comment: models.Comment = Body(...)):
+    comment = jsonable_encoder(comment)
+    new_comment = await comment_col.insert_one(comment)
+    added_comment = await comment_col.find_one({"_id": new_comment.inserted_id})
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.comment_helper(added_comment)))
+
 
 @app.get("/cuisine", response_description="list all cuisine", response_model=List[models.Cuisine])
 async def list_cuisine():
