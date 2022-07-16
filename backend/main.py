@@ -1,12 +1,12 @@
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
-import motor.motor_asyncio
 from pymongo import MongoClient
 import uvicorn
 import models
+from fastapi.responses import JSONResponse
 
 load_dotenv()
 app = FastAPI()
@@ -25,12 +25,11 @@ ingredient_type_col = database["ingredient_type"]
 
 # client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_DETAILS))
 # database = client.db
-
-comment_col = database.get_collection("comment")
-cuisine_col = database.get_collection("cuisine")
-game_col = database.get_collection("game")
-ingredient_col = database.get_collection("ingredient")
-ingredient_type_col = database.get_collection("ingredient_type")
+# comment_col = database.get_collection("comment")
+# cuisine_col = database.get_collection("cuisine")
+# game_col = database.get_collection("game")
+# ingredient_col = database.get_collection("ingredient")
+# ingredient_type_col = database.get_collection("ingredient_type")
 
 def ResponseModel(data, message="success"):
     return {
@@ -64,7 +63,7 @@ async def list_comments():
 async def list_cuisine():
     list = []
 
-    async for document in cuisine_col.find():
+    for document in cuisine_col.find():
         list.append(models.cuisine_helper(document))
 
     return list
@@ -74,7 +73,7 @@ async def list_cuisine():
 async def list_game():
     list = []
 
-    async for document in game_col.find():
+    for document in game_col.find():
         list.append(models.game_helper(document))
 
     return list
@@ -84,7 +83,7 @@ async def list_game():
 async def list_ingredient():
     list = []
 
-    async for document in ingredient_col.find():
+    for document in ingredient_col.find():
         list.append(models.ingredient_helper(document))
 
     return list
@@ -94,7 +93,14 @@ async def list_ingredient():
 async def list_ingredient_type():
     list = []
 
-    async for document in ingredient_type_col.find():
+    for document in ingredient_type_col.find():
         list.append(models.ingredient_type_helper(document))
 
     return list
+
+@app.post("/create_ingredient_type", response_description="create ingredient type", response_model=models.IngredientType)
+async def post_ingredient_type(ingredient_type: models.IngredientType = Body(...)):
+    ingredient_type = jsonable_encoder(ingredient_type)
+    new_ingredient_type = ingredient_type_col.insert_one(ingredient_type)
+    created_ingredient_type = ingredient_type_col.find_one({"_id": new_ingredient_type.inserted_id})
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_type_helper(created_ingredient_type)))
