@@ -1,6 +1,6 @@
 # Backend
 
-## Download requirements
+## Install requirements
 
 `pip3 install requirements.txt`
 

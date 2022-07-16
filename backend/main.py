@@ -1,12 +1,14 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from typing import List
 import motor.motor_asyncio
 from decouple import config
 import uvicorn
 
 if __name__ == "__main__":
     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
+import models
 
 load_dotenv()
 app = FastAPI()
@@ -21,61 +23,11 @@ ingredient_col = database.get_collection("ingredient")
 ingredient_type_col = database.get_collection("ingredient_type")
 
 
-## MODEL
-
 def ResponseModel(data, message="success"):
     return {
         "data": [data],
         "code": 200,
         "message": message,
-    }
-
-
-# HELPER
-
-def comment_helper(comment) -> dict:
-    return {
-        "nickname": comment["nickname"],
-        "profile_photo": comment["profile_photo"],
-        "content": comment["content"],
-        "score": comment["score"],
-    }
-
-
-def cuisine_helper(cuisine) -> dict:
-    return {
-        "id": cuisine["id"],
-        "name": cuisine["name"],
-        "required_ingredients": cuisine["required_ingredients"],
-        "type": cuisine["type"],
-        "image_url": cuisine["image_url"],
-    }
-
-
-def game_helper(cuisine) -> dict:
-    return {
-        "cuisine": cuisine["cuisine"],
-        "cart": cuisine["cart"],
-        "score": cuisine["score"],
-    }
-
-    
-def ingredient_helper(cuisine) -> dict:
-    return {
-        "id": cuisine["id"],
-        "name": cuisine["name"],
-        "tap": cuisine["tap"],
-        "score": cuisine["score"],
-        "type": cuisine["type"],
-    }
-
-
-def ingredient_type_helper(cuisine) -> dict:
-    return {
-        "id": cuisine["id"],
-        "name": cuisine["name"],
-        "special_requirement": cuisine["special_requirement"],
-        "source": cuisine["source"],
     }
 
 
@@ -86,53 +38,51 @@ async def test():
     return {"message": "Hello World"}
 
 
-
-@app.get("/comment", response_description="comments")
+@app.get("/comment", response_description="comments", response_model=List[models.Comment])
 async def list_comments():
     list = []
 
     async for document in comment_col.find():
-        list.append(comment_helper(document))
+        list.append(models.comment_helper(document))
 
-    return ResponseModel(list)
+    return list
 
 
-
-@app.get("/cuisine", response_description="cuisine")
+@app.get("/cuisine", response_description="cuisine", response_model=List[models.Cuisine])
 async def list_cuisine():
     list = []
 
     async for document in cuisine_col.find():
-        list.append(cuisine_helper(document))
+        list.append(models.cuisine_helper(document))
 
-    return ResponseModel(list)
+    return list
 
 
-@app.get("/game", response_description="game")
+@app.get("/game", response_description="game", response_model=List[models.Game])
 async def list_game():
     list = []
 
     async for document in game_col.find():
-        list.append(game_helper(document))
+        list.append(models.game_helper(document))
 
-    return ResponseModel(list)
+    return list
 
 
-@app.get("/ingredient", response_description="ingredient")
+@app.get("/ingredient", response_description="ingredient", response_model=List[models.Ingredient])
 async def list_ingredient():
     list = []
 
     async for document in ingredient_col.find():
-        list.append(ingredient_helper(document))
+        list.append(models.ingredient_helper(document))
 
-    return ResponseModel(list)
+    return list
 
 
-@app.get("/ingredient_type", response_description="ingredient_type")
+@app.get("/ingredient_type", response_description="ingredient_type", response_model=List[models.IngredientType])
 async def list_ingredient_type():
     list = []
 
     async for document in ingredient_type_col.find():
-        list.append(ingredient_type_helper(document))
+        list.append(models.ingredient_type_helper(document))
 
-    return ResponseModel(list)
+    return list
