@@ -16,7 +16,6 @@ port = 8000
 
 client = MongoClient(MONGO_DETAILS, port)
 database = client["db"]
-
 comment_col = database["comment"]
 cuisine_col = database["cuisine"]
 game_col = database["game"]
