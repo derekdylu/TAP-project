@@ -2,11 +2,17 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
 import motor.motor_asyncio
+from decouple import config
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
 
 load_dotenv()
 app = FastAPI()
+MONGO_DETAILS = config("MONGO_DETAILS")
 
-client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("MONGODB_URL"))
+client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_DETAILS))
 database = client.db
 comment_col = database.get_collection("comment")
 cuisine_col = database.get_collection("cuisine")
