@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import List
 from sympy import true
 
@@ -142,4 +142,32 @@ def comment_helper(comment) -> dict:
         "profile_photo": comment["profile_photo"],
         "content": comment["content"],
         "score": comment["score"],
+    }
+
+
+# Email
+
+class Email(BaseModel):
+    from_email: str = Field(...)
+    to_emails: str = Field(...)
+    subject: str = Field(...)
+    html_content: str = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "from_email": "emverse@yopmail.com",
+                "to_emails": "grc.dev@yopmail.com",
+                "subject": "Menu",
+                "html_content": "<h1>Test</h1>"
+            }
+        }
+
+
+def email_helper(email) -> dict:
+    return {
+        "from_email": email["from_email"],
+        "to_emails": email["to_emails"],
+        "subject": email["subject"],
+        "html_content": email["html_content"],
     }

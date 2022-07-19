@@ -9,6 +9,7 @@ import uvicorn
 import motor.motor_asyncio
 import models
 from fastapi.responses import JSONResponse
+import sendgrid_api
 
 # if __name__ == "__main__":
 #     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
@@ -116,3 +117,15 @@ async def post_ingredient_type(ingredient_type: models.IngredientType = Body(...
     new_ingredient_type = ingredient_type_col.insert_one(ingredient_type)
     created_ingredient_type = ingredient_type_col.find_one({"_id": new_ingredient_type.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_type_helper(created_ingredient_type)))
+
+@app.post("/email", response_description="send email", response_model=models.Email)
+async def send_email(data: models.Email = Body(...)):
+    data = jsonable_encoder(data)
+    response = sendgrid_api.send_email(
+        data["from_email"],
+        data["to_emails"],
+        data["subject"],
+        data["html_content"]
+    )
+
+    return JSONResponse(status_code=response.status_code, content=jsonable_encoder(response.headers))
