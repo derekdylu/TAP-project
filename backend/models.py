@@ -66,7 +66,7 @@ def ingredient_helper(cuisine) -> dict:
 class Cuisine(BaseModel):
     id: int = Field(...)
     name: str = Field(...)
-    required_ingredients: List[int] = Field(...)
+    required_ingredient_types: List[int] = Field(...)
     type: str = Field(...)
     image_url: str = Field(...)
 
@@ -86,7 +86,7 @@ def cuisine_helper(cuisine) -> dict:
     return {
         "id": cuisine["id"],
         "name": cuisine["name"],
-        "required_ingredients": cuisine["required_ingredients"],
+        "required_ingredient_types": cuisine["required_ingredient_types"],
         "type": cuisine["type"],
         "image_url": cuisine["image_url"],
     }

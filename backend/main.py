@@ -67,8 +67,8 @@ async def list_comments():
 @app.post("/comment", response_description="add a comment", response_model=models.Comment)
 async def add_comment(comment: models.Comment = Body(...)):
     comment = jsonable_encoder(comment)
-    new_comment = await comment_col.insert_one(comment)
-    added_comment = await comment_col.find_one({"_id": new_comment.inserted_id})
+    new_comment = comment_col.insert_one(comment)
+    added_comment = comment_col.find_one({"_id": new_comment.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.comment_helper(added_comment)))
 
 
