@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, Body, status
+from fastapi import FastAPI, Body, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
 from pymongo import MongoClient
@@ -22,6 +22,7 @@ game_col = database["game"]
 ingredient_col = database["ingredient"]
 ingredient_type_col = database["ingredient_type"]
 
+# NOTE alternative collection retriever of above ones
 # client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_DETAILS))
 # database = client.db
 # comment_col = database.get_collection("comment")
@@ -40,23 +41,25 @@ def ResponseModel(data, message="success"):
 def ErrorResponseModel(error, code, message):
     return {"error": error, "code": code, "message": message}
 
-
-# API
+# ---
+# --- API
 
 @app.get("/")
 async def test():
     return {"message": "Hello World"}
 
-
+# --- Comment
+# get all comments
 @app.get("/comments", response_description="get all comments", response_model=List[models.Comment])
 async def list_comments():
     list = []
 
-    for document in comment_col.find():
-        list.append(models.comment_helper(document))
+    for ele in comment_col.find():
+        list.append(models.comment_helper(ele))
 
     return list
 
+# create a comment
 @app.post("/create_comment", response_description="create a comment", response_model=models.Comment)
 async def create_comment(comment: models.Comment = Body(...)):
     comment = jsonable_encoder(comment)
@@ -64,21 +67,25 @@ async def create_comment(comment: models.Comment = Body(...)):
     created_comment = comment_col.find_one({"_id": new_comment.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.comment_helper(created_comment)))
 
+# --- Cuisine
+# get all cuisines
 @app.get("/cuisines", response_description="get all cuisines", response_model=List[models.Cuisine])
 async def list_cuisines():
     list = []
 
-    for document in cuisine_col.find():
-        list.append(models.cuisine_helper(document))
+    for ele in cuisine_col.find():
+        list.append(models.cuisine_helper(ele))
 
     return list
 
+# get a specific cuisine
 @app.get("/cuisine/{id}", response_description="get a specific cuisine", response_model=models.Cuisine)
 async def get_cuisine(id: int):
     if (cuisine := cuisine_col.find_one({"id": id})) is not None:
         return cuisine
     return {"message": "error"}
 
+# create a cuisine
 @app.post("/create_cuisine", response_description="create a cuisine", response_model=models.Cuisine)
 async def create_cuisine(cuisine: models.Cuisine = Body(...)):
     cuisine = jsonable_encoder(cuisine)
@@ -86,16 +93,25 @@ async def create_cuisine(cuisine: models.Cuisine = Body(...)):
     created_cuisine = cuisine_col.find_one({"_id": new_cuisine.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.game_helper(created_cuisine)))
 
-
+# --- Game
+# get all games
 @app.get("/games", response_description="get all games", response_model=List[models.Game])
 async def list_games():
     list = []
 
-    for document in game_col.find():
-        list.append(models.game_helper(document))
+    for ele in game_col.find():
+        list.append(models.game_helper(ele))
 
     return list
 
+# get a game
+@app.get("/game/{id}", response_description="get a game", response_model=models.Game)
+async def get_game(id: str):
+    if (game := game_col.find_one({"_id": id})) is not None:
+        return game
+    raise HTTPException(status_code=404, detail=f"Game {id} not found")
+
+# create a game
 @app.post("/create_game", response_description="create a game", response_model=models.Game)
 async def create_game(game: models.Game = Body(...)):
     game = jsonable_encoder(game)
@@ -103,21 +119,51 @@ async def create_game(game: models.Game = Body(...)):
     created_game = game_col.find_one({"_id": new_game.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.game_helper(created_game)))
 
+@app.delete("/delete_game/{id}", response_description="delete a game")
+async def delete_student(id: str):
+    delete_result = game_col.delete_one({"_id": id})
+
+    if delete_result.deleted_count == 1:
+        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+
+# select a cuisine
+@app.put("/update_game/{id}", response_description="update a game", response_model=models.Game)
+async def update_game(id: str, game: models.UpdateGame = Body(...)):
+    game = {k: v for k, v in game.dict().items() if v is not None}
+
+    if len(game) >= 1:
+        update_result = game_col.update_one({"_id": id}, {"$set": game})
+
+        if update_result.modified_count == 1:
+            if (
+                updated_game := game_col.find_one({"_id": id})
+            ) is not None:
+                return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(updated_game)))
+
+    if (existing_game := game_col.find_one({"_id": id})) is not None:
+        return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(existing_game)))
+
+    raise HTTPException(status_code=404, detail=f"Game {id} not found")
+
+# --- Ingredient
+# get all ingredients
 @app.get("/ingredients", response_description="get all ingredients", response_model=List[models.Ingredient])
 async def list_ingredients():
     list = []
 
-    for document in ingredient_col.find():
-        list.append(models.ingredient_helper(document))
+    for ele in ingredient_col.find():
+        list.append(models.ingredient_helper(ele))
 
     return list
 
+# get an ingredient
 @app.get("/ingredient/{id}", response_description="get a specific ingredient", response_model=models.Ingredient)
 async def get_ingredient(id: int):
     if (ingredient := ingredient_col.find_one({"id": id})) is not None:
         return ingredient
     return {"message": "error"}
 
+# create an ingredient
 @app.post("/create_ingredient", response_description="create an ingredient", response_model=models.Ingredient)
 async def create_ingredient(ingredient: models.Ingredient = Body(...)):
     ingredient = jsonable_encoder(ingredient)
@@ -125,22 +171,25 @@ async def create_ingredient(ingredient: models.Ingredient = Body(...)):
     created_ingredient = ingredient_type_col.find_one({"_id": new_ingredient.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_type_helper(created_ingredient)))
 
-
+# --- Ingredient Type
+# get all ingredient types
 @app.get("/ingredient_types", response_description="get all ingredient types", response_model=List[models.IngredientType])
 async def list_ingredient_types():
     list = []
 
-    for document in ingredient_type_col.find():
-        list.append(models.ingredient_type_helper(document))
+    for ele in ingredient_type_col.find():
+        list.append(models.ingredient_type_helper(ele))
 
     return list
 
+# get an ingredient type
 @app.get("/ingredient_type/{id}", response_description="get a specific ingredient_type", response_model=models.IngredientType)
 async def get_ingredient_type(id: int):
     if (ingredient_type := ingredient_type_col.find_one({"id": id})) is not None:
         return ingredient_type
     return {"message": "error"}
 
+# create an ingredient type
 @app.post("/create_ingredient_type", response_description="create an ingredient type", response_model=models.IngredientType)
 async def create_ingredient_type(ingredient_type: models.IngredientType = Body(...)):
     ingredient_type = jsonable_encoder(ingredient_type)

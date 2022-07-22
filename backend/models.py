@@ -1,6 +1,22 @@
+from bson import ObjectId
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 from sympy import true
+
+class PyObjectId(ObjectId):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if not ObjectId.is_valid(v):
+            raise ValueError("Invalid objectid")
+        return ObjectId(v)
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(type="string")
 
 # Ingredient Type
 
@@ -21,12 +37,12 @@ class IngredientType(BaseModel):
         }
 
 
-def ingredient_type_helper(cuisine) -> dict:
+def ingredient_type_helper(ingredient_type) -> dict:
     return {
-        "id": cuisine["id"],
-        "name": cuisine["name"],
-        "special_requirement": cuisine["special_requirement"],
-        "source": cuisine["source"],
+        "id": ingredient_type["id"],
+        "name": ingredient_type["name"],
+        "special_requirement": ingredient_type["special_requirement"],
+        "source": ingredient_type["source"],
     }
 
 
@@ -51,13 +67,13 @@ class Ingredient(BaseModel):
         }
 
 
-def ingredient_helper(cuisine) -> dict:
+def ingredient_helper(ingredient) -> dict:
     return {
-        "id": cuisine["id"],
-        "name": cuisine["name"],
-        "tap": cuisine["tap"],
-        "score": cuisine["score"],
-        "type": cuisine["type"],
+        "id": ingredient["id"],
+        "name": ingredient["name"],
+        "tap": ingredient["tap"],
+        "score": ingredient["score"],
+        "type": ingredient["type"],
     }
 
 
@@ -95,11 +111,14 @@ def cuisine_helper(cuisine) -> dict:
 # Game
 
 class Game(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     cuisine: list = Field(...)
     cart: list = Field(...)
     score: int = Field(...)
 
     class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
                 "cuisine": [0],
@@ -109,23 +128,43 @@ class Game(BaseModel):
         }
 
 
-def game_helper(cuisine) -> dict:
+class UpdateGame(BaseModel):
+    cuisine: Optional[list]
+    cart: Optional[list]
+    score: Optional[int]
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "cuisine": [0],
+                "cart": [0],
+                "score": 0,
+            }
+        }
+
+def game_helper(game) -> dict:
     return {
-        "cuisine": cuisine["cuisine"],
-        "cart": cuisine["cart"],
-        "score": cuisine["score"],
+        "id": game["_id"],
+        "cuisine": game["cuisine"],
+        "cart": game["cart"],
+        "score": game["score"],
     }
 
 
 # Comment
 
 class Comment(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     nickname: str = Field(...)
     profile_photo: str = Field(...)
     content: str = Field(...)
     score: int = Field(...)
 
     class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
         schema_extra = {
             "example": {
                 "nickname": "sun_of_ntu",
@@ -138,6 +177,7 @@ class Comment(BaseModel):
 
 def comment_helper(comment) -> dict:
     return {
+        "id": comment["_id"],
         "nickname": comment["nickname"],
         "profile_photo": comment["profile_photo"],
         "content": comment["content"],
