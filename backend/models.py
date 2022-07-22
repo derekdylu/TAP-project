@@ -36,7 +36,7 @@ class Ingredient(BaseModel):
     id: int = Field(...)
     name: str = Field(...)
     tap: bool = Field(...)
-    score: object = Field(...)
+    score: List[int] = Field(...)
     type: str = Field(...)
 
     class Config:
@@ -45,7 +45,7 @@ class Ingredient(BaseModel):
                 "id": 0,
                 "name": "cabbage",
                 "tap": true,
-                "score": 0,
+                "score": [0,0,0,0],
                 "type": "cabbage",
             }
         }
@@ -66,7 +66,7 @@ def ingredient_helper(cuisine) -> dict:
 class Cuisine(BaseModel):
     id: int = Field(...)
     name: str = Field(...)
-    required_ingredients: List[int] = Field(...)
+    required_ingredient_types: List[int] = Field(...)
     type: str = Field(...)
     image_url: str = Field(...)
 
@@ -75,7 +75,7 @@ class Cuisine(BaseModel):
             "example": {
                 "id": 0,
                 "name": "food",
-                "required_ingredients": [0],
+                "required_ingredient_types": [0],
                 "type": "main",
                 "image_url": "www",
             }
@@ -86,7 +86,7 @@ def cuisine_helper(cuisine) -> dict:
     return {
         "id": cuisine["id"],
         "name": cuisine["name"],
-        "required_ingredients": cuisine["required_ingredients"],
+        "required_ingredient_types": cuisine["required_ingredient_types"],
         "type": cuisine["type"],
         "image_url": cuisine["image_url"],
     }
