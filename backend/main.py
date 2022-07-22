@@ -126,7 +126,7 @@ async def delete_student(id: str):
     if delete_result.deleted_count == 1:
         return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
 
-# select a cuisine
+# update a game
 @app.put("/update_game/{id}", response_description="update a game", response_model=models.Game)
 async def update_game(id: str, game: models.UpdateGame = Body(...)):
     game = {k: v for k, v in game.dict().items() if v is not None}
@@ -144,6 +144,16 @@ async def update_game(id: str, game: models.UpdateGame = Body(...)):
         return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(existing_game)))
 
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
+
+@app.get("/get_score/{id}", response_description="get a score based on game id")
+async def get_score(id: str):
+    if (game := game_col.find_one({"_id": id})) is not None:
+        score = 0
+        # TODO to get score
+        return score
+    raise HTTPException(status_code=404, detail=f"Game {id} not found")
+
+# TODO email
 
 # --- Ingredient
 # get all ingredients
