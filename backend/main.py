@@ -2,11 +2,17 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, Body, HTTPException, status
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from typing import List
 from pymongo import MongoClient
 import uvicorn
+import motor.motor_asyncio
 import models
 from fastapi.responses import JSONResponse
+import sendgrid_api
+
+# if __name__ == "__main__":
+#     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
 
 load_dotenv()
 app = FastAPI()
@@ -58,6 +64,15 @@ async def list_comments():
         list.append(models.comment_helper(ele))
 
     return list
+
+
+@app.post("/comment", response_description="add a comment", response_model=models.Comment)
+async def add_comment(comment: models.Comment = Body(...)):
+    comment = jsonable_encoder(comment)
+    new_comment = comment_col.insert_one(comment)
+    added_comment = comment_col.find_one({"_id": new_comment.inserted_id})
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.comment_helper(added_comment)))
+
 
 # create a comment
 @app.post("/create_comment", response_description="create a comment", response_model=models.Comment)
@@ -206,3 +221,15 @@ async def create_ingredient_type(ingredient_type: models.IngredientType = Body(.
     new_ingredient_type = ingredient_type_col.insert_one(ingredient_type)
     created_ingredient_type = ingredient_type_col.find_one({"_id": new_ingredient_type.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_type_helper(created_ingredient_type)))
+
+@app.post("/email", response_description="send email", response_model=models.Email)
+async def send_email(data: models.Email = Body(...)):
+    data = jsonable_encoder(data)
+    response = sendgrid_api.send_email(
+        data["from_email"],
+        data["to_emails"],
+        data["subject"],
+        data["html_content"]
+    )
+
+    return JSONResponse(status_code=response.status_code, content=jsonable_encoder(response.headers))
