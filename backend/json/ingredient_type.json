@@ -1,0 +1,98 @@
+[
+    {
+        "id": 0,
+        "name": "豬後腿肉",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 1,
+        "name": "牛腱",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 2,
+        "name": "馬鈴薯",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 3,
+        "name": "白蘿蔔",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 4,
+        "name": "紅蘿蔔",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 5,
+        "name": "洋蔥",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 6,
+        "name": "大蒜",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 7,
+        "name": "菠菜",
+        "special_requirement": true,
+        "source": "雲林"
+    },
+    {
+        "id": 8,
+        "name": "甜椒",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 9,
+        "name": "冬瓜",
+        "special_requirement": true,
+        "source": "宜蘭"
+    },
+    {
+        "id": 10,
+        "name": "胡瓜",
+        "special_requirement": true,
+        "source": "高雄"
+    },
+    {
+        "id": 11,
+        "name": "茄子",
+        "special_requirement": true,
+        "source": "屏東"
+    },
+    {
+        "id": 12,
+        "name": "青蔥",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 13,
+        "name": "蛋",
+        "special_requirement": false,
+        "source": ""
+    },
+    {
+        "id": 14,
+        "name": "香菇",
+        "special_requirement": true,
+        "source": "台中"
+    },
+    {
+        "id": 15,
+        "name": "鴻喜菇",
+        "special_requirement": false,
+        "source": ""
+    }
+]

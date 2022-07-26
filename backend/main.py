@@ -14,20 +14,8 @@ import sendgrid_api
 # if __name__ == "__main__":
 #     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
 
-# if __name__ == "__main__":
-#     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
-
 load_dotenv()
 app = FastAPI()
-# MONGO_DETAILS = os.environ.get("MONGO_DETAILS")
-
-client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("MONGODB_URL"))
-database = client.db
-comment_col = database.get_collection("comment")
-cuisine_col = database.get_collection("cuisine")
-game_col = database.get_collection("game")
-ingredient_col = database.get_collection("ingredient")
-ingredient_type_col = database.get_collection("ingredient_type")
 
 MONGO_DETAILS = "mongodb://redacted.invalid/removed"
 port = 8000

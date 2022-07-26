@@ -1,0 +1,58 @@
+[
+    {
+        "id": 0,
+        "name": "馬鈴薯燉肉",
+        "type": "main",
+        "image_url": "",
+        "required_ingredient_types": [2, 3, 0]
+    },
+    {
+        "id": 1,
+        "name": "蘿蔔燉牛肉",
+        "type": "main",
+        "image_url": "",
+        "required_ingredient_types": [2, 3, 1]
+    },
+    {
+        "id": 2,
+        "name": "冬瓜滷肉",
+        "type": "main",
+        "image_url": "",
+        "required_ingredient_types": [9, 0]
+    },
+    {
+        "id": 3,
+        "name": "紅燒茄子",
+        "type": "side",
+        "image_url": "",
+        "required_ingredient_types": [11, 12, 6]
+    },
+    {
+        "id": 4,
+        "name": "胡瓜炒蛋",
+        "type": "side",
+        "image_url": "",
+        "required_ingredient_types": [10, 3, 13]
+    },
+    {
+        "id": 5,
+        "name": "甜椒炒菠菜",
+        "type": "side",
+        "image_url": "",
+        "required_ingredient_types": [8, 7, 6]
+    },
+    {
+        "id": 6,
+        "name": "洋蔥炒菇",
+        "type": "side",
+        "image_url": "",
+        "required_ingredient_types": [5, 14, 15, 12]
+    },
+    {
+        "id": 7,
+        "name": "紅燒菇菇冬瓜",
+        "type": "side",
+        "image_url": "",
+        "required_ingredient_types": [14, 15, 9]
+    }
+]
