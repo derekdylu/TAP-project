@@ -10,6 +10,7 @@ import motor.motor_asyncio
 import models
 from fastapi.responses import JSONResponse
 import sendgrid_api
+import score_helper
 
 # if __name__ == "__main__":
 #     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
@@ -156,9 +157,35 @@ async def update_game(id: str, game: models.UpdateGame = Body(...)):
 async def get_score(id: str):
     if (game := game_col.find_one({"_id": id})) is not None:
         score = 0
-        # TODO to get score
+        grocery_id = await get_grocery(id)
+        grocery = [ingredient_type_col.find_one({"id": _id}) for _id in grocery_id]
+        cart_id = game["cart"]
+        cart = [ingredient_col.find_one({"id": _id}) for _id in cart_id]
+
+        score = score_helper.calculate_total_score(grocery, cart)
+        
         return score
+
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
+
+
+@app.get("/get_grocery/{id}", response_description="get card based on game id")
+async def get_grocery(id: str):
+    if (game := game_col.find_one({"_id": id})) is not None:
+        grocery = []
+
+        for cuisine_id in game["cuisine"]:
+            cuisine = cuisine_col.find_one({"id": cuisine_id})
+            ingredients = cuisine["required_ingredient_types"]
+
+            for ingredient in ingredients:
+                if (ingredient not in grocery):
+                    grocery.append(ingredient)
+
+        return grocery
+
+    raise HTTPException(status_code=404, detail=f"Game {id} not found")
+
 
 # --- Email
 # send email to a user

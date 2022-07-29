@@ -3,7 +3,7 @@ Score:
 1. Safety       (int) 0 or 1
 2. Transparency (int) 0 or 1
 3. Emission     (int) distance
-4. Season       (int) month
+4. Season       (arr) months
 Total avg.
 
 Rule:
@@ -24,20 +24,22 @@ def calculate_total_score(grocery, cart):
 
     curr_month = datetime.now().month
 
-    grocery = sorted(grocery, key=itemgetter('type'))
-    cart = sorted(grocery, key=itemgetter('type'))
+    grocery = sorted(grocery, key=itemgetter('name'))
+    cart = sorted(cart, key=itemgetter('type'))
 
     total_ingredient = len(grocery)
     offset = 0
 
     for i in range(total_ingredient):
-        while (cart[i + offset]["type"] is not grocery[i]["type"]):
+        while (cart[i + offset]["type"] != grocery[i]["name"]):
             offset += 1
 
-        safety_score += cart[i]["score"]["safety"]
-        transparency_score += cart[i]["score"]["transparency"]
-        emission_score += cart[i]["score"]["emission"]
-        season_score += 1 if cart[i]["score"]["season"] == curr_month else 0
+        safety_score += cart[i]["score"][0]
+        transparency_score += cart[i]["score"][1]
+        emission_score += cart[i]["score"][2]
+        for month in cart[i]["score"][3]:
+            if month == curr_month:
+                season_score += 1
 
     safety_score *= 1 / total_ingredient * 25
     transparency_score *= 1 / total_ingredient * 25
@@ -46,4 +48,4 @@ def calculate_total_score(grocery, cart):
 
     total_score = safety_score + transparency_score + emission_score + season_score
 
-    return total_score, safety_score, transparency_score, emission_score, season_score
+    return [total_score, safety_score, transparency_score, emission_score, season_score]
