@@ -66,14 +66,6 @@ async def list_comments():
     return list
 
 
-@app.post("/comment", response_description="add a comment", response_model=models.Comment)
-async def add_comment(comment: models.Comment = Body(...)):
-    comment = jsonable_encoder(comment)
-    new_comment = comment_col.insert_one(comment)
-    added_comment = comment_col.find_one({"_id": new_comment.inserted_id})
-    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.comment_helper(added_comment)))
-
-
 # create a comment
 @app.post("/create_comment", response_description="create a comment", response_model=models.Comment)
 async def create_comment(comment: models.Comment = Body(...)):
@@ -106,7 +98,7 @@ async def create_cuisine(cuisine: models.Cuisine = Body(...)):
     cuisine = jsonable_encoder(cuisine)
     new_cuisine = cuisine_col.insert_one(cuisine)
     created_cuisine = cuisine_col.find_one({"_id": new_cuisine.inserted_id})
-    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.game_helper(created_cuisine)))
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.cuisine_helper(created_cuisine)))
 
 # --- Game
 # get all games
@@ -168,7 +160,21 @@ async def get_score(id: str):
         return score
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
-# TODO email
+# --- Email
+# send email to a user
+@app.post("/send_email", response_description="send email", response_model=models.Email)
+async def send_email(data: models.Email = Body(...)):
+    data = jsonable_encoder(data)
+    response = sendgrid_api.send_email(
+        data["from_email"],
+        data["to_emails"],
+        data["subject"],
+        data["html_content"]
+    )
+
+    print(response)
+
+    return JSONResponse(status_code=response.status_code, content=jsonable_encoder(response.headers))
 
 # --- Ingredient
 # get all ingredients
@@ -193,8 +199,8 @@ async def get_ingredient(id: int):
 async def create_ingredient(ingredient: models.Ingredient = Body(...)):
     ingredient = jsonable_encoder(ingredient)
     new_ingredient = ingredient_col.insert_one(ingredient)
-    created_ingredient = ingredient_type_col.find_one({"_id": new_ingredient.inserted_id})
-    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_type_helper(created_ingredient)))
+    created_ingredient = ingredient_col.find_one({"_id": new_ingredient.inserted_id})
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_helper(created_ingredient)))
 
 # --- Ingredient Type
 # get all ingredient types
@@ -221,15 +227,3 @@ async def create_ingredient_type(ingredient_type: models.IngredientType = Body(.
     new_ingredient_type = ingredient_type_col.insert_one(ingredient_type)
     created_ingredient_type = ingredient_type_col.find_one({"_id": new_ingredient_type.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.ingredient_type_helper(created_ingredient_type)))
-
-@app.post("/email", response_description="send email", response_model=models.Email)
-async def send_email(data: models.Email = Body(...)):
-    data = jsonable_encoder(data)
-    response = sendgrid_api.send_email(
-        data["from_email"],
-        data["to_emails"],
-        data["subject"],
-        data["html_content"]
-    )
-
-    return JSONResponse(status_code=response.status_code, content=jsonable_encoder(response.headers))

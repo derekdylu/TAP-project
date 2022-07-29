@@ -117,6 +117,7 @@ class Game(BaseModel):
     score: int = Field(...)
 
     class Config:
+        allow_population_by_field_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
         schema_extra = {
@@ -163,6 +164,7 @@ class Comment(BaseModel):
     score: int = Field(...)
 
     class Config:
+        allow_population_by_field_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
         schema_extra = {
