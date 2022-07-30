@@ -1,0 +1,35 @@
+.main-circle {
+    width: 500px;
+    height: 500px;
+    /* position: relative; */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.score-circle {
+    /* background: lightblue; */
+    /* background: linear-gradient(90deg, #fdcd3b 45%, #ffed4b 60%); */
+    background: conic-gradient(
+        #F3C522 0deg, #F3C522 90deg,
+        #FF7768 90deg, #FF7768 180deg,
+        #00BEA7 180deg, #00BEA7 270deg,
+        #5552FF 270deg, #5552FF 330deg,
+        #E9E9E9 330deg, #E9E9E9 360deg);
+    border-radius: 50%;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+}
+
+.white-circle {
+    background: white;
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
