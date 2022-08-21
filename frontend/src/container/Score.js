@@ -1,10 +1,11 @@
 import './Score.css';
+import React, { Component }  from 'react';
 
 const Score = () => {
 	return (
-		<div class="main-circle">
-			<div class="score-circle" />
-			<div class="white-circle" />
+		<div className="main-circle">
+			<div className="score-circle" />
+			<div className="white-circle" />
 		</div>
 	)
 }
