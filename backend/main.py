@@ -169,8 +169,8 @@ async def get_score(id: str):
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
 
-@app.get("/get_grocery/{id}", response_description="get card based on game id")
-async def get_grocery(id: str):
+@app.put("/put_grocery/{id}", response_description="put all needed ingredients based on game id")
+async def put_grocery(id: str):
     if (game := game_col.find_one({"_id": id})) is not None:
         grocery = []
 
@@ -182,7 +182,14 @@ async def get_grocery(id: str):
                 if (ingredient not in grocery):
                     grocery.append(ingredient)
 
-        return grocery
+        
+        update_result = game_col.update_one({"_id": id}, {"grocery": grocery})
+
+        if update_result.modified_count == 1:
+            if (
+                updated_game := game_col.find_one({"_id": id})
+            ) is not None:
+                return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(updated_game)))
 
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 

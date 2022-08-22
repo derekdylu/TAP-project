@@ -114,6 +114,7 @@ class Game(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     cuisine: list = Field(...)
     cart: list = Field(...)
+    grocery: list = Field(...)
     score: int = Field(...)
 
     class Config:
@@ -124,6 +125,7 @@ class Game(BaseModel):
             "example": {
                 "cuisine": [0],
                 "cart": [0],
+                "grocery": [0],
                 "score": 0,
             }
         }
@@ -132,6 +134,7 @@ class Game(BaseModel):
 class UpdateGame(BaseModel):
     cuisine: Optional[list]
     cart: Optional[list]
+    grocery: Optional[list]
     score: Optional[int]
 
     class Config:
@@ -141,6 +144,7 @@ class UpdateGame(BaseModel):
             "example": {
                 "cuisine": [0],
                 "cart": [0],
+                "grocery": [0],
                 "score": 0,
             }
         }
@@ -150,6 +154,7 @@ def game_helper(game) -> dict:
         "id": game["_id"],
         "cuisine": game["cuisine"],
         "cart": game["cart"],
+        "grocery": game["grocery"],
         "score": game["score"],
     }
 
