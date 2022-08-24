@@ -3,7 +3,7 @@
     top: 0px;
     min-height: 80px;
     overflow: hidden;
-    background-color: #FFF3E1;
+    background: #FCD219;
 }
 
 .return {
@@ -56,8 +56,11 @@ label {
     line-height:40px;
     height: 100%;
     width: 100%;
-    -webkit-font-smoothing: antialiased; 
-    background-color: #D6B38A;
+    /* -webkit-font-smoothing: antialiased;  */
+    background: #FFFFFF;
+    border: 2px solid #44C177;
+    border-radius: 24px;
+    box-sizing: border-box;
 }
 
 .menuImage {
@@ -71,21 +74,21 @@ img {
 
 
 .menuName {
-    color: #4A341A;
     /* font-family: 'Noto Sans CJK TC'; */
+    margin: 0px 10px;
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
-    margin: 0px 10px;
+    color: #2D3748;
 }
 
 .menuIngredient {
-    color: #956834;
+    margin: 0px 10px 8px 10px;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 150%;
-    margin: 0px 10px 8px 10px;
+    color: #4A5568;
 }
 
 input[type=checkbox] {
@@ -93,24 +96,50 @@ input[type=checkbox] {
 }
 
 input:checked + label{
-    background-color: #F46B3B;
+    background: #44C177;
     color: white;
 }
 
 .footer {
-    position: sticky;
+    position: fixed;
     bottom: 0px;
-    height: 120px;
+    left: 0px;
+    width: 100%;
+    margin: 0px;
+    height: 140px;
     border: none;
-    background-color: #FFF3E1;
+    /* background: #3AAB7A; */
+}
+
+.triangle {
+    display: inline-block;
+    /* position: absolute; */
+    /* bottom: 96px; */
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid black;
+}
+
+.button {
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    justify-content: center;
+    align-items: center;
+
+    background: white;
+    width: 100%;
 }
 
 button {
-    margin-top: 24px;
+    margin-top: 16px;
+    margin-bottom: 16px;
 
-    background: #F46B3B;
-    border-radius: 5px;
-    width: 100%;
+    background: #44C177;
+    border-radius: 16px;
+    width: 80%;
     height: 64px;
     border: none;
 

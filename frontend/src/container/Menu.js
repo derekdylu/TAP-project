@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react';
+import { useParams } from 'react-router-dom';
 import { getCuisines, getIngredientTypeById, getIngredientTypes } from "../utils/axios";
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
 import { styled } from '@mui/material/styles';
@@ -7,19 +8,44 @@ import testImg from "./testImg.png"
 import arrow from "./arrow.png"
 
 const Menu = () => {
+    const { type } = useParams();
+    const name = {
+        "main": "主菜",
+        "side": "配菜"
+    }
+    const [windowSize, setWindowSize] = useState(getWindowSize());
     const [cuisines, setCuisines] = useState({});
     const [ingredientTypes, setIngredientTypes] = useState({});
-    const [checkboxState, setCheckboxState] = useState ({});
+    const [checkboxState, setCheckboxState] = useState({});
     const [totalChosen, setTotalChosen] = useState(-1);
     const [buttonDisabled, setButtonDisabled] = useState(true);
-    const maxChosen = 1;
+    const [maxChosen, setMaxChosen] = useState(0);
+
+    function getWindowSize() {
+        const {innerWidth, innerHeight} = window;
+        return {innerWidth, innerHeight};
+    }
 
     useEffect(() => {
-        document.body.style = 'background: #FFF3E1;';
+        console.log("test", type, name, windowSize);
+        document.body.style = 'background: #FCD219;';
+
+        if (type == "main") {
+            setMaxChosen(1);
+        }
+        else if (type == "side") {
+            setMaxChosen(2);
+        }
 
         const fetchCuisines = async () => {
             const cuisinesRes = await getCuisines();
-            setCuisines(cuisinesRes);
+
+            Object.keys(cuisinesRes).map(key => {
+                if (cuisinesRes[key].type == type) {
+                    console.log(cuisinesRes[key])
+                    setCuisines(prevState => ({...prevState, [key]: cuisinesRes[key]}))
+                }
+            });
         }
 
         const fetchIngredientTypes = async () => {
@@ -48,10 +74,10 @@ const Menu = () => {
     useEffect(() =>  {
         const totalElement = document.getElementById("total");
         const buttonElement = document.getElementById("submit");
-        console.log(totalChosen, maxChosen);
+        // console.log(totalChosen, maxChosen);
 
         if (totalChosen == maxChosen) {
-            console.log(true);
+            // console.log(true);
             totalElement.style.color = "#3AAB7A";
             setButtonDisabled(false);
         } else {
@@ -65,6 +91,10 @@ const Menu = () => {
         backgroundColor: '#F46B3B',
         borderRadius: '5px'
     }));
+
+    const FooterPattern = () => (
+        <div className="triangle"></div>
+    );
 
     const handleCheckbox = async(event) => {
         // console.log(event.target);
@@ -82,16 +112,16 @@ const Menu = () => {
         <React.Fragment>
             <Container>
                 <div className="header">
-                    <div className="return"><img src={arrow} class="arrow" />返回</div>
-                    <div className="title">選擇你的主菜</div>
-                    <div className="total" id="total">{totalChosen}/1</div>
-                    <div className="subTitle">為今天的晚餐選出 1 道想吃的主菜。</div>
+                    <div className="return"><img src={arrow} />返回</div>
+                    <div className="title">選擇你的{name[type]}</div>
+                    <div className="total" id="total">{totalChosen}/{maxChosen}</div>
+                    <div className="subTitle">為今天的晚餐選出 {maxChosen} 道想吃的{name[type]}。</div>
                 </div>
                 <Grid container spacing={2}>
                     { Object.keys(cuisines).map(key => (
                         <Grid item xs={6} key={key}>
                             <input type="checkbox" id={key} name={key} onClick={handleCheckbox}/>
-                            <label htmlFor={key} className="test">
+                            <label htmlFor={key}>
                                 <p className="menuImage">
                                     <img src={testImg} />
                                 </p>
@@ -107,12 +137,22 @@ const Menu = () => {
                         </Grid>
                     ))}
                 </Grid>
-                <Grid container className="footer">
+                {/* <Grid container className="footer">
                     <Grid item xs={12}>
-                        <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>Submit</button>
+                        <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Container>
+            <div className="footer">
+                {/* <FooterPattern /> */}
+                <div className="button">
+                    <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
+                </div>
+                {/* <Grid container> */}
+                    {/* <Grid item xs={12}> */}
+                    {/* </Grid> */}
+                {/* </Grid> */}
+            </div>
         </React.Fragment>
     )
 }
