@@ -147,7 +147,7 @@ async def delete_student(id: str):
     delete_result = game_col.delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+        return status.HTTP_204_NO_CONTENT
 
 # update a game
 @app.put("/update_game/{id}", response_description="update a game", response_model=models.Game)
@@ -185,7 +185,7 @@ async def get_score(id: str):
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
 # get grocery by id
-@app.get("/get_grocery/{id}", response_description="get card based on game id")
+@app.get("/get_grocery/{id}", response_description="get grocery based on game id")
 async def get_grocery(id: str):
     if (game := game_col.find_one({"_id": id})) is not None:
         grocery = []
@@ -202,6 +202,25 @@ async def get_grocery(id: str):
 
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
+# get cuisine by ingredient type
+@app.get("/get_cuisine_ingredient/{id}", response_description="get cuisine based on ingredient type")
+async def get_cuisine_ingredient(id: int):
+    if (ingredient_type := ingredient_type_col.find_one({"id": id})) is not None:
+        print("HELLO")
+        res = []
+        cuisines = await list_cuisines()
+
+
+        for cuisine in cuisines:
+            ingredients = cuisine["required_ingredient_types"]
+            print(ingredients)
+            
+            if id in ingredients:
+                res.append(cuisine["id"])
+
+        return res
+
+    return {"message": "error"}
 
 # --- Email
 # send email to a user

@@ -1,7 +1,9 @@
+/* Temporary theme (grc) */
+
 .header {
     position: sticky;
     top: 0px;
-    min-height: 80px;
+    /* min-height: 80px; */
     overflow: hidden;
     background: #FCD219;
 }
@@ -13,10 +15,20 @@
     font-size: 22px;
     line-height: 140%;
     color: #704E27;
+}
+
+a {
     display: flex;
     justify-content: left;
-    align-items: center; 
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
 }
+
+/* a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; } */
 
 .arrow {
     max-height: 100%;
@@ -49,6 +61,15 @@
     font-size: 18px;
     line-height: 150%;
     color: #704E27;
+}
+
+.text {
+    margin-top: 10px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+    color: #4A341A;
 }
 
 label {
@@ -101,15 +122,24 @@ input:checked + label{
 }
 
 .footer {
-    position: fixed;
+    position: relative;
     bottom: 0px;
     left: 0px;
     width: 100%;
     margin: 0px;
     height: 140px;
     border: none;
+    background: transparent;
     /* background: #3AAB7A; */
 }
+
+.noise {
+    width: 400px;
+    height: 100px;
+    background: linear-gradient(to right, blue, transparent),
+      url(https://grainy-gradients.vercel.app/noise.svg);
+    filter: contrast(170%) brightness(1000%);
+  }
 
 .triangle {
     display: inline-block;
@@ -124,7 +154,7 @@ input:checked + label{
 
 .button {
     display: flex;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     justify-content: center;
     align-items: center;
@@ -135,7 +165,7 @@ input:checked + label{
 
 button {
     margin-top: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
 
     background: #44C177;
     border-radius: 16px;

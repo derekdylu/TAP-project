@@ -1,7 +1,8 @@
 // This page is mainly for testing backend API
 
 import React, { Component, useState, useEffect }  from 'react';
-import { getComments, createComment, getCuisines, getCuisineById, getGames, getGameById, createGame, deleteGameById } from "../utils/axios";
+import { getComments, createComment, getCuisines, getCuisineById, 
+         getGames, getGameById, createGame, updateGameById, deleteGameById } from "../utils/axios";
 
 const Test = () => {
     // --- Comment
@@ -62,6 +63,11 @@ const Test = () => {
         console.log(tmp);
     }
 
+    const handleUpdateGameById = async () => {
+        const tmp = await updateGameById("6305dce843e48b43e3c5a123", null, [1, 2, 3], 80);
+        console.log(tmp);
+    }
+
     return (
         <div>
             <div>
@@ -102,6 +108,10 @@ const Test = () => {
                 Id:
                 <input type="text" value={id} onChange={(e) => setId(e.target.value)} /> <br />
                 <button onClick={handleCreateGame}> CreateGame </button>
+            </div>
+
+            <div>
+                <button onClick={handleUpdateGameById}> UpdateGameById </button>
             </div>
 
             <div>

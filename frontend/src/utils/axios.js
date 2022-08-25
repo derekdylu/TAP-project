@@ -69,7 +69,31 @@ export const getGameById = async (id) => {
         score: _score
     });
 
+    console.log(param);
+
     return await instance.post('/create_game', param, jsonHeader).then((res) => {
+        return res.data;
+    })
+ }
+
+ // update a game
+ export const updateGameById = async (id, _cuisine, _cart, _score) => {
+    let param = {};
+
+    if (_cuisine != null) {
+        param = {...param, "cuisine": _cuisine}
+    }
+    if (_cart != null) {
+        param = {...param, "cart": _cart}
+    }
+    if (_score != null) {
+        param = {...param, "score": _score}
+    }
+
+    console.log(param)
+
+    param = JSON.stringify(param);
+    return await instance.put(`/update_game/${id}`, param, jsonHeader).then((res) => {
         return res.data;
     })
  }

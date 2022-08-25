@@ -1,17 +1,29 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { getCuisines, getIngredientTypeById, getIngredientTypes } from "../utils/axios";
+import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById } from "../utils/axios";
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
 import { styled } from '@mui/material/styles';
-import "./Menu.css"
+import "./Theme.css"
 import testImg from "./testImg.png"
 import arrow from "./arrow.png"
 
 const Menu = () => {
     const { type } = useParams();
-    const name = {
-        "main": "主菜",
-        "side": "配菜"
+    const content = {
+        "main": {
+            "name": "主菜",
+            "maxChosen": 1,
+            "returnText": "返回",
+            "hrefPrev": "#/story/1",
+            "hrefNext": "#/menu/side",
+        },
+        "side": {
+            "name": "配菜",
+            "maxChosen": 2,
+            "returnText": "重新選主菜", // or 返回？
+            "hrefPrev": "#/menu/main",
+            "hrefNext": "#/story/2",
+        }
     }
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const [cuisines, setCuisines] = useState({});
@@ -19,30 +31,31 @@ const Menu = () => {
     const [checkboxState, setCheckboxState] = useState({});
     const [totalChosen, setTotalChosen] = useState(-1);
     const [buttonDisabled, setButtonDisabled] = useState(true);
-    const [maxChosen, setMaxChosen] = useState(0);
+    const [gameId, setGameId] = useState();
 
     function getWindowSize() {
         const {innerWidth, innerHeight} = window;
         return {innerWidth, innerHeight};
     }
 
-    useEffect(() => {
-        console.log("test", type, name, windowSize);
-        document.body.style = 'background: #FCD219;';
+    function init() {
+        setCuisines({});
+        setIngredientTypes({});
+        setCheckboxState({});
+        setTotalChosen(0);
+        setGameId(sessionStorage.getItem('gameId'));
+    }
 
-        if (type == "main") {
-            setMaxChosen(1);
-        }
-        else if (type == "side") {
-            setMaxChosen(2);
-        }
+    useEffect(() => {
+        document.body.style = 'background: #FCD219';
+        
+        init();
 
         const fetchCuisines = async () => {
             const cuisinesRes = await getCuisines();
 
             Object.keys(cuisinesRes).map(key => {
                 if (cuisinesRes[key].type == type) {
-                    console.log(cuisinesRes[key])
                     setCuisines(prevState => ({...prevState, [key]: cuisinesRes[key]}))
                 }
             });
@@ -57,13 +70,12 @@ const Menu = () => {
 
         fetchCuisines();
         fetchIngredientTypes();
-    }, []);
+    }, [type]);
 
     useEffect(() => {
         let count = 0;
 
         for (const [key, value] of Object.entries(checkboxState)) {
-            // console.log(key, value);
             if (value == true)
                 count += 1
         }
@@ -76,8 +88,7 @@ const Menu = () => {
         const buttonElement = document.getElementById("submit");
         // console.log(totalChosen, maxChosen);
 
-        if (totalChosen == maxChosen) {
-            // console.log(true);
+        if (totalChosen == content[type].maxChosen) {
             totalElement.style.color = "#3AAB7A";
             setButtonDisabled(false);
         } else {
@@ -92,12 +103,15 @@ const Menu = () => {
         borderRadius: '5px'
     }));
 
+    const StyledContainer = styled(Container)(() => ({
+        backgroundColor: '#FCD219'
+    }));
+
     const FooterPattern = () => (
         <div className="triangle"></div>
     );
 
     const handleCheckbox = async(event) => {
-        // console.log(event.target);
         setCheckboxState(prevState => 
             ({...prevState, [event.target.name]: event.target.checked})    
         );
@@ -105,17 +119,40 @@ const Menu = () => {
 
     const handleSubmit = async(event) => {
         console.log("submit")
-        console.log(checkboxState)
+        console.log(checkboxState);
+
+        const game = await getGameById(gameId);
+
+        let menuId = game.cuisine;
+        for (const [key, value] of Object.entries(checkboxState)) {
+            if (value == true)
+                menuId.push(parseInt(key));
+        }
+
+        updateGameById(gameId, menuId, null, null)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+
+        window.location.href = content[type].hrefNext;
     }
 
     return (
         <React.Fragment>
             <Container>
                 <div className="header">
-                    <div className="return"><img src={arrow} />返回</div>
-                    <div className="title">選擇你的{name[type]}</div>
-                    <div className="total" id="total">{totalChosen}/{maxChosen}</div>
-                    <div className="subTitle">為今天的晚餐選出 {maxChosen} 道想吃的{name[type]}。</div>
+                    <div className="return">
+                        <a href={ content[type].hrefPrev }>
+                            <img src={ arrow } />{ content[type].returnText }
+                        </a>
+                    </div>
+                    {/* <div className="return"><img src={ arrow } />{ content[type].returnText }</div> */}
+                    <div className="title">選擇你的{ content[type].name }</div>
+                    <div className="total" id="total">{ totalChosen }/{ content[type].maxChosen }</div>
+                    <div className="subTitle">為今天的晚餐選出 { content[type].maxChosen } 道想吃的{ content[type].name }。</div>
                 </div>
                 <Grid container spacing={2}>
                     { Object.keys(cuisines).map(key => (
@@ -145,6 +182,7 @@ const Menu = () => {
             </Container>
             <div className="footer">
                 {/* <FooterPattern /> */}
+                {/* <div className="noise" /> */}
                 <div className="button">
                     <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
                 </div>
