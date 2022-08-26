@@ -8,13 +8,13 @@ import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
-import { autoPlay } from 'react-swipeable-views-utils';
+// import { autoPlay } from 'react-swipeable-views-utils';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
@@ -87,7 +87,7 @@ function SwipeableTextMobileStepper() {
       >
         <Typography>{images[activeStep].label}</Typography>
       </Paper>
-      <AutoPlaySwipeableViews
+      <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
         onChangeIndex={handleStepChange}
@@ -138,7 +138,7 @@ function SwipeableTextMobileStepper() {
             <Card variant="outlined">{trustCard}</Card>
           </Box>
         </Box>
-      </AutoPlaySwipeableViews>
+      </SwipeableViews>
       <MobileStepper
         steps={maxSteps}
         position="static"
