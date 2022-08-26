@@ -1,9 +1,9 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { getGroceryById, getIngredientTypeById } from '../utils/axios';
+import { getCuisineByIngredient, getGroceryById, getIngredientTypeById } from '../utils/axios';
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
 import "./Theme.css"
-import arrow from "./arrow.png"
+import arrow from "../Images/arrow.png"
 
 const Special = () => {
     const content = {
@@ -18,7 +18,7 @@ const Special = () => {
     const [gameId, setGameId] = useState();
     const [grocery, setGrocery] = useState({});
     const [specialIngredient, setSpecialIngredient] = useState({});
-    const [specialMenu, setSpecialMenu] = useState({});
+    const [specialCuisine, setspecialCuisine] = useState({});
 
     function init() {
         setGameId(sessionStorage.getItem('gameId'));
@@ -33,13 +33,24 @@ const Special = () => {
 
             let list = []
     
-            // Object.keys(groceryRes).map(async(key) => {
-            //     const ingredient = await getIngredientTypeById(groceryRes[key]);
-            //     console.log(ingredient);
-            //     if (ingredient.special_requirement == true)  {
-            //         setSpecialIngredient((prevstate) => ({...prevstate, [key]: ingredient}))
-            //     }
-            // });
+            Object.keys(groceryRes).map(async(key) => {
+                const ingredient = await getIngredientTypeById(groceryRes[key]);
+                console.log(ingredient);
+
+                if (ingredient.special_requirement == true)  {
+                    // setSpecialIngredient((prevstate) => ({...prevstate, [key]: ingredient}));
+                    const tmp =  ingredient.source + ingredient.name
+                    console.log(tmp);
+
+                    const cuisinesRes = await getCuisineByIngredient(groceryRes[key]);
+
+                    Object.keys(cuisinesRes).map(async(key) => {
+                        const cuisine = cuisinesRes[key];
+                        setspecialCuisine((prevState) => ({...prevState, [cuisine]: [tmp]}))
+                    });
+                    // console.log(cuisines);
+                }
+            });
         }
 
         fetcthGrocery();
@@ -57,6 +68,7 @@ const Special = () => {
         // })
         console.log(grocery);
         console.log(specialIngredient);
+        console.log(specialCuisine);
     }
 
     return (

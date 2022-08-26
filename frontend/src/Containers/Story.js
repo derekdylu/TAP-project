@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { createGame } from '../utils/axios';
 import "./Theme.css"
 // import { useCookies } from 'react-cookie';
-import arrow from "./arrow.png"
+import arrow from "../Images/arrow.png"
 
 const Story = () => {
     const { id } = useParams();

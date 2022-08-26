@@ -2,11 +2,11 @@ import React, { Component }  from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
-import Score from './container/Score';
-import Test from './container/Test';
-import Menu from './container/Menu';
-import Story from './container/Story';
-import Special from './container/Special';
+import Score from './Containers/Score';
+import Test from './Containers/Test';
+import Menu from './Containers/Menu';
+import Story from './Containers/Story';
+import Special from './Containers/Special';
 
 const App = () => {
   return (

@@ -4,8 +4,8 @@ import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById,
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import "./Theme.css"
-import testImg from "./testImg.png"
-import arrow from "./arrow.png"
+import testImg from "../Images/testImg.png"
+import arrow from "../Images/arrow.png"
 
 const Menu = () => {
     const { type } = useParams();

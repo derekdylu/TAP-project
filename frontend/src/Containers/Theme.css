@@ -1,5 +1,10 @@
 /* Temporary theme (grc) */
 
+.HAHA {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .header {
     position: sticky;
     top: 0px;

@@ -46,6 +46,12 @@ export const getCuisineById = async (id) => {
     })
 }
 
+export const getCuisineByIngredient = async (id) => {
+    return await instance.get(`/get_cuisine_ingredient/${id}`).then((res) => {
+        return res.data;
+    })
+}
+
 // --- Game
 // get all games
 export const getGames = async () => {
