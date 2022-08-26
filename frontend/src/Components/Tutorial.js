@@ -54,25 +54,31 @@ function SwipeableTextMobileStepper() {
   const trustCard = (
     <React.Fragment>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          second card trust
+        <Typography variant="body1">
+          trusttrusttrusttrusttrusttrust
+          <br />
+          {'"a benevolent smile"'}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        trust
-        </Typography>
+        <Button variant="contained" disableElevation>
+          觀看採購密技
+        </Button>
         <Typography variant="body2">
           trusttrusttrusttrusttrusttrust
           <br />
           {'"a benevolent smile"'}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </React.Fragment>
   );
 
   return (
+    <>
+    <Typography>
+      採買小撇步
+    </Typography>
+    <Typography>
+      前往超市前
+    </Typography>
     <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
       <Paper
         square
@@ -169,6 +175,12 @@ function SwipeableTextMobileStepper() {
         }
       />
     </Box>
+    <Paper>
+      <Button variant="contained" disableElevation>
+         採買去
+      </Button>
+    </Paper>
+    </>
   );
 }
 

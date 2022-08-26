@@ -1,10 +1,10 @@
 import React from 'react'
-import Menu from '../Components/Menu'
+import Navigation from '../Components/Navigation'
 
 const Error = () => {
   return (
     <>
-      <Menu />
+      <Navigation />
       <div>Error</div>
     </>
   )

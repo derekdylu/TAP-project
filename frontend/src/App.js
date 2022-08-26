@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 // Debug
 import Score from './Containers/Score'
-import Menu from './Components/Menu'
+import Navigation from './Components/Navigation'
 import Tutorial from './Components/Tutorial';
 // Containers
 import Game from './Containers/Game'
@@ -14,7 +14,7 @@ const App = () => {
         <Routes>
           {/* Debug */}
           <Route path="/score" element={<Score />} />
-          <Route path="/menu" element={<Menu />} />
+          <Route path="/menu" element={<Navigation />} />
           <Route path="/tutorial" element={<Tutorial />} />
 
           {/* Containers */}
