@@ -52,7 +52,7 @@ class Ingredient(BaseModel):
     id: int = Field(...)
     name: str = Field(...)
     tap: bool = Field(...)
-    score: List[int] = Field(...)
+    score: List = Field(...)
     type: str = Field(...)
 
     class Config:

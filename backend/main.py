@@ -38,6 +38,21 @@ ingredient_type_col = database["ingredient_type"]
 # ingredient_col = database.get_collection("ingredient")
 # ingredient_type_col = database.get_collection("ingredient_type")
 
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def ResponseModel(data, message="success"):
     return {
         "data": [data],
@@ -132,7 +147,7 @@ async def delete_student(id: str):
     delete_result = game_col.delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+        return status.HTTP_204_NO_CONTENT
 
 # update a game
 @app.put("/update_game/{id}", response_description="update a game", response_model=models.Game)
@@ -153,6 +168,7 @@ async def update_game(id: str, game: models.UpdateGame = Body(...)):
 
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
+# get score by id
 @app.get("/get_score/{id}", response_description="get a score based on game id")
 async def get_score(id: str):
     if (game := game_col.find_one({"_id": id})) is not None:
@@ -193,6 +209,25 @@ async def put_grocery(id: str):
 
     raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
+# get cuisine by ingredient type
+@app.get("/get_cuisine_ingredient/{id}", response_description="get cuisine based on ingredient type")
+async def get_cuisine_ingredient(id: int):
+    if (ingredient_type := ingredient_type_col.find_one({"id": id})) is not None:
+        print("HELLO")
+        res = []
+        cuisines = await list_cuisines()
+
+
+        for cuisine in cuisines:
+            ingredients = cuisine["required_ingredient_types"]
+            print(ingredients)
+            
+            if id in ingredients:
+                res.append(cuisine["id"])
+
+        return res
+
+    return {"message": "error"}
 
 # --- Email
 # send email to a user
