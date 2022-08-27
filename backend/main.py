@@ -198,8 +198,9 @@ async def put_grocery(id: str):
                 if (ingredient not in grocery):
                     grocery.append(ingredient)
 
+        update = {"grocery": grocery}
         
-        update_result = game_col.update_one({"_id": id}, {"grocery": grocery})
+        update_result = game_col.update_one({"_id": id}, {"$set": update})
 
         if update_result.modified_count == 1:
             if (

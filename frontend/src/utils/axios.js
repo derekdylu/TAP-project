@@ -68,10 +68,11 @@ export const getGameById = async (id) => {
 }
 
 // create a game
- export const createGame = async (_cuisine, _cart, _score) => {
+ export const createGame = async (_cuisine, _cart, _grocery, _score) => {
     const param = JSON.stringify({
         cuisine: _cuisine,
         cart: _cart,
+        grocery: _grocery,
         score: _score
     });
 
@@ -83,7 +84,7 @@ export const getGameById = async (id) => {
  }
 
  // update a game
- export const updateGameById = async (id, _cuisine, _cart, _score) => {
+ export const updateGameById = async (id, _cuisine, _cart, _grocery, _score) => {
     let param = {};
 
     if (_cuisine != null) {
@@ -91,6 +92,9 @@ export const getGameById = async (id) => {
     }
     if (_cart != null) {
         param = {...param, "cart": _cart}
+    }
+    if (_grocery != null) {
+        param = {...param, "cart": _grocery}
     }
     if (_score != null) {
         param = {...param, "score": _score}
@@ -122,8 +126,8 @@ export const getGameById = async (id) => {
  }
 
  // get grocery by id
- export const getGroceryById = async (id) => {
-    return await instance.get(`/get_grocery/${id}`).then((res) => {
+ export const putGroceryById = async (id) => {
+    return await instance.put(`/put_grocery/${id}`).then((res) => {
         return res.data;
     });
  }

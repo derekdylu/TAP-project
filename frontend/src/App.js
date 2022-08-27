@@ -8,17 +8,17 @@ import Tutorial from './Components/Tutorial';
 import Game from './Containers/Game'
 import Error from './Containers/Error'
 
-// import Test from './Containers/Test';
-// import Menu from './Containers/Menu';
-// import Story from './Containers/Story';
-// import Special from './Containers/Special';
+import Test from './Components/Test';
+import Menu from './Components/Menu';
+import Story from './Components/Story';
+import Requirement from './Components/Requirement';
 
 const App = () => {
   return (
       <Router>
         <Routes>
           <Route path="/score" element={<Score />} />
-          <Route path="/menu" element={<Navigation />} />
+          <Route path="/navigation" element={<Navigation />} />
           <Route path="/tutorial" element={<Tutorial />} />
 
           <Route path="/" element={<Game />} />
@@ -28,9 +28,9 @@ const App = () => {
           <Route path="/terms" element={<Terms />} /> */}
 
           {/* <Route path="/test" element={<Test />} /> */}
-          {/* <Route path="/menu/:type" element={<Menu />} /> */}
-          {/* <Route path="/story/:id" element={<Story />} /> */}
-          {/* <Route path="/special" element={<Special />} /> */}
+          <Route path="/menu/:type" element={<Menu />} />
+          <Route path="/story/:id" element={<Story />} />
+          <Route path="/requirement" element={<Requirement />} />
         </Routes>
       </Router>
   )
