@@ -14,27 +14,29 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
+import Footer from './Footer';
+
 // const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
     label: 'safety',
     imgPath:
-      '/tutorial_placeholder.png',
+      '',
   },
   {
     label: 'trust',
     imgPath:
-      '/tutorial_placeholder.png',
+      '',
   },
   {
     label: 'mileage',
     imgPath:
-      '/tutorial_placeholder.png',
+      '',
   },
 ];
 
-function SwipeableTextMobileStepper() {
+function Tutorial() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -175,13 +177,9 @@ function SwipeableTextMobileStepper() {
         }
       />
     </Box>
-    <Paper>
-      <Button variant="contained" disableElevation>
-         採買去
-      </Button>
-    </Paper>
+    <Footer />
     </>
   );
 }
 
-export default SwipeableTextMobileStepper;
+export default Tutorial;
