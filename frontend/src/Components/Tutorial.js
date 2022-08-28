@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -28,6 +29,12 @@ function Tutorial() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = 3;
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref1b = useRef(null);
+  const ref2b = useRef(null);
+  const ref3b = useRef(null);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,6 +48,25 @@ function Tutorial() {
     setActiveStep(step);
   };
 
+  const handleClick1 = () => {
+    ref1.current?.scrollIntoView({behavior: 'smooth'});
+  };
+  const handleClick2 = () => {
+    ref2.current?.scrollIntoView({behavior: 'smooth'});
+  };
+  const handleClick3 = () => {
+    ref3.current?.scrollIntoView({behavior: 'smooth'});
+  };
+  const handleClick1b = () => {
+    ref1b.current?.scrollIntoView({behavior: 'smooth'});
+  };
+  const handleClick2b = () => {
+    ref2b.current?.scrollIntoView({behavior: 'smooth'});
+  };
+  const handleClick3b = () => {
+    ref3b.current?.scrollIntoView({behavior: 'smooth'});
+  };
+
   const cardContents = [
     (
     <React.Fragment>
@@ -51,13 +77,14 @@ function Tutorial() {
           justifyContent="flex-start"
           alignItems="center"
         >
+          <div style={{position: 'relative', top: '-24px'}} ref={ref1b}> </div>
           <Typography variant="h3" sx={{ mb: 1 }}>
             1 用藥安全
           </Typography>
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇經過認證的食材，吃得安全又放心。
           </Typography>
-          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick1}>
             觀看採購密技
           </Button>
           <img src={testImg} alt="test" width="256px"/>
@@ -67,9 +94,10 @@ function Tutorial() {
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，因此選擇具有標章的產品絕不會錯！
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick1b} ref={ref1}>
             返回
           </Button>
+          
         </Grid>
       </CardContent>
     </React.Fragment>
@@ -83,13 +111,14 @@ function Tutorial() {
           justifyContent="flex-start"
           alignItems="center"
         >
+          <div style={{position: 'relative', top: '-24px'}} ref={ref2b}> </div>
           <Typography variant="h3" sx={{ mb: 1 }}>
             2 食材可信度
           </Typography>
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇產品資訊透明詳盡，對消費者有保障的食材，買得安心才吃得開心。
           </Typography>
-          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick2}>
             觀看採購密技
           </Button>
           <img src={testImg} alt="test" width="256px"/>
@@ -99,7 +128,7 @@ function Tutorial() {
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等，為消費者的權益把關。
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick2b} ref={ref2}>
             返回
           </Button>
         </Grid>
@@ -115,13 +144,14 @@ function Tutorial() {
           justifyContent="flex-start"
           alignItems="center"
         >
+          <div style={{position: 'relative', top: '-24px'}} ref={ref3b}> </div>
           <Typography variant="h3" sx={{ mb: 1 }}>
             3 食物里程
           </Typography>
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇離家近的在地食材，我們吃得新鮮，環境也更健康。
           </Typography>
-          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick3}>
             觀看採購密技
           </Button>
           <img src={testImg} alt="test" width="256px"/>
@@ -131,9 +161,10 @@ function Tutorial() {
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以選擇在地食材降低碳排也獲得更新鮮的食材。
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick3b} ref={ref3}>
             返回
           </Button>
+          
         </Grid>
       </CardContent>
     </React.Fragment>

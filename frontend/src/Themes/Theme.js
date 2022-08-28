@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-const colorPalette = createTheme({
+const globalPalette = createTheme({
   status: {
     danger: '#F16063',
   },
@@ -45,10 +45,6 @@ const colorPalette = createTheme({
       900: '#1A202C'
     }
   },
-})
-
-const theme = createTheme({
-  colorPalette,
   typography: {
     fontFamily: "Noto",
     h1: {
@@ -97,6 +93,9 @@ const theme = createTheme({
       lineHeight: 1.5,
     }
   },
+})
+
+const theme = createTheme({
   components: {
     MuiButtonBase: {
       defaultProps: {
@@ -112,15 +111,15 @@ const theme = createTheme({
           style: {
             borderRadius: '16px',
             height: '64px',
-            backgroundColor: colorPalette.palette.primary.main,
+            backgroundColor: globalPalette.palette.primary.main,
             "&:hover":{
-              backgroundColor: colorPalette.palette.primary[300],
+              backgroundColor: globalPalette.palette.primary[300],
             },
             "&:active":{
-              backgroundColor: colorPalette.palette.primary[300],
+              backgroundColor: globalPalette.palette.primary[300],
             },
             "&:focus":{
-              backgroundColor: colorPalette.palette.primary.main,
+              backgroundColor: globalPalette.palette.primary.main,
             },
           },
           
@@ -130,15 +129,15 @@ const theme = createTheme({
           style: {
             borderRadius: '45px',
             height: '48px',
-            backgroundColor: colorPalette.palette.secondary.main,
+            backgroundColor: globalPalette.palette.secondary.main,
             "&:hover":{
-              backgroundColor: colorPalette.palette.secondary[300],
+              backgroundColor: globalPalette.palette.secondary[300],
             },
             "&:active":{
-              backgroundColor: colorPalette.palette.secondary[300],
+              backgroundColor: globalPalette.palette.secondary[300],
             },
             "&:focus":{
-              backgroundColor: colorPalette.palette.secondary.main,
+              backgroundColor: globalPalette.palette.secondary.main,
             },
           },
         },
@@ -157,6 +156,6 @@ const theme = createTheme({
       ],
     }
   },
-}, colorPalette);
+}, globalPalette);
 
 export default theme;

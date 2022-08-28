@@ -13,6 +13,7 @@ import Test from './Components/Test';
 import Menu from './Components/Menu';
 import Story from './Components/Story';
 import Requirement from './Components/Requirement';
+import Cart from './Components/Cart';
 
 import theme from './Themes/Theme';
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/score" element={<Score />} />
           <Route path="/navigation" element={<Navigation />} />
           <Route path="/tutorial" element={<Tutorial />} />
+          <Route path="/cart" element={<Cart />} />
 
           <Route path="/" element={<Game />} />
           <Route path="*" element={<Error />} />
