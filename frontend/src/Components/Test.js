@@ -2,7 +2,7 @@
 
 import React, { Component, useState, useEffect }  from 'react';
 import { getComments, createComment, getCuisines, getCuisineById, 
-         getGames, getGameById, createGame, updateGameById, deleteGameById } from "../utils/axios";
+         getGames, getGameById, createGame, updateGameById, deleteGameById } from "../Utils/Axios";
 
 const Test = () => {
     // --- Comment

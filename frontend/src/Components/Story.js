@@ -1,7 +1,7 @@
 import { Container } from '@mui/system';
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { createGame } from '../utils/axios';
+import { createGame } from '../Utils/Axios';
 import "./Theme.css"
 // import { useCookies } from 'react-cookie';
 import arrow from "../Images/arrow.png"
@@ -59,7 +59,7 @@ const Story = () => {
                 <div className="header">
                     <div className="return">
                         <a href={ content[id].hrefPrev }>
-                            <img src={ arrow } />{ content[id].returnText }
+                            <img src={ arrow } alt="arrow" />{ content[id].returnText }
                         </a>
                     </div>
                     {/* <div className="return"><img src={ arrow } />{ content[id].returnText }</div> */}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../utils/axios";
+import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import "./Theme.css"
