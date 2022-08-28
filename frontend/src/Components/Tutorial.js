@@ -1,45 +1,34 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
-// import { autoPlay } from 'react-swipeable-views-utils';
-
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-
 import Footer from './Footer';
 
-// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+import testImg from '../Images/testImg.png';
 
-const images = [
-  {
-    label: 'safety',
-    imgPath:
-      '',
+const styles = {
+  stepper: {
+    backgroundColor: "transparent",
+    marginBottom: "32px",
   },
-  {
-    label: 'trust',
-    imgPath:
-      '',
-  },
-  {
-    label: 'mileage',
-    imgPath:
-      '',
-  },
-];
+  overflow: {
+    display: "flex",
+    flexDirection: "column",
+  }
+};
 
 function Tutorial() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = 3;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -53,101 +42,130 @@ function Tutorial() {
     setActiveStep(step);
   };
 
-  const trustCard = (
+  const cardContents = [
+    (
     <React.Fragment>
-      <CardContent>
-        <Typography variant="body1">
-          trusttrusttrusttrusttrusttrust
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-        <Button variant="contained" disableElevation>
-          觀看採購密技
-        </Button>
-        <Typography variant="body2">
-          trusttrusttrusttrusttrusttrust
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+      <CardContent sx={{padding: "32px 24px 32px 24px"}}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Typography variant="h3" sx={{ mb: 1 }}>
+            1 用藥安全
+          </Typography>
+          <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
+            選擇經過認證的食材，吃得安全又放心。
+          </Typography>
+          <Button variant="contained" disableElevation sx={{ mb: 4 }}>
+            觀看採購密技
+          </Button>
+          <img src={testImg} alt="test" width="256px"/>
+          <Typography variant="h5" sx={{ mt: 4 }}>
+            密技-用藥安全
+          </Typography>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+            標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，因此選擇具有標章的產品絕不會錯！
+          </Typography>
+          <Button variant="contained" disableElevation sx={{ mt: 4 }}>
+            返回
+          </Button>
+        </Grid>
       </CardContent>
     </React.Fragment>
-  );
+    ),
+    (
+    <React.Fragment>
+      <CardContent sx={{padding: "32px 24px 32px 24px"}}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Typography variant="h3" sx={{ mb: 1 }}>
+            2 食材可信度
+          </Typography>
+          <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
+            選擇產品資訊透明詳盡，對消費者有保障的食材，買得安心才吃得開心。
+          </Typography>
+          <Button variant="contained" disableElevation sx={{ mb: 4 }}>
+            觀看採購密技
+          </Button>
+          <img src={testImg} alt="test" width="256px"/>
+          <Typography variant="h5" sx={{ mt: 4 }}>
+            密技-食材可信度
+          </Typography>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+            消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等，為消費者的權益把關。
+          </Typography>
+          <Button variant="contained" disableElevation sx={{ mt: 4 }}>
+            返回
+          </Button>
+        </Grid>
+      </CardContent>
+    </React.Fragment>
+    ),
+    (
+    <React.Fragment>
+      <CardContent sx={{padding: "32px 24px 32px 24px"}}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Typography variant="h3" sx={{ mb: 1 }}>
+            3 食物里程
+          </Typography>
+          <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
+            選擇離家近的在地食材，我們吃得新鮮，環境也更健康。
+          </Typography>
+          <Button variant="contained" disableElevation sx={{ mb: 4 }}>
+            觀看採購密技
+          </Button>
+          <img src={testImg} alt="test" width="256px"/>
+          <Typography variant="h5" sx={{ mt: 4 }}>
+            密技-食物里程
+          </Typography>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+            標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以選擇在地食材降低碳排也獲得更新鮮的食材。
+          </Typography>
+          <Button variant="contained" disableElevation sx={{ mt: 4 }}>
+            返回
+          </Button>
+        </Grid>
+      </CardContent>
+    </React.Fragment>
+    )
+  ];
 
   return (
-    <>
-    <Typography>
-      採買小撇步
-    </Typography>
-    <Typography>
-      前往超市前
-    </Typography>
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: 50,
-          pl: 2,
-          bgcolor: 'background.default',
-        }}
-      >
-        <Typography>{images[activeStep].label}</Typography>
-      </Paper>
+    <div style={{backgroundColor: '#FCD219'}}>
+      <Typography>
+        採買小撇步
+      </Typography>
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
+        style={styles.swipeable}
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {/* {images.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  height: 255,
-                  display: 'block',
-                  maxWidth: 400,
-                  overflow: 'hidden',
-                  width: '100%',
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))} */}
-        <Box sx={{ minWidth: 275 }}>
-          <Box sx={{ width: 205, height: 200}}>
-            <Card variant="outlined">
-              <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  Word of the Day
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  adjective
-                </Typography>
-                <Typography variant="body2">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card>
-          </Box>
-        </Box>
-        <Box sx={{ minWidth: 275}}>
-          <Box sx={{ width: 205, height: 200}}>
-            <Card variant="outlined">{trustCard}</Card>
-          </Box>
-        </Box>
+        {cardContents.map(x => 
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ minWidth: 304, height: 421, margin: "auto"}}
+          >
+            <Card sx={{ width: 304, height: 357, borderRadius: '16px', overflow: 'auto', margin: "auto" }}>{x}</Card>
+          </Grid>
+        )}
       </SwipeableViews>
       <MobileStepper
+        style={styles.stepper}
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
@@ -157,7 +175,6 @@ function Tutorial() {
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
           >
-            Next
             {theme.direction === 'rtl' ? (
               <KeyboardArrowLeft />
             ) : (
@@ -172,13 +189,12 @@ function Tutorial() {
             ) : (
               <KeyboardArrowLeft />
             )}
-            Back
           </Button>
         }
       />
-    </Box>
-    <Footer />
-    </>
+      <Container />
+      <Footer text="採買去！" />
+    </div>
   );
 }
 
