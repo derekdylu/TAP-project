@@ -1,5 +1,5 @@
 import axios from "axios"
-import "dotenv/config"
+// import "dotenv/config"
 
 // const SERVER_URL = process.env.SERVER_URL;
 const instance = axios.create({ baseURL: 'http://127.0.0.1:8000' });

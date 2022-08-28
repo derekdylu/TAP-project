@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 // Debug
@@ -13,8 +14,11 @@ import Menu from './Components/Menu';
 import Story from './Components/Story';
 import Requirement from './Components/Requirement';
 
+import theme from './Themes/Theme';
+
 const App = () => {
   return (
+    <ThemeProvider theme={theme}>
       <Router>
         <Routes>
           <Route path="/score" element={<Score />} />
@@ -27,12 +31,13 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/terms" element={<Terms />} /> */}
 
-          {/* <Route path="/test" element={<Test />} /> */}
+          <Route path="/test" element={<Test />} />
           <Route path="/menu/:type" element={<Menu />} />
           <Route path="/story/:id" element={<Story />} />
           <Route path="/requirement" element={<Requirement />} />
         </Routes>
       </Router>
+    </ThemeProvider>
   )
 }
 

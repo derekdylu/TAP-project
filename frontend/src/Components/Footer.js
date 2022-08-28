@@ -33,7 +33,7 @@ function Footer({text}) {
 
   return (
     <div className={`${zigzag}`}>
-      <Button variant="contained" style={{width: '100%', height: '64px', backgroundColor: '#44C177', color: '#251A0D'}} sx={{ borderRadius: '16px' }} disableElevation>
+      <Button variant="primary" style={{width: '100%'}} >
         {buttonText}
       </Button>
     </div>

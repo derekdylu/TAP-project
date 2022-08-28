@@ -12,16 +12,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Footer from './Footer';
 
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
+
 import testImg from '../Images/testImg.png';
 
 const styles = {
   stepper: {
     backgroundColor: "transparent",
     marginBottom: "32px",
-  },
-  overflow: {
-    display: "flex",
-    flexDirection: "column",
   }
 };
 
@@ -58,7 +57,7 @@ function Tutorial() {
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇經過認證的食材，吃得安全又放心。
           </Typography>
-          <Button variant="contained" disableElevation sx={{ mb: 4 }}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />}>
             觀看採購密技
           </Button>
           <img src={testImg} alt="test" width="256px"/>
@@ -68,7 +67,7 @@ function Tutorial() {
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，因此選擇具有標章的產品絕不會錯！
           </Typography>
-          <Button variant="contained" disableElevation sx={{ mt: 4 }}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />}>
             返回
           </Button>
         </Grid>
@@ -90,7 +89,7 @@ function Tutorial() {
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇產品資訊透明詳盡，對消費者有保障的食材，買得安心才吃得開心。
           </Typography>
-          <Button variant="contained" disableElevation sx={{ mb: 4 }}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />}>
             觀看採購密技
           </Button>
           <img src={testImg} alt="test" width="256px"/>
@@ -100,7 +99,7 @@ function Tutorial() {
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等，為消費者的權益把關。
           </Typography>
-          <Button variant="contained" disableElevation sx={{ mt: 4 }}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />}>
             返回
           </Button>
         </Grid>
@@ -122,7 +121,7 @@ function Tutorial() {
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇離家近的在地食材，我們吃得新鮮，環境也更健康。
           </Typography>
-          <Button variant="contained" disableElevation sx={{ mb: 4 }}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />}>
             觀看採購密技
           </Button>
           <img src={testImg} alt="test" width="256px"/>
@@ -132,7 +131,7 @@ function Tutorial() {
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以選擇在地食材降低碳排也獲得更新鮮的食材。
           </Typography>
-          <Button variant="contained" disableElevation sx={{ mt: 4 }}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />}>
             返回
           </Button>
         </Grid>
@@ -172,6 +171,7 @@ function Tutorial() {
         nextButton={
           <Button
             size="small"
+            variant="toggle"
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
           >
@@ -183,7 +183,12 @@ function Tutorial() {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button
+            size="small"
+            variant="toggle"
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
             {theme.direction === 'rtl' ? (
               <KeyboardArrowRight />
             ) : (
