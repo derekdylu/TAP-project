@@ -18,7 +18,7 @@ const Story = () => {
             ],
             "returnText": "返回",
             "hrefPrev": "",
-            "hrefNext": "#/menu/main",
+            "hrefNext": "/menu/main",
         },
         2: {
             "title": "冰箱食材好像不太夠",
@@ -28,8 +28,8 @@ const Story = () => {
                 "所以你現在要到附近的超市採買所有這餐所需的食材。"
             ],
             "returnText": "重新選配菜",
-            "hrefPrev": "#/menu/side",
-            "hrefNext": "#/special",
+            "hrefPrev": "/menu/side",
+            "hrefNext": "/requirement",
         }
     }
     
@@ -39,14 +39,18 @@ const Story = () => {
 
     const handleSubmit = async() => {
         console.log("submit");
-        createGame([], [], 0)
-        .then((res) => {
-            sessionStorage.setItem('gameId', res.id);
-            console.log(sessionStorage);
+        if (id == 1) {
+            createGame([], [], [], 0)
+            .then((res) => {
+                sessionStorage.setItem('gameId', res.id);
+                console.log(sessionStorage);
+                window.location.href = content[id].hrefNext;
+            }).catch((error) => {
+                console.log(error);
+            })
+        } else if (id == 2) {
             window.location.href = content[id].hrefNext;
-        }).catch((error) => {
-            console.log(error);
-        })
+        }
     }
 
     return (

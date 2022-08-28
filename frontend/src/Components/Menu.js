@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById } from "../utils/axios";
+import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../utils/axios";
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import "./Theme.css"
@@ -14,15 +14,15 @@ const Menu = () => {
             "name": "主菜",
             "maxChosen": 1,
             "returnText": "返回",
-            "hrefPrev": "#/story/1",
-            "hrefNext": "#/menu/side",
+            "hrefPrev": "/story/1",
+            "hrefNext": "/menu/side",
         },
         "side": {
             "name": "配菜",
             "maxChosen": 2,
             "returnText": "重新選主菜", // or 返回？
-            "hrefPrev": "#/menu/main",
-            "hrefNext": "#/story/2",
+            "hrefPrev": "/menu/main",
+            "hrefNext": "/story/2",
         }
     }
     const [windowSize, setWindowSize] = useState(getWindowSize());
@@ -122,20 +122,26 @@ const Menu = () => {
         console.log(checkboxState);
 
         const game = await getGameById(gameId);
+        let menuId = [];
 
-        let menuId = game.cuisine;
+        if (type == "side") {
+            menuId.push(game.cuisine[0]);
+        }
+
+        // let menuId = game.cuisine;
         for (const [key, value] of Object.entries(checkboxState)) {
             if (value == true)
                 menuId.push(parseInt(key));
         }
 
-        updateGameById(gameId, menuId, null, null)
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+        await updateGameById(gameId, menuId, null, null)
+        await putGroceryById(gameId)
+        // .then((res) => {
+        //     console.log(res);
+        // })
+        // .catch((e) => {
+        //     console.log(e);
+        // });
 
         window.location.href = content[type].hrefNext;
     }
