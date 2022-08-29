@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import "./Theme.css"
 import testImg from "../Images/testImg.png"
 import arrow from "../Images/arrow.png"
+import Header from "./Header.js"
 
 const Menu = () => {
     const { type } = useParams();
@@ -88,13 +89,13 @@ const Menu = () => {
         const buttonElement = document.getElementById("submit");
         // console.log(totalChosen, maxChosen);
 
-        if (totalChosen == content[type].maxChosen) {
-            totalElement.style.color = "#3AAB7A";
-            setButtonDisabled(false);
-        } else {
-            totalElement.style.color = "#CF4655";
-            setButtonDisabled(true);
-        }
+        // if (totalChosen == content[type].maxChosen) {
+        //     totalElement.style.color = "#3AAB7A";
+        //     setButtonDisabled(false);
+        // } else {
+        //     totalElement.style.color = "#CF4655";
+        //     setButtonDisabled(true);
+        // }
 
     }, [totalChosen])
 
@@ -147,19 +148,19 @@ const Menu = () => {
     }
 
     return (
-        <React.Fragment>
-            <Container>
-                <div className="header">
+        <div style={{backgroundColor: "#FCD219"}}>
+            <Header _returnLink={ content[type].hrefPrev } _titleText="TEST" _contentText="TEST"></Header>
+            <div>
+                {/* <div className="header">
                     <div className="return">
                         <a href={ content[type].hrefPrev }>
                             <img src={ arrow } />{ content[type].returnText }
                         </a>
                     </div>
-                    {/* <div className="return"><img src={ arrow } />{ content[type].returnText }</div> */}
                     <div className="title">選擇你的{ content[type].name }</div>
                     <div className="total" id="total">{ totalChosen }/{ content[type].maxChosen }</div>
                     <div className="subTitle">為今天的晚餐選出 { content[type].maxChosen } 道想吃的{ content[type].name }。</div>
-                </div>
+                </div> */}
                 <Grid container spacing={2}>
                     { Object.keys(cuisines).map(key => (
                         <Grid item xs={6} key={key}>
@@ -185,7 +186,7 @@ const Menu = () => {
                         <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
                     </Grid>
                 </Grid> */}
-            </Container>
+            </div>
             <div className="footer">
                 {/* <FooterPattern /> */}
                 {/* <div className="noise" /> */}
@@ -197,7 +198,7 @@ const Menu = () => {
                     {/* </Grid> */}
                 {/* </Grid> */}
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 

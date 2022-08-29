@@ -43,6 +43,9 @@ const globalPalette = createTheme({
       700: '#4A5568',
       800: '#2D3748',
       900: '#1A202C'
+    },
+    carton: {
+      700: '#704E27',
     }
   },
   typography: {
