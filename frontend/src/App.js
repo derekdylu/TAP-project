@@ -16,6 +16,7 @@ import Requirement from './Components/Requirement';
 import Cart from './Components/Cart';
 
 import theme from './Themes/Theme';
+import StartPage from './Components/StartPage';
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/terms" element={<Terms />} /> */}
 
           <Route path="/test" element={<Test />} />
+          <Route path="/start" element={<StartPage />} />
           <Route path="/menu/:type" element={<Menu />} />
           <Route path="/story/:id" element={<Story />} />
           <Route path="/requirement" element={<Requirement />} />
