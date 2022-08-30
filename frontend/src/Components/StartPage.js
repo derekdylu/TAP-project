@@ -73,7 +73,6 @@ const rightButton = css`
     background-size: 24px 24px;
     height: 72px;
     width: 24px;
-    
 `
 
 const arrow = css`

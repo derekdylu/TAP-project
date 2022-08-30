@@ -1,31 +1,51 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
 import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
-import { styled } from '@mui/material/styles';
 import "./Theme.css"
+import { css } from "@emotion/css";
+import { styled } from '@mui/material/styles';
+import { Typography } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 import testImg from "../Images/testImg.png"
 import arrow from "../Images/arrow.png"
+import theme from '../Themes/Theme';
 import Header from "./Header.js"
+import Footer from './Footer';
+import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
+
+const content = {
+    "main": {
+        "name": "主菜",
+        "maxChosen": 1,
+        "returnText": "返回",
+        "hrefPrev": "/story/1",
+        "hrefNext": "/menu/side",
+    },
+    "side": {
+        "name": "配菜",
+        "maxChosen": 2,
+        "returnText": "重新選主菜", // or 返回？
+        "hrefPrev": "/menu/main",
+        "hrefNext": "/story/2",
+    }
+}
+
+const Page = styled('div')(({ theme }) => ({
+    background: theme.palette.secondary.main,
+    height: '100vh',
+}));
+
+const headerContainer = css`
+    margin: 33px 0px 0px 0px;
+`
+
+const bodyContainer = css`
+    margin: 11px 0px 0px 0px;
+`
 
 const Menu = () => {
     const { type } = useParams();
-    const content = {
-        "main": {
-            "name": "主菜",
-            "maxChosen": 1,
-            "returnText": "返回",
-            "hrefPrev": "/story/1",
-            "hrefNext": "/menu/side",
-        },
-        "side": {
-            "name": "配菜",
-            "maxChosen": 2,
-            "returnText": "重新選主菜", // or 返回？
-            "hrefPrev": "/menu/main",
-            "hrefNext": "/story/2",
-        }
-    }
+    
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const [cuisines, setCuisines] = useState({});
     const [ingredientTypes, setIngredientTypes] = useState({});
@@ -104,8 +124,8 @@ const Menu = () => {
         borderRadius: '5px'
     }));
 
-    const StyledContainer = styled(Container)(() => ({
-        backgroundColor: '#FCD219'
+    const StyledGrid = styled(Grid)(() => ({
+        
     }));
 
     const FooterPattern = () => (
@@ -148,20 +168,25 @@ const Menu = () => {
     }
 
     return (
-        <div style={{backgroundColor: "#FCD219"}}>
-            <Header _returnLink={ content[type].hrefPrev } _titleText="TEST" _contentText="TEST"></Header>
-            <div>
-                {/* <div className="header">
-                    <div className="return">
-                        <a href={ content[type].hrefPrev }>
-                            <img src={ arrow } />{ content[type].returnText }
-                        </a>
-                    </div>
-                    <div className="title">選擇你的{ content[type].name }</div>
-                    <div className="total" id="total">{ totalChosen }/{ content[type].maxChosen }</div>
-                    <div className="subTitle">為今天的晚餐選出 { content[type].maxChosen } 道想吃的{ content[type].name }。</div>
-                </div> */}
-                <Grid container spacing={2}>
+        <ThemeProvider theme={theme}>
+            <Page>
+            <Header _returnLink={ content[type].hrefPrev }>
+                <div className={`${headerContainer}`}>
+                    <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
+                        選擇你的{ content[type].name }
+                        { totalChosen }/{ content[type].maxChosen }
+                    </Typography>
+                </div>
+                <div className={`${bodyContainer}`}>
+                    <Typography variant="body1" color={theme.palette.carton[700]} sx={{ fontWeight: '400' }}>
+                        為今天的晚餐選出 { content[type].maxChosen } 道想吃的{ content[type].name }。
+                    </Typography>
+                </div>
+                {/* <div className="total" id="total"></div> */}
+            </Header>
+                <div className="header">
+                </div>
+                <Grid container spacing={2} px={2}>
                     { Object.keys(cuisines).map(key => (
                         <Grid item xs={6} key={key}>
                             <input type="checkbox" id={key} name={key} onClick={handleCheckbox}/>
@@ -181,24 +206,15 @@ const Menu = () => {
                         </Grid>
                     ))}
                 </Grid>
-                {/* <Grid container className="footer">
-                    <Grid item xs={12}>
-                        <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
-                    </Grid>
-                </Grid> */}
-            </div>
             <div className="footer">
-                {/* <FooterPattern /> */}
-                {/* <div className="noise" /> */}
                 <div className="button">
                     <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
                 </div>
-                {/* <Grid container> */}
-                    {/* <Grid item xs={12}> */}
-                    {/* </Grid> */}
-                {/* </Grid> */}
             </div>
-        </div>
+            {/* <Footer text="確定">
+            </Footer> */}
+            </Page>
+        </ThemeProvider>
     )
 }
 

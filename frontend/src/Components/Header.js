@@ -34,11 +34,12 @@ const arrow = css`
     -webkit-transform: rotate(135deg);
 `;
 
-function Header({_returnText, _returnLink, _titleText, _contentText}) {
+function Header({_returnText, _returnLink, _titleText, _contentText, _linkColor}) {
   let returnText = "返回";
   let returnLink = "";
   let titleText = null;
   let contentText = null;
+  let linkColor = theme.palette.carton[700];
 
   if (_returnText !== undefined) {
     returnText = _returnText;
@@ -52,11 +53,14 @@ function Header({_returnText, _returnLink, _titleText, _contentText}) {
   if (_contentText !== undefined) {
     contentText = _contentText;
   }
+  if (_linkColor !== undefined) {
+    linkColor = _linkColor
+  }
 
   return (
     <ThemeProvider theme={theme}>
         <div className={`${header}`} id="header">
-            <Typography variant="h5" color={theme.palette.carton[700]}>
+            <Typography variant="h5" color={linkColor}>
                 <a href={ returnLink } className={`${link}`}>
                     <div className={`${arrow}`}/>{ returnText }
                 </a>
