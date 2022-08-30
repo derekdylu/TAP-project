@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Children } from "react";
 import Button from '@mui/material/Button';
-import { Link, Typography } from "@mui/material";
+import { Link, Typography, useThemeProps } from "@mui/material";
 import { styled } from '@mui/system';
 // import styled from "@mui/materials/styles";
 import { css } from "@emotion/css";
@@ -34,27 +34,27 @@ const arrow = css`
     -webkit-transform: rotate(135deg);
 `;
 
-function Header({_returnText, _returnLink, _titleText, _contentText, _linkColor}) {
+function Header(props, {_returnText, _returnLink, _titleText, _contentText, _linkColor}) {
   let returnText = "返回";
   let returnLink = "";
   let titleText = null;
   let contentText = null;
   let linkColor = theme.palette.carton[700];
 
-  if (_returnText !== undefined) {
-    returnText = _returnText;
+  if (props._returnText !== undefined) {
+    returnText = props._returnText;
   }
-  if (_returnLink !== undefined) {
-    returnLink = _returnLink;
+  if (props._returnLink !== undefined) {
+    returnLink = props._returnLink;
   }
-  if (_titleText !== undefined) {
-    titleText = _titleText;
+  if (props._titleText !== undefined) {
+    titleText = props._titleText;
   }
-  if (_contentText !== undefined) {
-    contentText = _contentText;
+  if (props._contentText !== undefined) {
+    contentText = props._contentText;
   }
-  if (_linkColor !== undefined) {
-    linkColor = _linkColor
+  if (props._linkColor !== undefined) {
+    linkColor = props._linkColor
   }
 
   return (
@@ -75,6 +75,7 @@ function Header({_returnText, _returnLink, _titleText, _contentText, _linkColor}
                 {_titleText}
                 </Typography>
             }
+            { props.children }
         </div>
     </ThemeProvider>
   )
