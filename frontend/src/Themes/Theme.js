@@ -1,5 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 
+const font = "'Noto Sans TC', sans-serif";
+
 const globalPalette = createTheme({
   status: {
     danger: '#F16063',
@@ -49,7 +51,7 @@ const globalPalette = createTheme({
     }
   },
   typography: {
-    fontFamily: "Noto",
+    fontFamily: font,
     h1: {
       fontSize: '36px',
       lineHeight: 1.4,
