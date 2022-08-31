@@ -76,15 +76,16 @@ const rightButton = css`
 `
 
 const arrow = css`
-    height: 4px;
-    width: 16px;
-    background: #704E27;
+    height: 5px;
+    width: 20px;
+    background: #143A24;
     margin-left: 5px;
+    margin-top: 2px;
     &:before {
-        border: solid #704E27;
-        border-width: 0 4px 4px 0;
+        border: solid #143A24;
+        border-width: 0 5px 5px 0;
         display: inline-block;
-        padding: 5px; 
+        padding: 6px; 
         transform: rotate(-45deg);
         -webkit-transform: rotate(-45deg);
         content: " ";
@@ -108,14 +109,14 @@ const StartPage = () => {
                 <div className={`${contentContainer}`}>
                     <img src={logo} className={`${imageContainer}`}/>
                     <div className={`${textContainer}`}>
-                        <Typography variant="body1" color={theme.palette.primary[900]}>
+                        <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500' }}>
                             { contentText }
                         </Typography>
                     </div>
                     <div className={`${button}`} onClick={handleOnClick}>
                         <div className={`${leftButton}`}></div>
                         <div className={`${middleButton}`}>
-                            <Typography variant="h2" color={theme.palette.primary[900]}>
+                            <Typography variant="h2" color={theme.palette.primary[900]} sx={{ fontWeight: '900' }}>
                                 START
                             </Typography>
                             <div className={`${arrow}`} />

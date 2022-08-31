@@ -108,10 +108,10 @@ const Story = () => {
                         { content[id].title }
                     </Typography>
                 </div>
-                <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>
+                <div className={`${bodyContainer}`}>
                 { content[id].text.map(key => 
-                    <p className={`${bodyContainer}`} key={key[0]}>{ key }</p>) }
-                </Typography>
+                    <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>{ key }</Typography>) }
+                </div>
                 <div className={`${buttonContainer}`}>
                     <button type="submit" className={`${button}`} onClick={handleSubmit}>下一步</button>
                 </div>

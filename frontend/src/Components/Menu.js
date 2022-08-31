@@ -1,13 +1,11 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Grid, outlinedInputClasses, Paper, Button } from '@mui/material'
-import "./Theme.css"
+import { Grid } from '@mui/material'
 import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import testImg from "../Images/testImg.png"
-import arrow from "../Images/arrow.png"
 import theme from '../Themes/Theme';
 import Header from "./Header.js"
 import Footer from './Footer';
@@ -41,6 +39,45 @@ const headerContainer = css`
 
 const bodyContainer = css`
     margin: 11px 0px 0px 0px;
+`
+
+const total = css`
+    display: inline-block;
+    margin-left: 16px;
+    font-style: normal;
+    color: #3AAB7A;
+`
+
+const checkbox = css`
+    display: none;
+    &: checked + label {
+        background: #44C177;
+        color: white;
+    };
+    &: checked + label > .h6 {
+      color: #003816;  
+    }
+    &: checked + label > .body2 {
+        color: #005521;  
+    }
+`
+
+const menuContainer = css`
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #44C177;
+    border-radius: 24px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+`
+
+const imageContainer = css`
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 `
 
 const Menu = () => {
@@ -106,31 +143,16 @@ const Menu = () => {
 
     useEffect(() =>  {
         const totalElement = document.getElementById("total");
-        const buttonElement = document.getElementById("submit");
-        // console.log(totalChosen, maxChosen);
 
-        // if (totalChosen == content[type].maxChosen) {
-        //     totalElement.style.color = "#3AAB7A";
-        //     setButtonDisabled(false);
-        // } else {
-        //     totalElement.style.color = "#CF4655";
-        //     setButtonDisabled(true);
-        // }
+        if (totalChosen == content[type].maxChosen) {
+            totalElement.style.color = "#3AAB7A";
+            setButtonDisabled(false);
+        } else {
+            totalElement.style.color = "#CF4655";
+            setButtonDisabled(true);
+        }
 
     }, [totalChosen])
-
-    const styledButton = styled(Button)(({ theme }) => ({
-        backgroundColor: '#F46B3B',
-        borderRadius: '5px'
-    }));
-
-    const StyledGrid = styled(Grid)(() => ({
-        
-    }));
-
-    const FooterPattern = () => (
-        <div className="triangle"></div>
-    );
 
     const handleCheckbox = async(event) => {
         setCheckboxState(prevState => 
@@ -157,12 +179,6 @@ const Menu = () => {
 
         await updateGameById(gameId, menuId, null, null)
         await putGroceryById(gameId)
-        // .then((res) => {
-        //     console.log(res);
-        // })
-        // .catch((e) => {
-        //     console.log(e);
-        // });
 
         window.location.href = content[type].hrefNext;
     }
@@ -174,7 +190,7 @@ const Menu = () => {
                 <div className={`${headerContainer}`}>
                     <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
                         選擇你的{ content[type].name }
-                        { totalChosen }/{ content[type].maxChosen }
+                        <div className={`${total}`} id="total">{ totalChosen }/{ content[type].maxChosen }</div>
                     </Typography>
                 </div>
                 <div className={`${bodyContainer}`}>
@@ -182,26 +198,21 @@ const Menu = () => {
                         為今天的晚餐選出 { content[type].maxChosen } 道想吃的{ content[type].name }。
                     </Typography>
                 </div>
-                {/* <div className="total" id="total"></div> */}
             </Header>
-                <div className="header">
-                </div>
-                <Grid container spacing={2} px={2}>
+                <Grid container spacing={2} px={2} my={0.5}>
                     { Object.keys(cuisines).map(key => (
                         <Grid item xs={6} key={key}>
-                            <input type="checkbox" id={key} name={key} onClick={handleCheckbox}/>
-                            <label htmlFor={key}>
-                                <p className="menuImage">
-                                    <img src={testImg} />
-                                </p>
-                                <p className="menuName">
+                            <input type="checkbox" id={key} name={key} onClick={handleCheckbox} className={`${checkbox}`}/>
+                            <label htmlFor={key} className={`${menuContainer}`}>
+                                <img src={testImg} className={`{${imageContainer}}`}/>
+                                <Typography variant="h6" color={theme.palette.grey[900]} sx={{ fontWeight: '700' }} className="h6">
                                     { cuisines[key].name }  
-                                </p>
-                                <div className="menuIngredient">
+                                </Typography>
+                                <Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }} className="body2">
                                     { cuisines[key].required_ingredient_types.map(key => (
                                         ingredientTypes[key]
                                     )).join("+")}
-                                </div>
+                                </Typography>
                             </label>
                         </Grid>
                     ))}
