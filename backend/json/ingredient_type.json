@@ -1,13 +1,13 @@
 [
     {
         "id": 0,
-        "name": "豬後腿肉",
+        "name": "豬肉",
         "special_requirement": false,
         "source": ""
     },
     {
         "id": 1,
-        "name": "牛腱",
+        "name": "牛肉",
         "special_requirement": false,
         "source": ""
     },
@@ -45,7 +45,7 @@
         "id": 7,
         "name": "菠菜",
         "special_requirement": true,
-        "source": "雲林"
+        "source": "台東"
     },
     {
         "id": 8,
@@ -57,13 +57,13 @@
         "id": 9,
         "name": "冬瓜",
         "special_requirement": true,
-        "source": "宜蘭"
+        "source": "彰化"
     },
     {
         "id": 10,
         "name": "胡瓜",
         "special_requirement": true,
-        "source": "高雄"
+        "source": "雲林"
     },
     {
         "id": 11,
@@ -87,7 +87,7 @@
         "id": 14,
         "name": "香菇",
         "special_requirement": true,
-        "source": "台中"
+        "source": "南投"
     },
     {
         "id": 15,

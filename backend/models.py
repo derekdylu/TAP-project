@@ -1,6 +1,6 @@
 from bson import ObjectId
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import Dict, List, Optional
 from sympy import true
 
 class PyObjectId(ObjectId):
@@ -49,20 +49,22 @@ def ingredient_type_helper(ingredient_type) -> dict:
 # Ingredient
 
 class Ingredient(BaseModel):
-    id: int = Field(...)
+    id: str = Field(...)
     name: str = Field(...)
-    tap: bool = Field(...)
-    score: List = Field(...)
     type: str = Field(...)
+    tap: bool = Field(...)
+    info: object = Field(...)
+    score: List = Field(...)
 
     class Config:
         schema_extra = {
             "example": {
                 "id": 0,
                 "name": "cabbage",
-                "tap": true,
-                "score": [0,0,0,0],
                 "type": "cabbage",
+                "tap": true,
+                "info": {},
+                "score": [0,0,0,0],
             }
         }
 
@@ -71,9 +73,10 @@ def ingredient_helper(ingredient) -> dict:
     return {
         "id": ingredient["id"],
         "name": ingredient["name"],
-        "tap": ingredient["tap"],
-        "score": ingredient["score"],
         "type": ingredient["type"],
+        "tap": ingredient["tap"],
+        "info": ingredient["info"],
+        "score": ingredient["score"],
     }
 
 

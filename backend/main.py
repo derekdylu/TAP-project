@@ -214,14 +214,12 @@ async def put_grocery(id: str):
 @app.get("/get_cuisine_ingredient/{id}", response_description="get cuisine based on ingredient type")
 async def get_cuisine_ingredient(id: int):
     if (ingredient_type := ingredient_type_col.find_one({"id": id})) is not None:
-        print("HELLO")
         res = []
         cuisines = await list_cuisines()
 
 
         for cuisine in cuisines:
             ingredients = cuisine["required_ingredient_types"]
-            print(ingredients)
             
             if id in ingredients:
                 res.append(cuisine["id"])
@@ -259,7 +257,7 @@ async def list_ingredients():
 
 # get an ingredient
 @app.get("/ingredient/{id}", response_description="get a specific ingredient", response_model=models.Ingredient)
-async def get_ingredient(id: int):
+async def get_ingredient(id: str):
     if (ingredient := ingredient_col.find_one({"id": id})) is not None:
         return ingredient
     return {"message": "error"}

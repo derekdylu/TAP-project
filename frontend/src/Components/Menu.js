@@ -10,6 +10,14 @@ import theme from '../Themes/Theme';
 import Header from "./Header.js"
 import Footer from './Footer';
 import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
+import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
+import cuisine_1 from "../Images/Cuisine/cuisine_1.png"
+import cuisine_2 from "../Images/Cuisine/cuisine_2.png"
+import cuisine_3 from "../Images/Cuisine/cuisine_3.png"
+import cuisine_4 from "../Images/Cuisine/cuisine_4.png"
+import cuisine_5 from "../Images/Cuisine/cuisine_5.png"
+import cuisine_6 from "../Images/Cuisine/cuisine_6.png"
+import cuisine_7 from "../Images/Cuisine/cuisine_7.png"
 
 const content = {
     "main": {
@@ -26,6 +34,17 @@ const content = {
         "hrefPrev": "/menu/main",
         "hrefNext": "/story/2",
     }
+}
+
+const img = {
+    0: cuisine_0,
+    1: cuisine_1,
+    2: cuisine_2,
+    3: cuisine_3,
+    4: cuisine_4,
+    5: cuisine_5,
+    6: cuisine_6,
+    7: cuisine_7,
 }
 
 const Page = styled('div')(({ theme }) => ({
@@ -174,7 +193,7 @@ const Menu = () => {
         // let menuId = game.cuisine;
         for (const [key, value] of Object.entries(checkboxState)) {
             if (value == true)
-                menuId.push(parseInt(key));
+                menuId.push(parseInt(cuisines[key].id));
         }
 
         await updateGameById(gameId, menuId, null, null)
@@ -204,7 +223,7 @@ const Menu = () => {
                         <Grid item xs={6} key={key}>
                             <input type="checkbox" id={key} name={key} onClick={handleCheckbox} className={`${checkbox}`}/>
                             <label htmlFor={key} className={`${menuContainer}`}>
-                                <img src={testImg} className={`{${imageContainer}}`}/>
+                                <img src={ img[cuisines[key].id] } className={`{${imageContainer}}`}/>
                                 <Typography variant="h6" color={theme.palette.grey[900]} sx={{ fontWeight: '700' }} className="h6">
                                     { cuisines[key].name }  
                                 </Typography>
