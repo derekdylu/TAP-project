@@ -1,16 +1,13 @@
 import React, { useState, useEffect }  from 'react';
-import { useParams } from 'react-router-dom';
-import "./Theme.css"
 import { Grid } from '@mui/material'
 import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import testImg from "../Images/testImg.png"
 import theme from '../Themes/Theme';
 import Header from "./Header.js"
 import Footer from './Footer';
-import { getCuisines, getIngredientTypes, getCuisineByIngredient, getCuisineById, getIngredientTypeById, getGameById } from '../Utils/Axios';
+import { getCuisines, getIngredientTypes, getGameById } from '../Utils/Axios';
 import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
 import cuisine_1 from "../Images/Cuisine/cuisine_1.png"
 import cuisine_2 from "../Images/Cuisine/cuisine_2.png"
@@ -81,8 +78,15 @@ const body2 = css`
     padding-left: 10px;
 `
 
+const footer = css`
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 170px;
+`
+
 const Requirement = () => {
-    // const [gameId, setGameId] = useState();
     const [specialCuisine, setSpecialCuisine] = useState({});
 
     useEffect(() => {
@@ -138,15 +142,8 @@ const Requirement = () => {
 
     const handleSubmit = async() => {
         console.log("submit");
-        // createGame([], [], 0)
-        // .then((res) => {
-        //     sessionStorage.setItem('gameId', res.id);
-        //     console.log(sessionStorage);
-        //     window.location.href = content.href;
-        // }).catch((error) => {
-        //     console.log(error);
-        // })
-        console.log(specialCuisine[2].name);
+        // TODO: redirect to tutorial page
+        // window.location.href = content.hrefNext;
     }
 
     return (
@@ -188,11 +185,9 @@ const Requirement = () => {
                 </Grid>
                 
             </Page>
-            {/* <div className="footer">
-                <div className="button">
-                    <button type="submit" id="submit" onClick={handleSubmit}>確定</button>
-                </div>
-            </div> */}
+            <div className={`${footer}`}>
+                <Footer text="確定" _onClick={handleSubmit}/>
+            </div>
         </ThemeProvider>
     )
 }

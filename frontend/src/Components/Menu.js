@@ -74,7 +74,7 @@ const checkbox = css`
         color: white;
     };
     &: checked + label > .h6 {
-      color: #003816;  
+        color: #003816;  
     }
     &: checked + label > .body2 {
         color: #005521;  
@@ -92,11 +92,20 @@ const menuContainer = css`
     box-sizing: border-box;
 `
 
-const imageContainer = css`
+const image = css`
     width: 80%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 5px;
+`
+
+const footer = css`
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 170px;
 `
 
 const Menu = () => {
@@ -190,7 +199,6 @@ const Menu = () => {
             menuId.push(game.cuisine[0]);
         }
 
-        // let menuId = game.cuisine;
         for (const [key, value] of Object.entries(checkboxState)) {
             if (value == true)
                 menuId.push(parseInt(cuisines[key].id));
@@ -218,31 +226,27 @@ const Menu = () => {
                     </Typography>
                 </div>
             </Header>
-                <Grid container spacing={2} px={2} my={0.5}>
-                    { Object.keys(cuisines).map(key => (
-                        <Grid item xs={6} key={key}>
-                            <input type="checkbox" id={key} name={key} onClick={handleCheckbox} className={`${checkbox}`}/>
-                            <label htmlFor={key} className={`${menuContainer}`}>
-                                <img src={ img[cuisines[key].id] } className={`{${imageContainer}}`}/>
-                                <Typography variant="h6" color={theme.palette.grey[900]} sx={{ fontWeight: '700' }} className="h6">
-                                    { cuisines[key].name }  
-                                </Typography>
-                                <Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }} className="body2">
-                                    { cuisines[key].required_ingredient_types.map(key => (
-                                        ingredientTypes[key]
-                                    )).join("+")}
-                                </Typography>
-                            </label>
-                        </Grid>
-                    ))}
-                </Grid>
-            <div className="footer">
-                <div className="button">
-                    <button type="submit" id="submit" onClick={handleSubmit} disabled={buttonDisabled}>確定</button>
-                </div>
+            <Grid container spacing={2} px={2} my={0.5}>
+                { Object.keys(cuisines).map(key => (
+                    <Grid item xs={6} key={key}>
+                        <input type="checkbox" id={key} name={key} onClick={handleCheckbox} className={`${checkbox}`}/>
+                        <label htmlFor={key} className={`${menuContainer}`}>
+                            <img src={ img[cuisines[key].id] } className={`${image}`}/>
+                            <Typography variant="h6" color={theme.palette.grey[900]} sx={{ fontWeight: '700' }} className="h6">
+                                { cuisines[key].name }  
+                            </Typography>
+                            <Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }} className="body2">
+                                { cuisines[key].required_ingredient_types.map(key => (
+                                    ingredientTypes[key]
+                                )).join("+")}
+                            </Typography>
+                        </label>
+                    </Grid>
+                ))}
+            </Grid>
+            <div className={`${footer}`}>
+                <Footer text="確定" _disabled={ buttonDisabled } _onClick={handleSubmit}/>
             </div>
-            {/* <Footer text="確定">
-            </Footer> */}
             </Page>
         </ThemeProvider>
     )

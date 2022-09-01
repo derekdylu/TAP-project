@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { createGame } from '../Utils/Axios';
+import Button from '@mui/material/Button';
 import theme from '../Themes/Theme';
 import Header from './Header';
 import story_1 from "../Images/story_1.png"
@@ -63,26 +64,10 @@ const buttonContainer = css`
     padding: 16px 24px;
 `
 
-const button = css`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    
-    // position: sticky;
-    // bottom: 54px;
-
-    width: 174px;
-    height: 64px;
-    background: #44C177,
-    border-radius: 16px;
-`
-
 const Story = () => {    
     const { id } = useParams();
 
-    const handleSubmit = async() => {
+    const handleClick = async() => {
         console.log("submit");
         if (id == 1) {
             createGame([], [], [], 0)
@@ -113,7 +98,11 @@ const Story = () => {
                     <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>{ key }</Typography>) }
                 </div>
                 <div className={`${buttonContainer}`}>
-                    <button type="submit" className={`${button}`} onClick={handleSubmit}>下一步</button>
+                    <Button variant="primary" style={{ width: '50%'}} onClick={handleClick}>
+                        <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+                            下一步
+                        </Typography>
+                    </Button>
                 </div>
             </Page>
         </ThemeProvider>

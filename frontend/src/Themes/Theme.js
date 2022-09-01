@@ -47,7 +47,15 @@ const globalPalette = createTheme({
       900: '#1A202C'
     },
     carton: {
+      100: '#ECDCCA',
+      200: '#E3CBAF',
+      300: '#D6B38A',
+      400: '#C99B65',
+      500: '#BA8241',
+      600: '#956834',
       700: '#704E27',
+      800: '#4A341A',
+      900: '#251A0D',
     }
   },
   typography: {
@@ -126,6 +134,9 @@ const theme = createTheme({
             "&:focus":{
               backgroundColor: globalPalette.palette.primary.main,
             },
+            "&:disabled":{
+              backgroundColor: globalPalette.palette.carton[400],
+            }
           },
           
         },

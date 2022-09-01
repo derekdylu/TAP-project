@@ -1,11 +1,15 @@
 import React from "react";
 // import Paper from '@mui/material/Paper';
-// import Typography from '@mui/material/Typography';
+import theme from '../Themes/Theme';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { css } from "@emotion/css";
 
 const zigzag = css`
-  position: relative;
+  position: fixed;
+  bottom: 0px;
+  box-sizing: border-box;
+  width: 100%;
   padding: 16px 24px 54px 24px;
   background: #fff;
   zIndex: '100';
@@ -24,17 +28,27 @@ const zigzag = css`
   }
 `;
 
-function Footer({text}) {
+function Footer({text, _disabled, _onClick}) {
   let buttonText = "default text";
+  let disabled = false;
+  let onClick = {};
 
   if (text !== undefined) {
     buttonText = text;
   }
+  if (_disabled !== undefined) {
+    disabled = _disabled
+  }
+  if (_onClick !== undefined) {
+    onClick = _onClick
+  }
 
   return (
     <div className={`${zigzag}`}>
-      <Button variant="primary" style={{width: '100%'}} >
-        {buttonText}
+      <Button variant="primary" style={{ width: '100%'}} disabled={disabled} onClick={onClick}>
+        <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+          {buttonText}
+        </Typography>
       </Button>
     </div>
   )
