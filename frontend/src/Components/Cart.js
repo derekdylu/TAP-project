@@ -7,6 +7,8 @@ const Cart = () => {
     <>
       <div>Cart</div>
       <CartItem name="嚴選胡蘿波" cuisines={["aaaa", "ccc"]} type="cart" added={false} />
+      <CartItem name="嚴選胡蘿波" cuisines={["aaaa", "ccc"]} added={false} />
+      <CartItem name="嚴選胡蘿波" cuisines={["aaaa", "ccc"]} added={true} />
     </>
   )
 }

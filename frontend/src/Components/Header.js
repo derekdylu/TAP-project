@@ -65,14 +65,14 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
                     <div className={`${arrow}`}/>{ returnText }
                 </a>
             </Typography>
-            { titleText != null &&
-                <Typography variant="h1" color={theme.palette.secondary.contrastText}>
-                {_titleText}
+            { titleText !== null &&
+                <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{textAlign: "left", mt:3}}>
+                {titleText}
                 </Typography>
             }
-            { contentText != null &&
-                <Typography variant="body1" color={theme.palette.secondary.contrastText}>
-                {_titleText}
+            { contentText !== null &&
+                <Typography variant="body1" color={theme.palette.secondary.contrastText} sx={{textAlign: "left"}}>
+                {contentText}
                 </Typography>
             }
             { props.children }

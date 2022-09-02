@@ -5,8 +5,10 @@ import Typography from '@mui/material/Typography';
 
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
+import ProductionQuantityLimitsRoundedIcon from '@mui/icons-material/ProductionQuantityLimitsRounded';
 
 import ingredientPlaceholder from '../Images/ingredient_placeholder.png'
+// import { maxWidth } from '@mui/system';
 
 const CartItem = ({name, cuisines, type, added}) => {
   let localCuisines = ["nothing"];
@@ -23,14 +25,15 @@ const CartItem = ({name, cuisines, type, added}) => {
     <Grid
       container
       direction="row"
-      justifyContent="center"
+      justifyContent="space-between"
       alignItems="center"
       style={{
         borderTop: "2px dashed #FCD219",
-        padding: "8px 16px 8px 16px"
+        padding: "8px 16px 8px 16px",
+        maxWidth: "100%"
       }}
     >
-      <Grid item sx={{ mr: 4}}>
+      <Grid item sx={{ mr: 3, ml: 1}}>
         <img src={ingredientPlaceholder} alt="ing" />
       </Grid>
       <Grid item sx={{ minWidth: '168px' }}>
@@ -47,15 +50,11 @@ const CartItem = ({name, cuisines, type, added}) => {
           {added === true ? 
             <DoneRoundedIcon color="primary"/>
             :
-            <Typography variant="body3" color="error">
-            未完成
-            </Typography>
+            <ProductionQuantityLimitsRoundedIcon color="error"/>
           }
           </>
         :
-          <Button variant="toggle">
-            <ClearRoundedIcon color="error"/>
-          </Button>
+          <ClearRoundedIcon color="error"/>
         }
       </Grid>
     </Grid>

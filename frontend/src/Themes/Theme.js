@@ -62,6 +62,7 @@ const globalPalette = createTheme({
     fontFamily: font,
     h1: {
       fontSize: '36px',
+      fontWeight: '600',
       lineHeight: 1.4,
     },
     h2: {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -12,11 +13,25 @@ import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Footer from './Footer';
+import Header from './Header';
 
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 
-import testImg from '../Images/testImg.png';
+import safetyImg from '../Images/Tutorial/safety.png';
+import trustImg from '../Images/Tutorial/trust.png'
+import mileageImg from '../Images/Tutorial/mileage.png'
+
+const Page = styled('div')(({ theme }) => ({
+  background: theme.palette.secondary.main,
+  height: '100vh',
+
+  displayRaw: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
+  overflow: 'hidden',
+}));
 
 const styles = {
   stepper: {
@@ -87,7 +102,7 @@ function Tutorial() {
           <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick1}>
             觀看採購密技
           </Button>
-          <img src={testImg} alt="test" width="256px"/>
+          <img src={safetyImg} alt="test" width="256px"/>
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-用藥安全
           </Typography>
@@ -121,7 +136,7 @@ function Tutorial() {
           <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick2}>
             觀看採購密技
           </Button>
-          <img src={testImg} alt="test" width="256px"/>
+          <img src={trustImg} alt="test" width="256px"/>
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-食材可信度
           </Typography>
@@ -154,7 +169,7 @@ function Tutorial() {
           <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick3}>
             觀看採購密技
           </Button>
-          <img src={testImg} alt="test" width="256px"/>
+          <img src={mileageImg} alt="test" width="256px"/>
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-食物里程
           </Typography>
@@ -172,10 +187,12 @@ function Tutorial() {
   ];
 
   return (
-    <div style={{backgroundColor: '#FCD219'}}>
-      <Typography>
-        採買小撇步
-      </Typography>
+    <div>
+    <Page sx={{pb: 19}}>
+      <Header
+        _titleText="採買小撇步"
+        _contentText="前往超市前，別忘了帶上採買秘笈！要成為世紀大主廚，食材的選擇必不可輕忽。只要檢查食材符合以下幾個要點，就可以放心地丟進購物車。"
+      />
       <SwipeableViews
         index={activeStep}
         style={styles.swipeable}
@@ -230,6 +247,7 @@ function Tutorial() {
       />
       <Container />
       <Footer text="採買去！" />
+    </Page>
     </div>
   );
 }
