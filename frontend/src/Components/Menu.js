@@ -5,11 +5,10 @@ import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import testImg from "../Images/testImg.png"
 import theme from '../Themes/Theme';
 import Header from "./Header.js"
 import Footer from './Footer';
-import { getCuisines, getIngredientTypeById, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
+import { getCuisines, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
 import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
 import cuisine_1 from "../Images/Cuisine/cuisine_1.png"
 import cuisine_2 from "../Images/Cuisine/cuisine_2.png"

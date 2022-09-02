@@ -10,13 +10,14 @@ import Game from './Containers/Game'
 import Error from './Containers/Error'
 
 import Test from './Components/Test';
-import Menu from './Components/Menu';
+import StartPage from './Components/StartPage';
 import Story from './Components/Story';
+import Menu from './Components/Menu';
 import Requirement from './Components/Requirement';
 import Cart from './Components/Cart';
+import Market from './Components/Market';
 
 import theme from './Themes/Theme';
-import StartPage from './Components/StartPage';
 
 const App = () => {
   return (
@@ -34,11 +35,12 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/terms" element={<Terms />} /> */}
 
-          <Route path="/test" element={<Test />} />
+          {/* <Route path="/test" element={<Test />} /> */}
           <Route path="/start" element={<StartPage />} />
           <Route path="/menu/:type" element={<Menu />} />
           <Route path="/story/:id" element={<Story />} />
           <Route path="/requirement" element={<Requirement />} />
+          <Route path="/market" element={<Market />} />
         </Routes>
       </Router>
     </ThemeProvider>

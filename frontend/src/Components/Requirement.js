@@ -183,11 +183,10 @@ const Requirement = () => {
                         </Grid>
                     ))}
                 </Grid>
-                
+                <div className={`${footer}`}>
+                    <Footer text="確定" _onClick={handleSubmit}/>
+                </div>
             </Page>
-            <div className={`${footer}`}>
-                <Footer text="確定" _onClick={handleSubmit}/>
-            </div>
         </ThemeProvider>
     )
 }
