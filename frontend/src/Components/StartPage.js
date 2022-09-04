@@ -6,6 +6,8 @@ import { ThemeProvider } from "@emotion/react";
 import Navigation from "./Navigation";
 import theme from '../Themes/Theme';
 import logo from '../Images/logo.png'
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
@@ -98,8 +100,17 @@ const arrow = css`
 const contentText = "人類平均一天需花費2小時在想要吃什麼，其中有一小時在跟朋友猜拳或猶豫不決。既然都得付出時間，我們就要利用的有價值，不只是吃得營養又健康，也要對環境更友善。";
 
 const StartPage = () => {
+    const dispatch = useDispatch()
     const handleOnClick = async(event) => {
         window.location.href = "/story/1";
+    }
+
+    function handlePageNext(e) {
+        console.log("next")
+        e.preventDefault()
+        dispatch(
+          pageChanged(1)
+        )
     }
 
     return (
@@ -113,7 +124,7 @@ const StartPage = () => {
                             { contentText }
                         </Typography>
                     </div>
-                    <div className={`${button}`} onClick={handleOnClick}>
+                    <div className={`${button}`} onClick={handlePageNext}>
                         <div className={`${leftButton}`}></div>
                         <div className={`${middleButton}`}>
                             <Typography variant="h2" color={theme.palette.primary[900]} sx={{ fontWeight: '900' }}>

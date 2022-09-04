@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import gamesReducer from '../Features/GamesSlice';
+import GamesReducer from '../Features/GamesSlice';
+import PagesReducer from '../Features/PagesSlice';
 
 export default configureStore({
   reducer: {
-    games: gamesReducer,
+    games: GamesReducer,
+    pages: PagesReducer,
   }
 })

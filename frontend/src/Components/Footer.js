@@ -4,6 +4,8 @@ import theme from '../Themes/Theme';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { css } from "@emotion/css";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 
 const zigzag = css`
   position: fixed;
@@ -29,6 +31,7 @@ const zigzag = css`
 `;
 
 function Footer({text, _disabled, _onClick}) {
+  const dispatch = useDispatch()
   let buttonText = "default text";
   let disabled = false;
   let onClick = {};
@@ -43,9 +46,17 @@ function Footer({text, _disabled, _onClick}) {
     onClick = _onClick
   }
 
+  function handlePageNext(e) {
+    console.log("next")
+    e.preventDefault()
+    dispatch(
+      pageChanged(1)
+    )
+  }
+
   return (
     <div className={`${zigzag}`}>
-      <Button variant="primary" style={{ width: '100%'}} disabled={disabled} onClick={onClick}>
+      <Button variant="primary" style={{ width: '100%'}} disabled={disabled} onClick={handlePageNext}>
         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
           {buttonText}
         </Typography>

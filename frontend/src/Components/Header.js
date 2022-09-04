@@ -6,6 +6,8 @@ import { styled } from '@mui/system';
 import { css } from "@emotion/css";
 import theme from '../Themes/Theme';
 import { ThemeProvider } from "@emotion/react";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 
 const header = css`
     position: sticky;
@@ -35,6 +37,8 @@ const arrow = css`
 `;
 
 function Header(props, {_returnText, _returnLink, _titleText, _contentText, _linkColor}) {
+  const dispatch = useDispatch()
+
   let returnText = "返回";
   let returnLink = "";
   let titleText = null;
@@ -57,11 +61,20 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
     linkColor = props._linkColor
   }
 
+  function handlePageBack(e) {
+    console.log("back")
+    e.preventDefault()
+    dispatch(
+      pageChanged(-1)
+    )
+  }
+
   return (
     <ThemeProvider theme={theme}>
         <div className={`${header}`} id="header">
             <Typography variant="h5" color={linkColor}>
-                <a href={ returnLink } className={`${link}`}>
+                {/* <a href={ returnLink } className={`${link}`}> */}
+                <a className={`${link}`} onClick={handlePageBack}>
                     <div className={`${arrow}`}/>{ returnText }
                 </a>
             </Typography>
