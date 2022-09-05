@@ -9,6 +9,10 @@ import theme from '../Themes/Theme';
 import Header from "./Header.js"
 import Footer from './Footer';
 import { getCuisines, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
+
 import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
 import cuisine_1 from "../Images/Cuisine/cuisine_1.png"
 import cuisine_2 from "../Images/Cuisine/cuisine_2.png"
@@ -23,15 +27,15 @@ const content = {
         "name": "主菜",
         "maxChosen": 1,
         "returnText": "返回",
-        "hrefPrev": "/story/1",
-        "hrefNext": "/menu/side",
+        "hrefPrev": 1,
+        "hrefNext": 3,
     },
     "side": {
         "name": "配菜",
         "maxChosen": 2,
-        "returnText": "重新選主菜", // or 返回？
-        "hrefPrev": "/menu/main",
-        "hrefNext": "/story/2",
+        "returnText": "返回", 
+        "hrefPrev": 2,
+        "hrefNext": 4,
     }
 }
 
@@ -107,9 +111,7 @@ const footer = css`
     min-height: 170px;
 `
 
-const Menu = ({type}) => {
-    // const { type } = useParams();
-    
+const Menu = ({ type }) => {
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const [cuisines, setCuisines] = useState({});
     const [ingredientTypes, setIngredientTypes] = useState({});
@@ -132,8 +134,7 @@ const Menu = ({type}) => {
     }
 
     useEffect(() => {
-        document.body.style = 'background: #FCD219';
-        
+        console.log(type);
         init();
 
         const fetchCuisines = async () => {
@@ -187,7 +188,19 @@ const Menu = ({type}) => {
         );
     }
 
+    const dispatch = useDispatch()
+
+    function handlePageNext(e) {
+        console.log("next")
+        e.preventDefault()
+        dispatch(
+          pageChanged(1)
+        )
+    }
+
     const handleSubmit = async(event) => {
+        event.preventDefault();
+        
         console.log("submit")
         console.log(checkboxState);
 
@@ -206,13 +219,15 @@ const Menu = ({type}) => {
         await updateGameById(gameId, menuId, null, null)
         await putGroceryById(gameId)
 
-        // window.location.href = content[type].hrefNext;
+        dispatch(
+            pageChanged(1)
+        )
     }
 
     return (
         <ThemeProvider theme={theme}>
             <Page>
-            <Header _returnLink={ content[type].hrefPrev }>
+            <Header /*_returnLink={ content[type].hrefPrev }*/>
                 <div className={`${headerContainer}`}>
                     <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
                         選擇你的{ content[type].name }

@@ -125,7 +125,7 @@ const Requirement = () => {
                 special.map(s => {
                     if ((sortedCuisines[key].required_ingredient_types).includes(s.id)) {
                         if (pair[key] == undefined) {
-                            pair[key] = {name: cuisines[key].name, ingredients: []};
+                            pair[key] = {name: sortedCuisines[key].name, ingredients: []};
                         }
                         pair[key]["ingredients"].push(s.name)
                     }
@@ -139,12 +139,6 @@ const Requirement = () => {
 
         fetchGrocery();
     }, []);
-
-    const handleSubmit = async() => {
-        console.log("submit");
-        // TODO: redirect to tutorial page
-        // window.location.href = content.hrefNext;
-    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -166,7 +160,7 @@ const Requirement = () => {
                         <Grid item xs={12} key={key}>
                             <div className={`${menuContainer}`}>
                                 <img src={ img[key] } className={`${imageContainer}`} />
-                                <div class={`${body2}`}>
+                                <div className={`${body2}`}>
                                     <Typography variant="h6" color={theme.palette.grey[800]} sx={{ fontWeight: '500' }}>
                                         { specialCuisine[key].name }  
                                     </Typography>

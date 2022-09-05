@@ -101,9 +101,9 @@ const contentText = "人類平均一天需花費2小時在想要吃什麼，其�
 
 const StartPage = () => {
     const dispatch = useDispatch()
-    const handleOnClick = async(event) => {
-        window.location.href = "/story/1";
-    }
+    // const handleOnClick = async(event) => {
+    //     window.location.href = "/story/1";
+    // }
 
     function handlePageNext(e) {
         console.log("next")
@@ -125,7 +125,7 @@ const StartPage = () => {
                         </Typography>
                     </div>
                     <div className={`${button}`} onClick={handlePageNext}>
-                        <div className={`${leftButton}`}></div>
+                        <div className={`${leftButton}`} />
                         <div className={`${middleButton}`}>
                             <Typography variant="h2" color={theme.palette.primary[900]} sx={{ fontWeight: '900' }}>
                                 START

@@ -189,6 +189,20 @@ const theme = createTheme({
         },
       ],
     },
+    MuiMenuItem: {
+      variants: {
+        // {
+          props: { variant: 'primary' },
+          style: {
+            backgroundColor: "#123456",
+            "&:hover": {
+            backgroundColor: globalPalette.palette.secondary.main,
+            }
+          // }
+        },
+        
+      }
+    }
   },
 }, globalPalette);
 

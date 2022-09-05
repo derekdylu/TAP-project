@@ -8,6 +8,7 @@ import Navigation from './Components/Navigation'
 import Tutorial from './Components/Tutorial';
 import Game from './Containers/Game'
 import Error from './Containers/Error'
+import Comment from './Containers/Comment';
 
 import Test from './Components/Test';
 import StartPage from './Components/StartPage';
@@ -37,15 +38,17 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/terms" element={<Terms />} /> */}
 
-            {/* <Route path="/test" element={<Test />} /> */}
-            <Route path="/start" element={<StartPage />} />
-            <Route path="/menu/:type" element={<Menu />} />
-            <Route path="/story/:id" element={<Story />} />
-            <Route path="/requirement" element={<Requirement />} />
-            <Route path="/market" element={<Market />} />
-          </Routes>
-        </Router>
-      </ThemeProvider>
+          {/* <Route path="/test" element={<Test />} /> */}
+          <Route path="/start" element={<StartPage />} />
+          <Route path="/menu/:type" element={<Menu />} />
+          <Route path="/story/:id" element={<Story />} />
+          <Route path="/requirement" element={<Requirement />} />
+          <Route path="/market" element={<Market />} />
+
+          <Route path="/comment" element={<Comment />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   )
 }
 

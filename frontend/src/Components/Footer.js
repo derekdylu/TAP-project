@@ -34,7 +34,7 @@ function Footer({text, _disabled, _onClick}) {
   const dispatch = useDispatch()
   let buttonText = "default text";
   let disabled = false;
-  let onClick
+  let onClick = handlePageNext;
 
   if (text !== undefined) {
     buttonText = text;
@@ -63,7 +63,7 @@ function Footer({text, _disabled, _onClick}) {
 
   return (
     <div className={`${zigzag}`}>
-      <Button variant="primary" style={{ width: '100%'}} disabled={disabled} onClick={handleClick}>
+      <Button variant="primary" style={{ width: '100%'}} disabled={disabled} onClick={onClick}>
         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
           {buttonText}
         </Typography>

@@ -40,10 +40,10 @@ const Game = () => {
       component = <Story id={1}/> // Story1
       break
     case 2:
-      component = <Menu type={"main"}/> // Menu1
+      component = <Menu type="main"/> // Menu1
       break
     case 3:
-      component = <Menu type={"side"}/> // Menu2
+      component = <Menu type="side"/> // Menu2
       break
     case 4:
       component = <Story id={2}/> // Story2
@@ -71,6 +71,8 @@ const Game = () => {
   return (
     <>
       {/* <div>{pages[0].pageIndex}</div>
+      {/* <Navigation />
+      <div>{pages[0].pageIndex}</div>
       <button onClick={handlePageBack}>back</button>
       <button onClick={handlePageNext}>next</button> */}
       {component}

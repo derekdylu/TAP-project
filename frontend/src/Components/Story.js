@@ -22,8 +22,8 @@ const content = {
             "今天你要負責準備晚餐，你得要想出菜單，並獨自完成和室友的晚餐。同時，你必須讓室友認可為世紀大主廚，因為你已經跟他吹噓了一學期。"
         ],
         "returnText": "返回",
-        "hrefPrev": "/start",
-        "hrefNext": "/menu/main",
+        "hrefPrev": 0,
+        "hrefNext": 2,
         "logo": story_1
     },
     2: {
@@ -34,8 +34,8 @@ const content = {
             "所以你現在要到附近的超市採買所有這餐所需的食材。"
         ],
         "returnText": "重新選配菜",
-        "hrefPrev": "/menu/side",
-        "hrefNext": "/requirement",
+        "hrefPrev": 3,
+        "hrefNext": 5,
         "logo": story_2
     }
 }
@@ -67,19 +67,18 @@ const buttonContainer = css`
     padding: 16px 24px;
 `
 
-const Story = ({id}) => {    
-    // const { id } = useParams();
+const Story = ({ id }) => { 
     const dispatch = useDispatch()
 
-    function handlePageNext() {
+    function handlePageNext(e) {
         console.log("next")
-        // e.preventDefault()
+        e.preventDefault()
         dispatch(
           pageChanged(1)
         )
     }
 
-    const handleClick = async() => {
+    const handleOnClick = async(event) => {
         console.log("submit");
         if (id === 1) {
             createGame([], [], [], 0)
@@ -88,20 +87,20 @@ const Story = ({id}) => {
                 console.log(sessionStorage);
                 // window.location.href = content[id].hrefNext;
                 dispatch(gameAdded({id: res.id}));
-                handlePageNext()
+                handlePageNext(event)
             }).catch((error) => {
                 console.log(error);
             })
         } else if (id === 2) {
             // window.location.href = content[id].hrefNext;
-            handlePageNext()
+            handlePageNext(event);
         }
     }
 
     return (
         <ThemeProvider theme={theme}>
             <Page>
-                <Header _returnLink={ content[id].hrefPrev } _linkColor={ theme.palette.grey[700] } />
+                <Header /*_returnLink={ content[id].hrefPrev }*/ _linkColor={ theme.palette.grey[700] } />
                 <img src={ content[id].logo } className={`${imageContainer}`} />
                 <div className={`${headerContainer}`}>
                     <Typography variant="h1" color={theme.palette.grey[800]} sx={{ fontWeight: '900' }}>
@@ -113,7 +112,7 @@ const Story = ({id}) => {
                     <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>{ key }</Typography>) }
                 </div>
                 <div className={`${buttonContainer}`}>
-                    <Button variant="primary" style={{ width: '50%'}} onClick={handleClick}>
+                    <Button variant="primary" style={{ width: '50%'}} onClick={handleOnClick}>
                         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
                             下一步
                         </Typography>

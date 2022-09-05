@@ -134,7 +134,18 @@ export const getGameById = async (id) => {
 
  // --- Email
  // send email to user
- // TODO !!
+ export const sendEmail = async (_to_emails) => {
+    const param = JSON.stringify({
+        from_email: "emverse@yopmail.com",
+        to_emails: _to_emails,
+        subject: "ㄟ，今晚吃什麼",
+        html_content: "嗨，親愛的挑戰者，今晚換你大顯身手囉！隨信附上我們為你精心準備的秘笈，希望你喜歡～<br/><br/>螺獅福祿團隊 敬上"
+    });
+
+    return await instance.post('/send_email', param, jsonHeader).then((res) => {
+        return res.data;
+    });
+}
 
  // --- Ingredient
 // get all ingredients
