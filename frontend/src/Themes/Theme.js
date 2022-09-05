@@ -159,6 +159,23 @@ const theme = createTheme({
           },
         },
         {
+          props: { variant: 'secondary2' },
+          style: {
+            borderRadius: '33px',
+            height: '48px',
+            backgroundColor: "#ffffff",
+            "&:hover":{
+              backgroundColor: globalPalette.palette.primary[300],
+            },
+            "&:active":{
+              backgroundColor: globalPalette.palette.primary[300],
+            },
+            "&:focus":{
+              backgroundColor: "#ffffff",
+            },
+          },
+        },
+        {
           props: { variant: 'toggle' },
           style: {
             borderRadius: '8px',
@@ -172,20 +189,6 @@ const theme = createTheme({
         },
       ],
     },
-    MuiMenuItem: {
-      variants: {
-        {
-          props: { variant: 'primary' },
-          style: {
-            backgroundColor: "#123456",
-            "&:hover": {
-            backgroundColor: globalPalette.palette.secondary.main,
-            }
-          }
-        },
-        
-      }
-    }
   },
 }, globalPalette);
 

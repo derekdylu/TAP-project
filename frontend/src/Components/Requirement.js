@@ -184,7 +184,7 @@ const Requirement = () => {
                     ))}
                 </Grid>
                 <div className={`${footer}`}>
-                    <Footer text="確定" _onClick={handleSubmit}/>
+                    <Footer text="確定"/>
                 </div>
             </Page>
         </ThemeProvider>

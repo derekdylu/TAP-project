@@ -107,8 +107,8 @@ const footer = css`
     min-height: 170px;
 `
 
-const Menu = () => {
-    const { type } = useParams();
+const Menu = ({type}) => {
+    // const { type } = useParams();
     
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const [cuisines, setCuisines] = useState({});
@@ -206,7 +206,7 @@ const Menu = () => {
         await updateGameById(gameId, menuId, null, null)
         await putGroceryById(gameId)
 
-        window.location.href = content[type].hrefNext;
+        // window.location.href = content[type].hrefNext;
     }
 
     return (

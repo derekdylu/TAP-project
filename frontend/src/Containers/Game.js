@@ -9,6 +9,7 @@ import Menu from '../Components/Menu'
 import Requirement from '../Components/Requirement'
 import Tutorial from '../Components/Tutorial'
 import Market from '../Components/Market'
+import Cart from '../Components/Cart'
 
 const Game = () => {
   const dispatch = useDispatch()
@@ -36,16 +37,16 @@ const Game = () => {
       component = <StartPage />
       break
     case 1:
-      // component = <Story /> // Story1
+      component = <Story id={1}/> // Story1
       break
     case 2:
-      // component = <Menu /> // Menu1
+      component = <Menu type={"main"}/> // Menu1
       break
     case 3:
-      // component = <Menu /> // Menu2
+      component = <Menu type={"side"}/> // Menu2
       break
     case 4:
-      // component = <Story /> // Story2
+      component = <Story id={2}/> // Story2
       break
     case 5:
       component = <Requirement />
@@ -59,6 +60,9 @@ const Game = () => {
     case 8:
       // component = <Score /> // Score
       break
+    case 1000:
+      component = <Cart />
+      break
     default:
       component = <div>default</div>
       break;
@@ -66,10 +70,9 @@ const Game = () => {
 
   return (
     <>
-      <Navigation />
-      <div>{pages[0].pageIndex}</div>
+      {/* <div>{pages[0].pageIndex}</div>
       <button onClick={handlePageBack}>back</button>
-      <button onClick={handlePageNext}>next</button>
+      <button onClick={handlePageNext}>next</button> */}
       {component}
     </>
   )

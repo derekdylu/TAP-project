@@ -10,6 +10,9 @@ import theme from '../Themes/Theme';
 import Header from './Header';
 import story_1 from "../Images/story_1.png"
 import story_2 from "../Images/story_2.png"
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
+import { selectAllGames, gameAdded } from '../Features/GamesSlice';
 
 const content = {
     1: {
@@ -64,22 +67,34 @@ const buttonContainer = css`
     padding: 16px 24px;
 `
 
-const Story = () => {    
-    const { id } = useParams();
+const Story = ({id}) => {    
+    // const { id } = useParams();
+    const dispatch = useDispatch()
+
+    function handlePageNext() {
+        console.log("next")
+        // e.preventDefault()
+        dispatch(
+          pageChanged(1)
+        )
+    }
 
     const handleClick = async() => {
         console.log("submit");
-        if (id == 1) {
+        if (id === 1) {
             createGame([], [], [], 0)
             .then((res) => {
                 sessionStorage.setItem('gameId', res.id);
                 console.log(sessionStorage);
-                window.location.href = content[id].hrefNext;
+                // window.location.href = content[id].hrefNext;
+                dispatch(gameAdded({id: res.id}));
+                handlePageNext()
             }).catch((error) => {
                 console.log(error);
             })
-        } else if (id == 2) {
-            window.location.href = content[id].hrefNext;
+        } else if (id === 2) {
+            // window.location.href = content[id].hrefNext;
+            handlePageNext()
         }
     }
 

@@ -49,8 +49,9 @@ const img = {
   15: bunaShimeji,
 }
 
-const CartItem = ({index, name, cuisines, type, added}) => {
-  let localCuisines = ["nothing"]
+const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
+  let onclick
+  let localCuisines = ["..."]
   if (cuisines !== undefined) {
     localCuisines = cuisines
   }
@@ -65,6 +66,10 @@ const CartItem = ({index, name, cuisines, type, added}) => {
     imgIdx = index
   }
 
+  if (onClickDelete !== undefined) {
+    onclick = onClickDelete
+  }
+
   return (
     <Grid
       container
@@ -77,15 +82,15 @@ const CartItem = ({index, name, cuisines, type, added}) => {
         maxWidth: "100%"
       }}
     >
-      <Grid item sx={{ mr: 3, ml: 1}}>
-        <img src={img[imgIdx]} alt="ing" style={{ maxWidth: "88px"}}/>
+      <Grid item sx={{ mr: 3, ml: 1 }}>
+        <img src={img[imgIdx]} alt="ing" style={{ maxWidth: "88px" }}/>
       </Grid>
       <Grid item sx={{ minWidth: '168px' }}>
         <Typography variant="h5">
-          {name !== undefined ? name : "nothing"}
+          {name !== undefined ? name : "name"}
         </Typography>
         <Typography variant="body1">
-          用於 {localCuisines.map(x => <span style={{ color: "#A48910"}}>{x}<br /></span>)}
+          用於 {localCuisines.map(x => <span style={{ color: "#A48910" }}>{x}<br /></span>)}
         </Typography>
       </Grid>
       <Grid>
@@ -98,7 +103,7 @@ const CartItem = ({index, name, cuisines, type, added}) => {
           }
           </>
         :
-          <ClearRoundedIcon color="error"/>
+          <ClearRoundedIcon color="error" onClick={onclick} />
         }
       </Grid>
     </Grid>

@@ -10,6 +10,12 @@ import Button from '@mui/material/Button';
 import Header from "./Header.js"
 import Footer from './Footer';
 import { getCuisines, getIngredientTypes, getGameById } from '../Utils/Axios';
+import { useDispatch } from 'react-redux';
+import { pageChanged } from '../Features/PagesSlice'
+import Cart from './Cart'
+import Dialog from '@mui/material/Dialog';
+import Slide from '@mui/material/Slide';
+import Ingredient from './Ingredient';
 
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
@@ -113,7 +119,28 @@ const listButton = css`
     margin-right: 32px;
 `
 
+const testIngredient = {
+    "id": "15_1",
+    "name": "鴻喜菇",
+    "type": "鴻喜菇",
+    "tap": true,
+    "info": {
+        "number": "10612310017",
+        "farmer": "陳鵬元",
+        "address": "南投縣草屯鎮將軍段",
+        "company": "台灣檢驗科技股份有限公司"
+    },
+    "score": [1, 1, 216.05, [0]]
+}
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Market = () => {
+    const dispatch = useDispatch()
+    const [openCart, setOpenCart] = useState(false);
+    const [openIngredient, setOpenIngredient] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
     const array = [1, 2, 3, 4, 5];
     const [totalGrocery, setTotalGrocery] = useState(0);
@@ -130,8 +157,30 @@ const Market = () => {
         init();
     })
 
+    const handleClickOpenCart = () => {
+        setOpenCart(true);
+    };
+
+    const handleCloseCart = () => {
+        setOpenCart(false);
+    };
+
+    const handleClickOpenIngredient = () => {
+        setOpenIngredient(true);
+    };
+
+    const handleCloseIngredient = () => {
+        setOpenIngredient(false);
+    };
+
     return (
         <ThemeProvider theme={theme}>
+            <Dialog open={openIngredient} onClose={handleCloseIngredient} fullScreen TransitionComponent={Transition}>
+                <Ingredient object={testIngredient} _handleClose={handleCloseIngredient} />
+            </Dialog>
+            <Dialog open={openCart} onClose={handleCloseCart} fullScreen TransitionComponent={Transition}>
+                <Cart _tab={0} handleClose={handleCloseCart} />
+            </Dialog>
             <Page>
             <div className={`${header}`}>
                 { array.map(key => (
@@ -154,6 +203,8 @@ const Market = () => {
                     </div>
                 ))}
             </div>
+            
+            <button onClick={handleClickOpenIngredient}>open ingredient</button>
 
             <div className={`${body}`}>
                 <div className={`${row}`}></div>
@@ -164,7 +215,7 @@ const Market = () => {
                         <div className={`${listButton}`}></div>
                     </Grid>
                     <Grid item xs={9}>
-                        <Button variant="primary" style={{ width: '100%', height: '64px' }}>
+                        <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenCart}>
                             <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
                                 查看購物清單 ({ totalGrocery })
                             </Typography>
