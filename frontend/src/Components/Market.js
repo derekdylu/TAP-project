@@ -18,6 +18,7 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import Ingredient from './Ingredient';
 import { getCuisines, getIngredientTypes, getGameById, getIngredients } from '../Utils/Axios';
+import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 
 import img0_1 from '../Images/Ingredient/0_1.png'
 import img0_2 from '../Images/Ingredient/0_2.png'
@@ -75,9 +76,9 @@ const img = {
     "1_1": img1_1,
     "1_2": img1_2,
     "1_3": img1_3,
-    "2_1": img2_1,
-    "2_2": img2_2,
-    "2_3": img2_3,
+    "2_1": img2_3,
+    "2_2": img2_1,
+    "2_3": img2_2,
     "3_1": img3_1,
     "3_2": img3_2,
     "3_3": img3_3,
@@ -85,11 +86,11 @@ const img = {
     "4_2": img4_2,
     "4_3": img4_3,
     "5_1": img5_1,
-    "5_2": img5_2,
-    "5_3": img5_3,
-    "6_1": img6_1,
+    "5_2": img5_3,
+    "5_3": img5_2,
+    "6_1": img6_3,
     "6_2": img6_2,
-    "6_3": img6_3,
+    "6_3": img6_1,
     "7_1": img7_1,
     "7_2": img7_2,
     "7_3": img7_3,
@@ -160,7 +161,7 @@ const typeList = css`
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    background: grey;
+    background: white;
 `
 
 const radio = css`
@@ -194,6 +195,20 @@ const ingredientImg = css`
     margin: 0px;
     padding: 0px;
     height: 100%;
+`
+
+const labelContainer = css`
+    background: white;
+    border-top: 8px solid #FCD219;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    position: relative;
+    bottom: 50px;
+    right: -50px;
+    width: fit-content;
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+    align-items: center;
 `
 
 const footer = css`
@@ -242,6 +257,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Market = () => {
     const dispatch = useDispatch()
     const [openCart, setOpenCart] = useState(false);
+    const [openList, setOpenList] = useState(false);
     const [openIngredient, setOpenIngredient] = useState([{}, false]);
     const [width, setWidth] = useState(window.innerWidth);
     const array = [1, 2, 3, 4, 5];
@@ -298,6 +314,14 @@ const Market = () => {
         setOpenCart(false);
     };
 
+    const handleClickOpenList = () => {
+        setOpenList(true);
+    };
+
+    const handleCloseList = () => {
+        setOpenList(false);
+    };
+
     const handleClickOpenIngredient = (e) => {
         console.log(e.target);
         setTabIngredient(ingredients[e.target.id]);
@@ -305,7 +329,7 @@ const Market = () => {
         setOpenIngredient([ingredients[e.target.id], true]);
     };
 
-    const handleCloseIngredient = () => {
+    const handleCloseIngredient = async() => {
         setOpenIngredient(prevState => ([prevState[0], false]));
     };
 
@@ -316,6 +340,9 @@ const Market = () => {
             </Dialog>
             <Dialog open={openCart} onClose={handleCloseCart} fullScreen TransitionComponent={Transition}>
                 <Cart _tab={0} handleClose={handleCloseCart} />
+            </Dialog>
+            <Dialog open={openList} onClose={handleCloseList} fullScreen TransitionComponent={Transition}>
+                <Cart _tab={1} handleClose={handleCloseList} />
             </Dialog>
             <Page>
             <div className={`${header}`}>
@@ -341,17 +368,30 @@ const Market = () => {
             <div className={`${body}`}>
                 { (type[tab].ids).map(id => (
                 <Grid container direction="column" spacing={0} sx={{display: "grid"}}>
-                    {/* <React.Fragment> */}
                         <Grid item xs={2} onClick={handleClickOpenIngredient}>
                             <img src={img[`${id + "_1"}`]} className={`${ingredientImg}`} id={id + "_1"} />
+                            {/* <div className={`${labelContainer}`}>
+                                <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500px' }}>
+                                    {ingredients[id + "_1"].name}
+                                </Typography>
+                            </div> */}
                         </Grid>
                         <Grid item xs={2} onClick={handleClickOpenIngredient}>
                             <img src={img[`${id + "_2"}`]} className={`${ingredientImg}`} id={id + "_2"} />
+                            {/* <div className={`${labelContainer}`}>
+                                <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500px' }}>
+                                    {ingredients[id + "_2"].name}
+                                </Typography>
+                            </div> */}
                         </Grid>
                         <Grid item xs={2} onClick={handleClickOpenIngredient}>
                             <img src={img[`${id + "_3"}`]} className={`${ingredientImg}`} id={id + "_3"} />
+                            {/* <div className={`${labelContainer}`}>
+                                <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500px' }}>
+                                    {ingredients[id + "_3"].name}
+                                </Typography>
+                            </div> */}
                         </Grid>
-                    {/* </React.Fragment> */}
                 </Grid>
                 ))}
             </div>
@@ -359,7 +399,9 @@ const Market = () => {
             <div className={`${footer}`}>
                 <Grid container spacing={2} px={2}>
                     <Grid item xs={3}>
-                        <div className={`${listButton}`}></div>
+                        <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <ListAltRoundedIcon />
+                        </div>
                     </Grid>
                     <Grid item xs={9}>
                         <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenCart}>
