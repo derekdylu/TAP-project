@@ -48,4 +48,4 @@ def calculate_total_score(grocery, cart):
 
     total_score = safety_score + transparency_score + emission_score + season_score
 
-    return [total_score, safety_score, transparency_score, emission_score, season_score]
+    return [int(total_score), int(safety_score), int(transparency_score), int(emission_score), int(season_score)]
