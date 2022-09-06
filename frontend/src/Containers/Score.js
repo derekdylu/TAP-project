@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import { Button } from '@mui/material';
 import theme from '../Themes/Theme';
 import Navigation from "../Components/Navigation";
-import { getGameById, sendEmail } from '../Utils/Axios';
+import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -27,6 +27,11 @@ import cuisine_4 from "../Images/Cuisine/cuisine_4.png"
 import cuisine_5 from "../Images/Cuisine/cuisine_5.png"
 import cuisine_6 from "../Images/Cuisine/cuisine_6.png"
 import cuisine_7 from "../Images/Cuisine/cuisine_7.png"
+import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
+import spinach from '../Images/IngredientType/菠菜.png'
+import redish from '../Images/IngredientType/白蘿蔔.png'
+import cucumber from '../Images/IngredientType/胡瓜.png'
+
 
 const content = {
     1: {
@@ -68,6 +73,13 @@ const cuisineImg = {
     5: cuisine_5,
     6: cuisine_6,
     7: cuisine_7,
+}
+
+const profileImg = {
+	0: bunaShimeji,
+	1: spinach,
+	2: redish,
+	3: cucumber
 }
 
 const Page = styled('div')(({ theme }) => ({
@@ -132,7 +144,7 @@ const rightButton = css`
     width: 10px;
 `
 
-const score = css`
+const scoreContainer = css`
     border-top: 2px dashed #FCD219;
     justify-content: center;
     align-items: center;
@@ -152,7 +164,15 @@ const scoreCircle = (type, score) => ({
     width: '250px',
     height: '250px', 
     borderRadius: '50%',
-    background: (type == 1) ? `conic-gradient(#F3C522 0deg, #F3C522 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` : "conic-gradient(#FF7768 0deg, #FF7768 90deg, #FEF6D1 90deg, #FEF6D1 360deg)"
+    background: (type == 0) ?
+	`conic-gradient(#F3C522 0deg, #F3C522 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+	(type == 1) ?
+	`conic-gradient(#F16063 0deg, #F16063 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+	(type == 2) ?
+	`conic-gradient(#44C177 0deg, #44C177 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+	(type == 3) ?
+	`conic-gradient(#1B71B2 0deg, #1B71B2 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+	`conic-gradient(#F46B3B 0deg, #F46B3B ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)`
 });
 
 const whiteCircle = css`
@@ -212,6 +232,10 @@ const inputTextarea = css`
 	line-height: 150%;
 `
 
+// fake score
+// total_score, safety_score, transparency_score, emission_score, season_score
+const fakeScore = [60, 20, 15, 15, 10];
+
 const Score = () => {
     const [rank, setRank] = useState(1);
 	const [tab, setTab] = useState(0);
@@ -220,6 +244,9 @@ const Score = () => {
 	const [buttonStatus, setButtonStatus] = useState(0);
 	const [cuisineId, setCuisineId] = useState({});
 	const [hideForm, setHideForm] = useState(true);
+	const [score, setScore] = useState({})
+	const [scoreToDeg, setScoreToDeg] = useState([]);
+	const totalScore = [100, 25, 25, 25, 25];
 
 	const type = {
 		0: {
@@ -271,21 +298,61 @@ const Score = () => {
 
 		else if (buttonStatus == 1) {
 			// add API
-			const to_email = document.getElementById("email").value;
-			sendEmail(to_email);
+			const email = document.getElementById("email");
+			sendEmail(email);
+
+			const nickname = document.getElementById("nickname");
+			const profile_photo = document.querySelector('input[name="profile"]:checked');
+			const comment = document.getElementById("comment");
+
+			createComment(nickname.value, profile_photo.value, comment.value, score[0])
+			.then((res) => {
+				nickname.value = "";
+				profile_photo.checked = false;
+				comment.value = "";
+				email.value = "";
+			}).catch((error) => {
+				console.log(error);
+			});
 		}
 	}
 
 	useEffect(() => {
+		const gameId = sessionStorage.getItem('gameId');
+
 		const init = async() => {
-			const gameId = sessionStorage.getItem('gameId')
 			const game = await getGameById(gameId);
 	
 			setCuisineId(game.cuisine);
 			console.log(game.cuisine);
 		}
 
+		const calculateScore = async() => {
+			const scoreRes = await getScoreById(gameId);
+			let originalScore = [...scoreRes]
+			setScore(originalScore);
+
+			if (originalScore[0] <= 30) {
+				setRank(3);
+			} else if (originalScore[0] <= 60) {
+				setRank(2);
+			}
+			
+			for (var i = 0; i < scoreRes.length; i++) {
+				if (i == 0) {
+					scoreRes[i] *= 3.6
+				}
+				else {
+					scoreRes[i] *= 14.4
+				}
+			}
+
+			console.log(scoreRes);
+			setScoreToDeg(scoreRes);
+		}
+
 		init();
+		calculateScore();
 	}, []);
 
     return (
@@ -315,19 +382,19 @@ const Score = () => {
                             <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }}>{ key }</Typography>) }
                         </div>
                     </div>
-                    <div className={`${score}`}> {/*calculate degree*/}
+                    <div className={`${scoreContainer}`}> {/*calculate degree*/}
 						<div className={`${mainCircle}`}>
-							<div style={ scoreCircle(1, 80) } />
+							<div style={ scoreCircle(tab, scoreToDeg[tab]) } />
 							<div className={`${whiteCircle}`} />
 							<div className={`${scoreContent}`}>
 								<Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: '500', m: '0px', p: '0px' }}>
 									總得分
 								</Typography>
 								<Typography sx={{ fontSize: '54px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
-									80
+									{score[tab]}
 								</Typography>
 								<Typography sx={{ fontSize: '20px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
-									/100
+									/{totalScore[tab]}
 								</Typography>
 								<Typography sx={{ fontSize: '22px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
 									分
@@ -415,6 +482,15 @@ const Score = () => {
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
 						選擇一個最能代表你的頭像
 						</Typography>
+						<Grid container>
+							{ Object.keys(profileImg).map(key => (
+								<Grid item xs={3}>
+									<input type="radio" value={key} name="profile" />
+									<img src = {profileImg[key]} style={{ width: '80%' }} />
+								</Grid>
+							))}
+						</Grid>
+
 
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
 						電子郵件
@@ -424,7 +500,7 @@ const Score = () => {
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
 						你認為產銷履歷怎麼樣？
 						</Typography>
-						<textarea placeholder='12345678@123.com' className={`${inputTextarea}`} rows={3} id='comment' />
+						<textarea placeholder='我覺得......' className={`${inputTextarea}`} rows={3} id='comment' />
 
 					</div>
 

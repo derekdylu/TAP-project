@@ -175,9 +175,8 @@ async def get_score(id: str):
         score = 0
         grocery_id = game["grocery"]
         grocery = [ingredient_type_col.find_one({"id": _id}) for _id in grocery_id]
-        cart_id = []
-        for i in game["cart"]:  cart_id.append(i["id"])
-        cart = [ingredient_col.find_one({"id": _id}) for _id in cart_id]
+        cart_id = game["cart"]
+        cart = [ingredient_col.find_one({"id": cart["id"]}) for cart in cart_id]
 
         score = score_helper.calculate_total_score(grocery, cart)
         
