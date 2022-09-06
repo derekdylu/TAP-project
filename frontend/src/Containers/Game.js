@@ -10,6 +10,7 @@ import Requirement from '../Components/Requirement'
 import Tutorial from '../Components/Tutorial'
 import Market from '../Components/Market'
 import Cart from '../Components/Cart'
+import Score from './Score'
 
 const Game = () => {
   const dispatch = useDispatch()
@@ -58,7 +59,7 @@ const Game = () => {
       component = <Market />
       break
     case 8:
-      // component = <Score /> // Score
+      component = <Score /> // Score
       break
     case 1000:
       component = <Cart />
@@ -70,11 +71,10 @@ const Game = () => {
 
   return (
     <>
-      {/* <div>{pages[0].pageIndex}</div>
-      {/* <Navigation />
-      <div>{pages[0].pageIndex}</div>
-      <button onClick={handlePageBack}>back</button>
-      <button onClick={handlePageNext}>next</button> */}
+      {/* {/* <Navigation /> */}
+      {/* <div>{pages[0].pageIndex}</div> */}
+      {/* <button onClick={handlePageBack}>back</button> */}
+      {/* <button onClick={handlePageNext}>next</button> */}
       {component}
     </>
   )

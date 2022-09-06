@@ -336,7 +336,7 @@ const Market = () => {
                 </Tabs>
             </div>
             
-            <button onClick={handleClickOpenIngredient}>open ingredient</button>
+            {/* <button onClick={handleClickOpenIngredient}>open ingredient</button> */}
 
             <div className={`${body}`}>
                 { (type[tab].ids).map(id => (
@@ -349,7 +349,7 @@ const Market = () => {
                             <img src={img[`${id + "_2"}`]} className={`${ingredientImg}`} id={id + "_2"} />
                         </Grid>
                         <Grid item xs={2} onClick={handleClickOpenIngredient}>
-                            <img src={img[`${id + "_3"}`]} className={`${ingredientImg}`} id={id + "_2"} />
+                            <img src={img[`${id + "_3"}`]} className={`${ingredientImg}`} id={id + "_3"} />
                         </Grid>
                     {/* </React.Fragment> */}
                 </Grid>
@@ -364,7 +364,7 @@ const Market = () => {
                     <Grid item xs={9}>
                         <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenCart}>
                             <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-                                查看購物清單 ({ totalGrocery })
+                                查看購物車 ({ totalGrocery })
                             </Typography>
                         </Button>
                     </Grid>

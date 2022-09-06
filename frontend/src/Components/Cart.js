@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { getCuisines, getIngredientTypes, getGameById, getIngredients, updateGameById } from '../Utils/Axios';
+import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
 import { css } from "@emotion/css";
 import Header from './Header'
 import Footer from './Footer'
@@ -79,6 +79,7 @@ const Cart = ({_tab, handleClose}) => {
 
   const [listGrocery, setListGrocery] = useState([])
   const [listCart, setListCart] = useState([])
+  const [checkout, setCheckout] = useState(false)
 
   // if (_tab !== undefined) {
   //   setTab(_tab);
@@ -110,30 +111,8 @@ const Cart = ({_tab, handleClose}) => {
         sortedCuisines = {...sortedCuisines, [cuisine.id]: cuisine};
     });
 
-    // game.cart.map(async(key) => {
-    //   if(listCart.find(x => x.id === key.id) === undefined) {
-    //     listCart.push(key)
-    //   }
-    // })
-    // listCart.map(async(key) => {
-    //   if(game.cart.find(x => x.id === key.id) === undefined) {
-    //     listCart.remove(key)
-    //   }
-    // })
-
     // update list cart list
     setListCart(game.cart)
-
-    // listCart.map(key => {
-    //   key.forCuisine = []
-    //   game.cuisine.map(y => {
-    //     let rqmt = cuisines.filter(z => z.id === y)[0].required_ingredient_types
-    //     let pair = rqmt.find(lambda => lambda === parseInt(key.id.split('_')[0]))
-    //     if(pair !== undefined) {
-    //       key.forCuisine.push(cuisines.find(c => c.id === y).name)
-    //     }
-    //   })
-    // })
 
     // get all needed ingredient types
     game.grocery.map(async(key) => {
@@ -164,7 +143,12 @@ const Cart = ({_tab, handleClose}) => {
       })
     })
 
-    // console.log("list grocery", listGrocery)
+    if (listGrocery.find(key => key.inCart === false) === undefined) {
+      setCheckout(true)
+    } else {
+      setCheckout(false)
+    }
+
     // console.log("list cart", listCart)
   }
 
@@ -181,29 +165,40 @@ const Cart = ({_tab, handleClose}) => {
     })
   }
 
-  // NOTE for debug
-  // CHECK in the market, remember to add forCuisine property in when added to the cart
-  const test = async() => {
-    listCart.push({
-      id: "1_2",
-      name: "正港牛肉",
-      forCuisine: ["..."]
-    })
-    listCart.push({
-      id: "3_2",
-      name: "好吃白羅波",
-      forCuisine: ["..."]
-    })
-    await updateGameById(gameId, null, listCart).then((res) => {
-      updateCartAndTobuy()
+  // // CHECK in the market, remember to add forCuisine property in when added to the cart
+  // const test = async() => {
+  //   listCart.push({
+  //     id: "1_2",
+  //     name: "正港牛肉",
+  //     forCuisine: ["..."]
+  //   })
+  //   listCart.push({
+  //     id: "3_2",
+  //     name: "好吃白羅波",
+  //     forCuisine: ["..."]
+  //   })
+  //   await updateGameById(gameId, null, listCart).then((res) => {
+  //     updateCartAndTobuy()
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  // }
+
+  const ClickCheckout = async() => {
+    await getScoreById(gameId).then((res) => {
+      dispatch(
+        pageChanged(1)
+      )
+      console.log(res)
     }).catch((error) => {
-      console.log(error);
+      console.log(error)
     })
   }
 
   return (
     <div>
-    <button onClick={test}>add 2 stuff</button>
+    {/* <button onClick={test}>add 2 stuff</button> */}
+    {/* <div>checkout: {JSON.stringify(checkout)}</div> */}
     <Grid container sx={{pb: 19}} direction="column"
           justifyContent="flex-start"
           alignItems="center"
@@ -290,14 +285,14 @@ const Cart = ({_tab, handleClose}) => {
               :
               <Grid container style={{height: '60vh', background: "#FEF6D1"}} direction="column" justifyContent="center" alignItems="center">
                 <Typography variant="h6" color="#4C3F08">
-                  待購清單空空如也s
+                  待購清單空空如也
                 </Typography>
               </Grid>
             }
             </>
         } 
       </Grid>
-      <Footer text="結帳回家" />
+      <Footer _disabled={!checkout} _onClick={ClickCheckout} text="結帳回家" />
     </Grid>
     </div>
   )

@@ -118,6 +118,7 @@ const Ingredient = ({object, _handleClose}) => {
       {
         id: object.id,
         name: object.name,
+        type: object.type
       }
     )
     await updateGameById(gameId, null, tmpCart).then((res) => {
