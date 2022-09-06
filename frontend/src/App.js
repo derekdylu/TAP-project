@@ -8,7 +8,7 @@ import Navigation from './Components/Navigation'
 import Tutorial from './Components/Tutorial';
 import Game from './Containers/Game'
 import Error from './Containers/Error'
-import Comment from './Containers/Comment';
+import Feeds from './Containers/Feeds'
 
 import Test from './Components/Test';
 import StartPage from './Components/StartPage';
@@ -34,9 +34,9 @@ const App = () => {
 
             <Route path="/" element={<Game />} />
             <Route path="*" element={<Error />} />
-            {/* <Route path="/feeds" element={<Feeds />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/terms" element={<Terms />} /> */}
+            <Route path="/feeds" element={<Feeds />} />
+            {/* <Route path="/about" element={<About />} /> */}
+            {/* <Route path="/terms" element={<Terms />} /> */}
 
           {/* <Route path="/test" element={<Test />} /> */}
           <Route path="/start" element={<StartPage />} />
@@ -45,7 +45,6 @@ const App = () => {
           <Route path="/requirement" element={<Requirement />} />
           <Route path="/market" element={<Market />} />
 
-          <Route path="/comment" element={<Comment />} />
         </Routes>
       </Router>
     </ThemeProvider>
