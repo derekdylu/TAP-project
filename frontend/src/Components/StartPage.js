@@ -5,7 +5,8 @@ import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import Navigation from "./Navigation";
 import theme from '../Themes/Theme';
-import logo from '../Images/logo.png'
+// import logo from '../Images/logo.png'
+import logo from '../Images/logo1.gif'
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 
@@ -31,7 +32,7 @@ const contentContainer = css`
 `
 
 const imageContainer = css`
-    width: 80%;
+    width: 100%;
 `
 
 const textContainer = css`

@@ -20,6 +20,10 @@ import Ingredient from './Ingredient';
 import { getCuisines, getIngredientTypes, getGameById, getIngredients } from '../Utils/Axios';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 
+import veg from '../Images/Market/veg.png'
+import egg from '../Images/Market/egg.png'
+import meat from '../Images/Market/meat.png'
+
 import img0_1 from '../Images/Ingredient/0_1.png'
 import img0_2 from '../Images/Ingredient/0_2.png'
 import img0_3 from '../Images/Ingredient/0_3.png'
@@ -120,6 +124,12 @@ const img = {
     "15_3": img15_3,
 }
 
+const labelImg = {
+    "0": veg,
+    "1": egg,
+    "2": meat
+}
+
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
     height: '100vh',
@@ -157,22 +167,27 @@ const header = css`
 
 const typeList = css`
     width: 100%;
-    height: 56px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    background: white;
+    position: relative;
 `
 
 const radio = css`
-    // display: none;
+    display: none;
 
     &: checked + label {
         background: white;
+        height: 56px;
+        bottom: 0px;
+        background-image: linear-gradient(#FCD219, #FCD219);
+        background-size: 80% 4px;
+        background-position: bottom left;
+        background-repeat: no-repeat;
     }
 `
-const card = css`
-    display: block;
+const tabContainer = css`
+    display: flex;
     box-sizing: border-box;
     border-radius: 16px 16px 0px 0px;
     width: 124px;
@@ -180,6 +195,8 @@ const card = css`
     justify-content: center;
     align-items: center;
     background: #FFF1B0;
+    bottom: -9px;
+    position: relative;
 `
 
 const body = css`
@@ -262,7 +279,6 @@ const Market = () => {
     const [width, setWidth] = useState(window.innerWidth);
     const array = [1, 2, 3, 4, 5];
     const [totalGrocery, setTotalGrocery] = useState(0);
-    // const [ingredientTypes, setIngredientTypes] = useState({});
     const [ingredients, setIngredients] = useState({});
     const type = {
         0: {
@@ -283,6 +299,9 @@ const Market = () => {
     const [tabIngredient, setTabIngredient] = useState({});
 
     useEffect(() => {
+        const radio_0 = document.querySelector('input[name="tab"][value="0"]');
+        radio_0.checked = true;
+
         const init = async() => {
             const gameId = sessionStorage.getItem('gameId')
             const game = await getGameById(gameId);
@@ -304,6 +323,12 @@ const Market = () => {
     const handleTabChange = async(e, newValue) => {
         console.log(ingredients);
         setTab(newValue);
+    }
+
+    const handleRadioOnClick = async(e) => {
+        const checkedRadio = document.querySelector('input[name="tab"]:checked');
+        console.log(checkedRadio);
+        setTab(checkedRadio.value);
     }
 
     const handleClickOpenCart = () => {
@@ -356,11 +381,17 @@ const Market = () => {
 
             
             <div className={`${typeList}`}>
-                <Tabs value={tab} onChange={handleTabChange}>
                 { Object.keys(type).map(key => (
-                    <Tab label={type[key].name} />
+                    <div style={{ position: 'relative', bottom: '0px', display: 'inline-block' }}>
+                        <input type="radio" id={key} value={key} name="tab" className={`${radio}`} onClick={handleRadioOnClick}/>
+                        <label htmlFor={key} className={`${tabContainer}`} >
+                            <img src={labelImg[key]} style={{marginRight: '4px'}}/>
+                            <Typography variant="body1" color={theme.palette.secondary[700]} sx={{ fontWeight: '500' }} className='tabContent'>
+                                {type[key].name}
+                            </Typography>
+                        </label>
+                    </div>
                 ))}
-                </Tabs>
             </div>
             
             {/* <button onClick={handleClickOpenIngredient}>open ingredient</button> */}

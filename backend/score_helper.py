@@ -37,9 +37,12 @@ def calculate_total_score(grocery, cart):
         safety_score += cart[i]["score"][0]
         transparency_score += cart[i]["score"][1]
         emission_score += cart[i]["score"][2]
-        for month in cart[i]["score"][3]:
-            if month == curr_month:
-                season_score += 1
+        if cart[i]["score"][3][0] == 0:
+            season_score += 1
+        else:
+            for month in cart[i]["score"][3]:
+                if month == curr_month:
+                    season_score += 1
 
     safety_score *= 1 / total_ingredient * 25
     transparency_score *= 1 / total_ingredient * 25

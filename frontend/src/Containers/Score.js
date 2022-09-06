@@ -244,6 +244,7 @@ const Score = () => {
 	const [buttonStatus, setButtonStatus] = useState(0);
 	const [cuisineId, setCuisineId] = useState({});
 	const [hideForm, setHideForm] = useState(true);
+	const [hideAll, setHideAll] = useState(false);
 	const [score, setScore] = useState({})
 	const [scoreToDeg, setScoreToDeg] = useState([]);
 	const totalScore = [100, 25, 25, 25, 25];
@@ -278,7 +279,8 @@ const Score = () => {
 
 	const buttonContext = {
 		0: "留言解鎖食譜",
-		1: "送出"
+		1: "送出",
+		2: "查看排名"
 	}
 
 	const handleTabChange = async(e, newValue) => {
@@ -314,11 +316,18 @@ const Score = () => {
 			}).catch((error) => {
 				console.log(error);
 			});
+			setButtonStatus(2);
+			setHideAll(true);
+		}
+
+		else if (buttonStatus == 2) {
+			window.location.href = '/feeds';
 		}
 	}
 
 	useEffect(() => {
-		const gameId = sessionStorage.getItem('gameId');
+		// const gameId = sessionStorage.getItem('gameId');
+		const gameId = '631715de971d50827ee63b11';
 
 		const init = async() => {
 			const game = await getGameById(gameId);
@@ -455,7 +464,8 @@ const Score = () => {
 						</Typography>
 					</div>
                 </div>
-				<div className={`${container}`} style={{ margin: '8px 24px' }}>
+
+				<div className={`${container}`} style={{ margin: '8px 24px' }} hidden={hideAll}>
 					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
 					想獲得本次遊戲的完整食譜嗎？
 					</Typography>
@@ -502,6 +512,30 @@ const Score = () => {
 						</Typography>
 						<textarea placeholder='我覺得......' className={`${inputTextarea}`} rows={3} id='comment' />
 
+					</div>
+
+					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
+                        <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+                            {buttonContext[buttonStatus]}
+                        </Typography>
+                    </Button>
+				</div>
+
+				<div className={`${container}`} style={{ margin: '8px 24px' }} hidden={!hideAll}>
+					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
+					食譜已經寄到你的信箱
+					</Typography>
+					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px' }}>
+					沒收到？再寄一次
+					</Typography>
+
+					<div className={`${additional}`} style={{ display: 'block' }}>
+						<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
+						好奇自己與其他玩家的差異？
+						</Typography>
+						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
+						按一下下方的神奇按鈕，你可以看到大家的得分，同時也可以看到大家對TAP的想法。聽起來很棒對吧!
+						</Typography>
 					</div>
 
 					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
