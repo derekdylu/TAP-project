@@ -128,6 +128,7 @@ const Ingredient = ({object, _handleClose}) => {
   }
 
   useEffect(() => {
+    console.log("test", object);
     fetchCart()
   }, [])
 

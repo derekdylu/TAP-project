@@ -242,7 +242,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Market = () => {
     const dispatch = useDispatch()
     const [openCart, setOpenCart] = useState(false);
-    const [openIngredient, setOpenIngredient] = useState(false);
+    const [openIngredient, setOpenIngredient] = useState([{}, false]);
     const [width, setWidth] = useState(window.innerWidth);
     const array = [1, 2, 3, 4, 5];
     const [totalGrocery, setTotalGrocery] = useState(0);
@@ -264,6 +264,7 @@ const Market = () => {
     };
     const total = [1, 2, 3, 4, 5];
     const [tab, setTab] = useState(0);
+    const [tabIngredient, setTabIngredient] = useState({});
 
     useEffect(() => {
         const init = async() => {
@@ -285,6 +286,7 @@ const Market = () => {
     }, [])
 
     const handleTabChange = async(e, newValue) => {
+        console.log(ingredients);
         setTab(newValue);
     }
 
@@ -296,18 +298,21 @@ const Market = () => {
         setOpenCart(false);
     };
 
-    const handleClickOpenIngredient = () => {
-        setOpenIngredient(true);
+    const handleClickOpenIngredient = (e) => {
+        console.log(e.target);
+        setTabIngredient(ingredients[e.target.id]);
+        console.log(ingredients[e.target.id]);
+        setOpenIngredient([ingredients[e.target.id], true]);
     };
 
     const handleCloseIngredient = () => {
-        setOpenIngredient(false);
+        setOpenIngredient(prevState => ([prevState[0], false]));
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <Dialog open={openIngredient} onClose={handleCloseIngredient} fullScreen TransitionComponent={Transition}>
-                <Ingredient object={testIngredient} _handleClose={handleCloseIngredient} />
+            <Dialog open={openIngredient[1]} onClose={handleCloseIngredient} fullScreen TransitionComponent={Transition}>
+                <Ingredient object={openIngredient[0]} _handleClose={handleCloseIngredient} />
             </Dialog>
             <Dialog open={openCart} onClose={handleCloseCart} fullScreen TransitionComponent={Transition}>
                 <Cart _tab={0} handleClose={handleCloseCart} />
@@ -337,14 +342,14 @@ const Market = () => {
                 { (type[tab].ids).map(id => (
                 <Grid container direction="column" spacing={0} sx={{display: "grid"}}>
                     {/* <React.Fragment> */}
-                        <Grid item xs={2}>
-                            <img src={img[`${id + "_1"}`]} className={`${ingredientImg}`} />
+                        <Grid item xs={2} onClick={handleClickOpenIngredient}>
+                            <img src={img[`${id + "_1"}`]} className={`${ingredientImg}`} id={id + "_1"} />
                         </Grid>
-                        <Grid item xs={2}>
-                            <img src={img[`${id + "_2"}`]} className={`${ingredientImg}`}  />
+                        <Grid item xs={2} onClick={handleClickOpenIngredient}>
+                            <img src={img[`${id + "_2"}`]} className={`${ingredientImg}`} id={id + "_2"} />
                         </Grid>
-                        <Grid item xs={2}>
-                            <img src={img[`${id + "_3"}`]} className={`${ingredientImg}`}  />
+                        <Grid item xs={2} onClick={handleClickOpenIngredient}>
+                            <img src={img[`${id + "_3"}`]} className={`${ingredientImg}`} id={id + "_2"} />
                         </Grid>
                     {/* </React.Fragment> */}
                 </Grid>
