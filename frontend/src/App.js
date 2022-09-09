@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query'
 import './App.css';
 // Debug
 import Score from './Containers/Score'
@@ -21,8 +22,11 @@ import Ingredient from './Components/Ingredient';
 
 import theme from './Themes/Theme';
 
+const queryClient = new QueryClient()
+
 const App = () => {
   return (
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
@@ -38,16 +42,17 @@ const App = () => {
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/terms" element={<Terms />} /> */}
 
-          {/* <Route path="/test" element={<Test />} /> */}
-          <Route path="/start" element={<StartPage />} />
-          <Route path="/menu/:type" element={<Menu />} />
-          <Route path="/story/:id" element={<Story />} />
-          <Route path="/requirement" element={<Requirement />} />
-          <Route path="/market" element={<Market />} />
+            {/* <Route path="/test" element={<Test />} /> */}
+            <Route path="/start" element={<StartPage />} />
+            <Route path="/menu/:type" element={<Menu />} />
+            <Route path="/story/:id" element={<Story />} />
+            <Route path="/requirement" element={<Requirement />} />
+            <Route path="/market" element={<Market />} />
 
-        </Routes>
-      </Router>
-    </ThemeProvider>
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
 

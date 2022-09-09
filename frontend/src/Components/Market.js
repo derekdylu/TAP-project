@@ -11,8 +11,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Header from "./Header.js"
 import Footer from './Footer';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { pageChanged } from '../Features/PagesSlice'
+import { selectAllGames } from '../Features/GamesSlice'
 import Cart from './Cart'
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
@@ -273,6 +275,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Market = () => {
     const dispatch = useDispatch()
+    const _game = useSelector(selectAllGames)
     const [openCart, setOpenCart] = useState(false);
     const [openList, setOpenList] = useState(false);
     const [openIngredient, setOpenIngredient] = useState([{}, false]);
@@ -319,11 +322,6 @@ const Market = () => {
 
         init();
     }, [])
-
-    const handleTabChange = async(e, newValue) => {
-        console.log(ingredients);
-        setTab(newValue);
-    }
 
     const handleRadioOnClick = async(e) => {
         const checkedRadio = document.querySelector('input[name="tab"]:checked');
@@ -384,7 +382,7 @@ const Market = () => {
                 { Object.keys(type).map(key => (
                     <div style={{ position: 'relative', bottom: '0px', display: 'inline-block' }}>
                         <input type="radio" id={key} value={key} name="tab" className={`${radio}`} onClick={handleRadioOnClick}/>
-                        <label htmlFor={key} className={`${tabContainer}`} >
+                        <label htmlFor={key} className={`${tabContainer}`}>
                             <img src={labelImg[key]} style={{marginRight: '4px'}}/>
                             <Typography variant="body1" color={theme.palette.secondary[700]} sx={{ fontWeight: '500' }} className='tabContent'>
                                 {type[key].name}
@@ -428,7 +426,7 @@ const Market = () => {
             </div>
 
             <div className={`${footer}`}>
-                <Grid container spacing={2} px={2}>
+                <Grid container px={2}>
                     <Grid item xs={3}>
                         <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <ListAltRoundedIcon />
@@ -437,7 +435,7 @@ const Market = () => {
                     <Grid item xs={9}>
                         <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenCart}>
                             <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-                                查看購物車 ({ totalGrocery })
+                                查看購物車 ({ _game[0].cart.length })
                             </Typography>
                         </Button>
                     </Grid>

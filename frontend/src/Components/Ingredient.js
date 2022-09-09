@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TabsUnstyled from '@mui/base/TabsUnstyled';
 import NativeSelect from '@mui/material/NativeSelect';
 import { useSelector } from 'react-redux';
-import { selectAllGames } from '../Features/GamesSlice'
+import { selectAllGames, gameCartAdded } from '../Features/GamesSlice'
 import { useDispatch } from 'react-redux';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
@@ -99,8 +99,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Ingredient = ({object, _handleClose}) => {
-  const __game = useSelector(selectAllGames)
-  const gameId = __game[0].id.id
+  const dispatch = useDispatch()
+  const _game = useSelector(selectAllGames)
+  const gameId = _game[0].id.id
   const [tmpCart, setTmpCart] = useState([])
 
   const [open, setOpen] = useState(false);
@@ -110,17 +111,19 @@ const Ingredient = ({object, _handleClose}) => {
   const fetchCart = async() => {
     const game = await getGameById(gameId);
     setTmpCart(game.cart)
-    console.log(game.cart)
+    console.log("fetched game cart", game.cart)
   }
 
   const AddItemToCart = async() => {
-    tmpCart.push(
-      {
-        id: object.id,
-        name: object.name,
-        type: object.type
-      }
+    const item = {
+      id: object.id,
+      name: object.name,
+      type: object.type
+    }
+    dispatch(
+      gameCartAdded(item)
     )
+    tmpCart.push(item)
     await updateGameById(gameId, null, tmpCart).then((res) => {
       _handleClose()
     }).catch((error) => {
@@ -129,7 +132,7 @@ const Ingredient = ({object, _handleClose}) => {
   }
 
   useEffect(() => {
-    console.log("test", object);
+    console.log("imported object", object);
     fetchCart()
   }, [])
 

@@ -79,7 +79,7 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
       style={{
         borderTop: "2px dashed #FCD219",
         padding: "8px 16px 8px 16px",
-        maxWidth: "100%"
+        maxWidth: "100%",
       }}
     >
       <Grid item sx={{ mr: 3, ml: 1 }}>

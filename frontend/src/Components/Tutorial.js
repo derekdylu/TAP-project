@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
+import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
+import { useQuery, useQueryClient, useMutation, QueryClient, QueryClientProvider } from 'react-query'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -14,6 +16,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Footer from './Footer';
 import Header from './Header';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllGames, gameCuisineUpdated, gameGroceryUpdated } from '../Features/GamesSlice'
 
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
@@ -41,6 +45,10 @@ const styles = {
 };
 
 function Tutorial() {
+  const dispatch = useDispatch()
+  const _game = useSelector(selectAllGames)
+  const gameId = _game[0].id.id
+
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = 3;
@@ -50,6 +58,18 @@ function Tutorial() {
   const ref1b = useRef(null);
   const ref2b = useRef(null);
   const ref3b = useRef(null);
+
+  const updateRedux = () => {
+    getGameById(gameId).then((res) => {
+      dispatch(gameGroceryUpdated(res.grocery))
+      dispatch(gameCuisineUpdated(res.cuisine))
+    })
+    console.log("redux _game", _game)
+  }
+
+  useEffect(() => {
+    updateRedux()
+  }, [])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

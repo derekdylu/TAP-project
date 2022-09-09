@@ -97,11 +97,11 @@ const Comment = ({nickname, profilePhoto, content, score}) => {
               <Typography variant="body2" color="#A48910" fontWeight="500">
                 {title}
               </Typography>
-              <div style={{display:"flex", alignItems: "center"}}>
+              <div style={{display:"flex", alignItems: "flex-end"}}>
                 <Typography variant="body2" color="#A48910" fontWeight="500" noWrap sx={{mr:0.5}}>
                   得分
                 </Typography>
-                <Typography variant="h6" color="#F69039" fontWeight="700" noWrap >
+                <Typography variant="body2" color="#F69039" fontWeight="700" noWrap >
                   {score}
                 </Typography>
               </div>

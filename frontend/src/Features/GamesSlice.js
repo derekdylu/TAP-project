@@ -1,6 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
 
 const initialState = []
+
+let ingredientTypes = []
+getIngredientTypes().then((res) => {
+  ingredientTypes = res
+})
+let cuisines = []
+getCuisines().then((res) => {
+  cuisines = res
+})
 
 const GamesSlice = createSlice({
   name: 'games',
@@ -17,8 +27,18 @@ const GamesSlice = createSlice({
             cuisine: [],
             cart: [],
             grocery: [],
-            score: 0
+            score: 0,
+            checkout: false,
           }
+        }
+      }
+    },
+    gameCheckoutUpdate:{
+      reducer(state, action) {
+        const ck = action.payload
+        const game = state.find(x => x.id !== undefined)
+        if (game) {
+          game.checkout = ck
         }
       }
     },
@@ -36,29 +56,88 @@ const GamesSlice = createSlice({
         const g = action.payload
         const game = state.find(x => x.id !== undefined)
         if(game) {
-          game.cuisine = g
+          game.grocery = g
+
+          // NOTE modify grocery
+          let _grocery = []
+          game.grocery.map((key) => {
+            const neededIngredient = ingredientTypes.find(x => x.id === key)
+            _grocery.push(neededIngredient)
+          })
+          let __grocery = []
+          _grocery.map((key) => {
+            let item = {
+              ...key,
+              forCuisine: [],
+              inCart: false
+            }
+            game.cuisine.map((x) => {
+              let rqmt = cuisines.filter(y => y.id === x)[0].required_ingredient_types
+              let pair = rqmt.find(z => z === key.id)
+              if(pair !== undefined) {
+                item.forCuisine.push(cuisines.find(l => l.id === x).name)
+              }
+            })
+            __grocery.push(item)
+          })
+
+          game.grocery = __grocery
         }
       }
     },
     gameCartAdded: {
       reducer(state, action) {
-        const i = action.payload
+        const item = action.payload
         const game = state.find(x => x.id !== undefined)
-        let c = game.cart
-        c.push(i)
         if(game) {
+          let c = game.cart
+
+          // NOTE check inCart for game.grocery, add forCuisine property, check checkout
+          const idx = game.grocery.findIndex(y => y.id === parseInt(item.id.split('_')[0]))
+          if (idx !== -1) {
+            if (game.grocery[idx].inCart === false) {
+              game.grocery[idx].inCart = true
+            } else {
+              let _c = c.filter(z => parseInt(z.id.split('_')[0]) !== parseInt(item.id.split('_')[0]))
+              c = _c
+            }
+          }
+          if (game.grocery.find(z => z.inCart === false) === undefined) {
+            game.checkout = true
+          } else {
+            game.checkout = false
+          }
+          const _item = {
+            ...item,
+            forCuisine: game.grocery[idx].forCuisine
+          }
+
+          c.push(_item)
           game.cart = c
         }
       }
     },
     gameCartDeleted: {
       reducer(state, action) {
-        const i = action.payload
+        const id = action.payload
         const game = state.find(x => x.id !== undefined)
         let c = game.cart
-        const _c = c.filter(y => y === i)
+        const _c = c.filter(y => y.id !== id)
         if(game) {
           game.cart = _c
+
+          // NOTE check inCart for game.grocery, add forCuisine property, check checkout
+          const idx = game.grocery.findIndex(y => y.id === parseInt(id.split('_')[0]))
+          if (idx !== -1) {
+            if (game.grocery[idx].inCart === true) {
+              game.grocery[idx].inCart = false
+            }
+          }
+          if (game.grocery.find(z => z.inCart === false) === undefined) {
+            game.checkout = true
+          } else {
+            game.checkout = false
+          }
         }
       }
     },
@@ -82,7 +161,7 @@ export const {gameAdded,
               gameCuisineUpdated, 
               gameGroceryUpdated,
               gameCartAdded,
-              gameCartUpdated,
+              gameCartDeleted,
               gameScoreUpdated} = GamesSlice.actions
 
 export default GamesSlice.reducer

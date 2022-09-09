@@ -412,7 +412,7 @@ const Score = () => {
 						</div>
                     </div>
 					<div style={{ width: '100%' }}>
-						<Tabs value={tab} onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '64px' }}>
+						<Tabs value={tab} indicatorColor="secondary" textColor="secondary" onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '64px' }}>
 							{ Object.keys(type).map(key => (
 									<Tab
 										label={<img src={type[key].img}/>}
