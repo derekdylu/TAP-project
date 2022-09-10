@@ -84,19 +84,21 @@ const Cart = ({_tab, handleClose}) => {
     }
   };
 
-  const deleteItemFromCart = async(_id) => {
-    let _listCart = game[0].cart.filter(x => x.id !== _id)
+  const deleteItemFromCart = (_id) => {
     dispatch(
       gameCartDeleted(_id)
     )
-    await updateGameById(gameId, null, _listCart)
   }
 
-  const ClickCheckout = async() => {
-    await getScoreById(gameId).then((res) => {
-      dispatch(
-        pageChanged(1)
-      )
+  const ClickCheckout = () => {
+    updateGameById(gameId, null, game[0].cart).then(() => {
+      getScoreById(gameId).then((res) => {
+        dispatch(
+          pageChanged(1)
+        )
+      }).catch((error) => {
+        console.log(error)
+      })
     }).catch((error) => {
       console.log(error)
     })

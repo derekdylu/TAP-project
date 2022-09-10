@@ -91,6 +91,7 @@ const GamesSlice = createSlice({
         const game = state.find(x => x.id !== undefined)
         if(game) {
           let c = game.cart
+          let _item
 
           // NOTE check inCart for game.grocery, add forCuisine property, check checkout
           const idx = game.grocery.findIndex(y => y.id === parseInt(item.id.split('_')[0]))
@@ -101,15 +102,21 @@ const GamesSlice = createSlice({
               let _c = c.filter(z => parseInt(z.id.split('_')[0]) !== parseInt(item.id.split('_')[0]))
               c = _c
             }
+            _item = {
+              ...item,
+              forCuisine: game.grocery[idx].forCuisine
+            }
+          } else {
+            _item = {
+              ...item,
+            }
           }
+
+          // check checkout status
           if (game.grocery.find(z => z.inCart === false) === undefined) {
             game.checkout = true
           } else {
             game.checkout = false
-          }
-          const _item = {
-            ...item,
-            forCuisine: game.grocery[idx].forCuisine
           }
 
           c.push(_item)

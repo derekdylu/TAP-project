@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { useState } from 'react';
+import Slide from '@mui/material/Slide';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
 import { css } from "@emotion/css";
 
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import ProductionQuantityLimitsRoundedIcon from '@mui/icons-material/ProductionQuantityLimitsRounded';
 
@@ -49,9 +52,15 @@ const img = {
   15: bunaShimeji,
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
-  let onclick
-  let localCuisines = ["..."]
+  const [open, setOpen] = useState(false);
+
+  let onClickCross
+  let localCuisines = ["(無需要)"]
   if (cuisines !== undefined) {
     localCuisines = cuisines
   }
@@ -67,10 +76,39 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
   }
 
   if (onClickDelete !== undefined) {
-    onclick = onClickDelete
+    onClickCross = onClickDelete
   }
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
+    <>
+    <Dialog open={open} onClose={handleClose} TransitionComponent={Transition} PaperProps={{style: { borderRadius: '32px' }}} >
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ borderRadius: '16px', px: 2, py: 2 }}
+        style={{ background: "#fff" }}
+      >
+        <Typography variant="body2" color="grey[700]" fontWeight="500">
+          要從購物車移除「{name !== undefined ? name : "name"}」嗎？
+        </Typography>
+        <Button sx={{width: "300px", mt: 1}} onClick={onClickCross} variant="secondary3">
+          移除
+        </Button>
+        <Button sx={{width: "300px", mt: 0.5}} onClick={handleClose} variant="secondary4">
+          取消
+        </Button>
+      </Grid>
+    </Dialog>
     <Grid
       container
       direction="row"
@@ -99,14 +137,15 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
           {added === true ? 
             <DoneRoundedIcon color="primary"/>
             :
-            <ProductionQuantityLimitsRoundedIcon color="error"/>
+            <ProductionQuantityLimitsRoundedIcon color="warning"/>
           }
           </>
         :
-          <ClearRoundedIcon color="error" onClick={onclick} />
+          <HighlightOffRoundedIcon color="error" onClick={handleClickOpen} />
         }
       </Grid>
     </Grid>
+    </>
   )
 }
 

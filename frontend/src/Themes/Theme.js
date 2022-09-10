@@ -35,6 +35,9 @@ const globalPalette = createTheme({
     purple: {
       main: '#5552FF'
     },
+    warning: {
+      main: '#F69039'
+    },
     grey: {
       100: '#F7FAFC',
       200: '#EDF2F7',
@@ -99,7 +102,7 @@ const globalPalette = createTheme({
     },
     button: {
       fontSize: '18px',
-      fontWeight: 'bold',
+      fontWeight: '600',
       lineHeight: '27px',
     },
     caption: {
@@ -136,7 +139,7 @@ const theme = createTheme({
               backgroundColor: globalPalette.palette.primary.main,
             },
             "&:disabled":{
-              backgroundColor: globalPalette.palette.carton[400],
+              backgroundColor: globalPalette.palette.grey[300],
             }
           },
           
@@ -173,6 +176,48 @@ const theme = createTheme({
             "&:focus":{
               backgroundColor: "#ffffff",
             },
+          },
+        },
+        {
+          props: { variant: 'secondary3' },
+          style: {
+            color: globalPalette.palette.error.main,
+            borderRadius: '32px',
+            height: '43px',
+            backgroundColor: "#ffffff",
+            "&:hover":{
+              backgroundColor: globalPalette.palette.error.main,
+              color: globalPalette.palette.error.contrastText,
+            },
+            "&:active":{
+              backgroundColor: globalPalette.palette.error.main,
+              color: globalPalette.palette.error.contrastText,
+            },
+          },
+        },
+        {
+          props: { variant: 'secondary4' },
+          style: {
+            color: globalPalette.palette.secondary[700],
+            borderRadius: '32px',
+            height: '43px',
+            backgroundColor: globalPalette.palette.secondary[100],
+            "&:hover":{
+              backgroundColor: globalPalette.palette.secondary[100],
+            },
+            "&:active":{
+              backgroundColor: globalPalette.palette.secondary[700],
+              color: globalPalette.palette.secondary[100],
+            },
+          },
+        },
+        {
+          props: { variant: 'outlined' },
+          style: {
+            color: globalPalette.palette.primary.main,
+            backgroundColor: "#fff",
+            borderRadius: '16px',
+            height: '64px',
           },
         },
         {

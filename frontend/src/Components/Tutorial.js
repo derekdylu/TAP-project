@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
@@ -48,6 +48,7 @@ function Tutorial() {
   const dispatch = useDispatch()
   const _game = useSelector(selectAllGames)
   const gameId = _game[0].id.id
+  const [next, setNext] = useState(false)
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -63,6 +64,7 @@ function Tutorial() {
     getGameById(gameId).then((res) => {
       dispatch(gameGroceryUpdated(res.grocery))
       dispatch(gameCuisineUpdated(res.cuisine))
+      setNext(true)
     })
     console.log("redux _game", _game)
   }
@@ -266,7 +268,7 @@ function Tutorial() {
         }
       />
       <Container />
-      <Footer text="採買去！" />
+      <Footer text="採買去！" _disabled={!next} />
     </Page>
     </div>
   );

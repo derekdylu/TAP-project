@@ -28,6 +28,7 @@ import ListItemText from '@mui/material/ListItemText';
 import TabBadgeImg from '../Images/tab_badge.png'
 import QrCodeScannerRoundedIcon from '@mui/icons-material/QrCodeScannerRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 
 import winterMellon from '../Images/IngredientType/冬瓜.png'
 import longEffPlant from '../Images/IngredientType/長茄子.png'
@@ -65,6 +66,8 @@ const img = {
   13: egg,
   14: mushroom,
   15: bunaShimeji,
+  111: roundEffPlant,
+  113: brownEgg,
 }
 
 const header = css`
@@ -100,19 +103,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Ingredient = ({object, _handleClose}) => {
   const dispatch = useDispatch()
-  const _game = useSelector(selectAllGames)
-  const gameId = _game[0].id.id
-  const [tmpCart, setTmpCart] = useState([])
 
   const [open, setOpen] = useState(false);
-  const ingredientTypeId = parseInt(object.id.split('_')[0])
-  // const thisIngredient = useRef();
-
-  const fetchCart = async() => {
-    const game = await getGameById(gameId);
-    setTmpCart(game.cart)
-    console.log("fetched game cart", game.cart)
-  }
+  const [ingredientTypeId, setIngredientTypeId] = useState(object.id.split('_')[0])
+  // let ingredientTypeId = parseInt(object.id.split('_')[0])
 
   const AddItemToCart = async() => {
     const item = {
@@ -123,17 +117,21 @@ const Ingredient = ({object, _handleClose}) => {
     dispatch(
       gameCartAdded(item)
     )
-    tmpCart.push(item)
-    await updateGameById(gameId, null, tmpCart).then((res) => {
-      _handleClose()
-    }).catch((error) => {
-      console.log(error);
-    })
+    _handleClose()
+  }
+
+  const handleImage = () => {
+    if (object.id === "11_2") {
+      setIngredientTypeId(111)
+    }
+    if (object.id === "13_2") {
+      setIngredientTypeId(113)
+    }
   }
 
   useEffect(() => {
     console.log("imported object", object);
-    fetchCart()
+    handleImage()
   }, [])
 
   const handleClickOpen = () => {
@@ -264,7 +262,7 @@ const Ingredient = ({object, _handleClose}) => {
       <Grid container sx={{pb: 19, px: 1}} direction="column"
           justifyContent="flex-start"
           alignItems="center"
-          style={{background: "#FCD219"}}
+          style={{background: "#FCD219", minHeight: '100vh'}}
       >
       <Grid container
             direction="row"
@@ -315,7 +313,13 @@ const Ingredient = ({object, _handleClose}) => {
           :
             <></>
         }
-        <Button variant="primary" style={{ width: '100%'}} sx={{mt:2}} onClick={AddItemToCart}>
+        <Grid container direction="row" alignItems="center" justifyContent="center" sx={{ mt:2 }}>
+          <ErrorOutlineRoundedIcon style={{ width: '16px' }} />
+          <Typography variant="body3" color="#4A5568" fontWeight="700" sx={{ml: 0.5}}>
+            同類食材只能加入一項喔
+          </Typography>
+        </Grid>
+        <Button variant="primary" style={{ width: '100%'}} sx={{mt:1}} onClick={AddItemToCart}>
             加入購物車 <AddRoundedIcon sx={{ml: 1, mt: 0.25}} />
         </Button>
       </Grid>
