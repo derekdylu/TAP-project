@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Slide from '@mui/material/Slide';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -50,6 +50,8 @@ const img = {
   13: egg,
   14: mushroom,
   15: bunaShimeji,
+  111: roundEffPlant,
+  113: brownEgg,
 }
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -57,7 +59,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [imgIdx, setImgIdx] = useState(0)
 
   let onClickCross
   let localCuisines = ["(無需要)"]
@@ -68,11 +71,6 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
   let toBuy = true
   if (type === "cart") {
     toBuy = false
-  }
-
-  let imgIdx = 0
-  if (index !== undefined) {
-    imgIdx = index
   }
 
   if (onClickDelete !== undefined) {
@@ -86,6 +84,28 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleImage = () => {
+    if (index !== undefined) {
+      if (Number.isInteger(index) === true) {
+        setImgIdx(index)
+      } else {
+        if (index === "11_2") {
+          setImgIdx(111)
+          return
+        }
+        if (index === "13_2") {
+          setImgIdx(113)
+          return
+        }
+        setImgIdx(parseInt(index.split('_')[0]))
+      }
+    }
+  }
+
+  useEffect(() => {
+    handleImage()
+  }, [])
 
   return (
     <>

@@ -34,18 +34,18 @@ const medals = {
 
 const Comment = ({nickname, profilePhoto, content, score}) => {
   const [img, setImg] = useState(0)
-  const [title, setTitle] = useState("人人餵我")
+  const [title, setTitle] = useState("木牌廚師")
   const [level, setLevel] = useState(0)
 
   const init = () => {
     if (score > 20 && score <= 40) {
-      setTitle("新世紀料理苦手")
+      setTitle("石牌捷運站廚師")
       setLevel(1)
     } else if (score > 40 && score <= 60) {
-      setTitle("大當鋪，小當家")
+      setTitle("銅牌廚師")
       setLevel(2)
     } else if (score > 60 && score <= 80) {
-      setTitle("伙力全開")
+      setTitle("銀牌廚師")
       setLevel(3)
     } else if (score > 80 && score <= 100) {
       setTitle("天才大主廚")
@@ -108,11 +108,11 @@ const Comment = ({nickname, profilePhoto, content, score}) => {
             sx={{pb: 0.5}}
             style={{background:"transparent"}}
           >
-            <Typography variant="body2" color="#4C3F08" fontWeight="700">
+            <Typography variant="body2" color="#4C3F08" fontWeight="700" sx={{pb:0.3}}>
               {nickname} • 
             </Typography>
             {<img src={medals[level]} alt="" width="24px" />}
-            <Typography variant="body2" color="#4C3F08" fontWeight="500" noWrap>
+            <Typography variant="body2" color="#4C3F08" fontWeight="500" noWrap sx={{pl:0.5, pb:0.2}}>
               {score} 分
             </Typography>
           </Grid>
