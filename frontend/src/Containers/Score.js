@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import theme from '../Themes/Theme';
 import Navigation from "../Components/Navigation";
 import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -31,7 +32,9 @@ import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
 import spinach from '../Images/IngredientType/菠菜.png'
 import redish from '../Images/IngredientType/白蘿蔔.png'
 import cucumber from '../Images/IngredientType/胡瓜.png'
-
+import pot from '../Images/Score/pot.gif'
+import nameLogo from '../Images/nameLogo.png'
+import CloseIcon from '@mui/icons-material/Close'
 
 const content = {
     1: {
@@ -76,7 +79,7 @@ const cuisineImg = {
 }
 
 const profileImg = {
-	0: bunaShimeji,
+	0: bunaShimeji, // 
 	1: spinach,
 	2: redish,
 	3: cucumber
@@ -232,6 +235,43 @@ const inputTextarea = css`
 	line-height: 150%;
 `
 
+const profileRadio = css`
+	display: none;
+	&: checked + label > div {
+        background: #FCD219;
+    };
+`
+
+const profileContainer = css`
+    display: block;
+	width: 80%;
+	padding-top: 80%;
+	border-radius: 50%;
+	border: 2px solid #FDE475;
+	position: relative;
+	background: white;
+`
+
+const centerProfile = css`
+	width: 95%;
+	height: 95%;
+	border-radius: 50%;
+	position: absolute;
+	background: white;
+	top: 2.5%;
+	left: 2.5%;
+`
+
+const helpContainer = css`
+	margin-top: 8px;
+	padding: 8px 16px;
+	background: #FDE475;
+	border-radius: 16px;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 // fake score
 // total_score, safety_score, transparency_score, emission_score, season_score
 const fakeScore = [60, 20, 15, 15, 10];
@@ -247,33 +287,46 @@ const Score = () => {
 	const [hideAll, setHideAll] = useState(false);
 	const [score, setScore] = useState({})
 	const [scoreToDeg, setScoreToDeg] = useState([]);
-	const totalScore = [100, 25, 25, 25, 25];
+	const [email, setEmail] = useState("");
+	const [renderStatus, setRenderStatus] = useState(false);
+	const [countRender, setRender] = useState(0);
+	const [hidePot, setHidePot] = useState(false);
 
 	const type = {
 		0: {
 			"img": total,
 			"title": "",
-			"text": ""
+			"text": "",
+			"totalScore": 100,
+			"scoreTitle": "總得分"
 		},
 		1: {
 			"img": safety,
 			"title": "用藥安全",
-			"text": "標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，認證機構都會註明在每一個蔬果的包裝上。消費者可以安心買到對健康有所保障的食品。"
+			"text": "標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，認證機構都會註明在每一個蔬果的包裝上。消費者可以安心買到對健康有所保障的食品。",
+			"totalScore": 25,
+			"scoreTitle": "用藥安全得分"
 		},
 		2: {
 			"img": transparency,
 			"title": "食材可信度",
-			"text": "消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等。透過查看食材的詳細資訊，消費者不僅可以更加認識自己所購買食物的來源，若需要申請權益救濟時也不會求助無門。"
+			"text": "消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等。透過查看食材的詳細資訊，消費者不僅可以更加認識自己所購買食物的來源，若需要申請權益救濟時也不會求助無門。",
+			"totalScore": 25,
+			"scoreTitle": "食材可信度得分"
 		},
 		3: {
 			"img": emission,
 			"title": "食物里程",
-			"text": "標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以根據產地選擇在地食材，支持地產地銷不僅能降低碳排，也可以獲得更新鮮的食材。"
+			"text": "標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以根據產地選擇在地食材，支持地產地銷不僅能降低碳排，也可以獲得更新鮮的食材。",
+			"totalScore": 25,
+			"scoreTitle": "食物里程得分"
 		},
 		4: {
 			"img": season,
 			"title": "當季蔬果",
-			"text": "每一種蔬果都有特定的產季，購買當季蔬果可以避免吃到需要經過特殊保存處理的食材，也可以透過不去選擇國外進口的食材來降低食物從產地到餐桌的距離，減少碳排放。"
+			"text": "每一種蔬果都有特定的產季，購買當季蔬果可以避免吃到需要經過特殊保存處理的食材，也可以透過不去選擇國外進口的食材來降低食物從產地到餐桌的距離，減少碳排放。",
+			"totalScore": 25,
+			"scoreTitle": "當季蔬果得分"
 		},
 	}
 
@@ -292,6 +345,16 @@ const Score = () => {
 		setHiddenStatus(prevState => (!prevState));
 	}
 
+	const handleHelpOnClick = async() => {
+		const helpElement = document.getElementById('help');
+		console.log(helpElement.style.display);
+		if (helpElement.style.display == 'flex') {
+			helpElement.style.display = 'none';
+		} else {
+			helpElement.style.display = 'flex';
+		}
+	}
+
 	const handleButtonOnClick = async() => {
 		if (buttonStatus == 0) {
 			setButtonStatus(1);
@@ -300,8 +363,11 @@ const Score = () => {
 
 		else if (buttonStatus == 1) {
 			// add API
-			const email = document.getElementById("email");
-			sendEmail(email);
+			const emailInput = document.getElementById("email");
+			sendEmail(emailInput.value);
+			setEmail(emailInput.value);
+
+			// TODO: menu type for email
 
 			const nickname = document.getElementById("nickname");
 			const profile_photo = document.querySelector('input[name="profile"]:checked');
@@ -312,7 +378,7 @@ const Score = () => {
 				nickname.value = "";
 				profile_photo.checked = false;
 				comment.value = "";
-				email.value = "";
+				emailInput.value = "";
 			}).catch((error) => {
 				console.log(error);
 			});
@@ -325,15 +391,19 @@ const Score = () => {
 		}
 	}
 
+	const sendAgain = async() => {
+		console.log("send")
+		sendEmail(email);
+	}
+
 	useEffect(() => {
 		// const gameId = sessionStorage.getItem('gameId');
-		const gameId = '631715de971d50827ee63b11';
+		const gameId = '631715de971d50827ee63b11'; // 固定 gameID 測試用
 
 		const init = async() => {
 			const game = await getGameById(gameId);
 	
 			setCuisineId(game.cuisine);
-			console.log(game.cuisine);
 		}
 
 		const calculateScore = async() => {
@@ -356,17 +426,38 @@ const Score = () => {
 				}
 			}
 
-			console.log(scoreRes);
 			setScoreToDeg(scoreRes);
+			console.log("done" + scoreRes);
 		}
 
 		init();
 		calculateScore();
 	}, []);
 
+	useEffect(() => {
+		setRender(prevState => (prevState + 1));
+		console.log(countRender);
+		if (countRender == 3) {
+			setHidePot(true);
+		}
+	}, [scoreToDeg]);
+
     return (
         <ThemeProvider theme={theme}>
-            <Page>
+            {/* <Page> */}
+			<Page hidden={hidePot}>
+				<div style={{ width: '100%', position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -40%)' }}>
+					<img src={pot} style={{ width: '70%' }} />
+					<Typography variant='h2' color={theme.palette.secondary[900]} sx={{fontWeight: 700}}>
+						主菜中...
+					</Typography>
+				</div>
+				<div style={{ width: '100%', position: 'absolute', bottom: '75px' }}>
+					<img src={nameLogo} style={{ width: '60%' }} />
+				</div>
+			</Page>
+            {/* <Page hidden> */}
+            <Page hidden={!hidePot}>
                 <Navigation />
                 <div className={`${container}`}>
                     <div className={`${review}`}>
@@ -397,13 +488,13 @@ const Score = () => {
 							<div className={`${whiteCircle}`} />
 							<div className={`${scoreContent}`}>
 								<Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: '500', m: '0px', p: '0px' }}>
-									總得分
+									{type[tab].title}得分
 								</Typography>
 								<Typography sx={{ fontSize: '54px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
 									{score[tab]}
 								</Typography>
 								<Typography sx={{ fontSize: '20px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
-									/{totalScore[tab]}
+									/{type[tab].totalScore}
 								</Typography>
 								<Typography sx={{ fontSize: '22px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
 									分
@@ -414,9 +505,9 @@ const Score = () => {
 					<div style={{ width: '100%' }}>
 						<Tabs value={tab} indicatorColor="secondary" textColor="secondary" onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '64px' }}>
 							{ Object.keys(type).map(key => (
-									<Tab
-										label={<img src={type[key].img}/>}
-										style={{ padding: '0px', minWidth: '40px' }}/>
+								<Tab
+									label={<img src={type[key].img}/>}
+									style={{ padding: '0px', minWidth: '40px' }}/>
 							))}
 						</Tabs>
 					</div>
@@ -495,17 +586,31 @@ const Score = () => {
 						<Grid container>
 							{ Object.keys(profileImg).map(key => (
 								<Grid item xs={3}>
-									<input type="radio" value={key} name="profile" />
-									<img src = {profileImg[key]} style={{ width: '80%' }} />
+									<input type="radio" id={"radio" + key} value={key} name="profile" className={`${profileRadio}`}/>
+									<label htmlFor={"radio" + key} className={`${profileContainer}`}>
+										<div className={`${centerProfile}`} />
+										<img src = {profileImg[key]} style={{ width: '80%', position: 'absolute', top: '10%', left: '10%' }} />
+									</label>
 								</Grid>
 							))}
 						</Grid>
 
-
-						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-						電子郵件
-						</Typography>
+						<div style={{width: '100%',  alignItems: 'center', justifyContent: 'left', display: 'flex'}}>
+							<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px', display: 'inline-block' }}>
+							電子郵件 
+							</Typography>
+							<HelpOutlineIcon fontSize='small' sx={{ pl: '5px', display: 'inline-block'}} onClick={handleHelpOnClick}/>
+						</div>
 						<input type="text" placeholder='12345678@123.com' className={`${inputText}`} id='email' />
+						<div className={`${helpContainer}`} id='help' style={{display: 'none'}}>
+							<Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', width: '80%', display: 'inline-block'}}>
+							食譜會以電子郵件寄送給您，並不會將您的郵件地址另作他用，請放心。
+							</Typography>
+							<div onClick={handleHelpOnClick} 
+								style={{ borderRadius: '50%', background:'#FEF6D1', width: '40px', height: '40px', marginLeft: '10px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
+								<CloseIcon />
+							</div>
+						</div>
 
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
 						你認為產銷履歷怎麼樣？
@@ -525,9 +630,13 @@ const Score = () => {
 					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
 					食譜已經寄到你的信箱
 					</Typography>
-					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px' }}>
-					沒收到？再寄一次
+					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline' }}>
+					沒收到？
 					</Typography>
+					<Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline', textDecoration: 'underline' }} onClick={sendAgain}>
+					再寄一次
+					</Typography>
+
 
 					<div className={`${additional}`} style={{ display: 'block' }}>
 						<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>

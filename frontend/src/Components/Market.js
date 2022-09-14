@@ -165,13 +165,15 @@ const header = css`
     height: 100px;
     display: flex;
     position: sticky;
+    bavkground: black;
 `
 
 const typeList = css`
-    width: 100%;
+    // width: 100%;
+    overflow-x: scroll;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
     position: relative;
 `
 
@@ -203,18 +205,14 @@ const tabContainer = css`
 
 const body = css`
     overflow-x: scroll;
-    // overflow-y: hide;
-    // height: 80%;
     width: 100%;
-    background: black;
+    // background: black;
     display: flex;
+    position: absolute;
+    top: 166px;
+    bottom: 137px;
 `
 
-const ingredientImg = css`
-    margin: 0px;
-    padding: 0px;
-    height: 100%;
-`
 
 const labelContainer = css`
     background: white;
@@ -222,8 +220,8 @@ const labelContainer = css`
     padding: 4px 8px;
     box-sizing: border-box;
     position: relative;
-    bottom: 50px;
-    right: -50px;
+    bottom: 27%;
+    right: -30%;
     width: fit-content;
     border-radius: 0px 0px 10px 10px;
     display: flex;
@@ -231,7 +229,7 @@ const labelContainer = css`
 `
 
 const footer = css`
-    position: relative;
+    position: absolute;
     bottom: 0px;
     left: 0px;
     width: 100%;
@@ -280,7 +278,6 @@ const Market = () => {
     const [openList, setOpenList] = useState(false);
     const [openIngredient, setOpenIngredient] = useState([{}, false]);
     const [width, setWidth] = useState(window.innerWidth);
-    const array = [1, 2, 3, 4, 5];
     const [totalGrocery, setTotalGrocery] = useState(0);
     const [ingredients, setIngredients] = useState({});
     const type = {
@@ -297,16 +294,16 @@ const Market = () => {
             "ids": [0, 1]
         }
     };
-    const total = [1, 2, 3, 4, 5];
     const [tab, setTab] = useState(0);
-    const [tabIngredient, setTabIngredient] = useState({});
+    const [imageSize, setImageSize] = useState(0);
 
     useEffect(() => {
         const radio_0 = document.querySelector('input[name="tab"][value="0"]');
         radio_0.checked = true;
 
         const init = async() => {
-            const gameId = sessionStorage.getItem('gameId')
+            // const gameId = sessionStorage.getItem('gameId')
+            const gameId = '631715de971d50827ee63b11';
             const game = await getGameById(gameId);
             setTotalGrocery(game.cart.length);
 
@@ -318,14 +315,17 @@ const Market = () => {
                     {...prevState, [ingredient.id]: ingredient}
                 ));
             });
+
         }
 
         init();
+
+        const body = document.getElementById('body');
+        setImageSize(Math.floor(body.offsetHeight / 3));
     }, [])
 
     const handleRadioOnClick = async(e) => {
         const checkedRadio = document.querySelector('input[name="tab"]:checked');
-        console.log(checkedRadio);
         setTab(checkedRadio.value);
     }
 
@@ -347,8 +347,6 @@ const Market = () => {
 
     const handleClickOpenIngredient = (e) => {
         console.log(e.target);
-        setTabIngredient(ingredients[e.target.id]);
-        console.log(ingredients[e.target.id]);
         setOpenIngredient([ingredients[e.target.id], true]);
     };
 
@@ -369,7 +367,7 @@ const Market = () => {
             </Dialog>
             <Page>
             <div className={`${header}`}>
-                { array.map(key => (
+                { [1, 2, 3, 4, 5].map(key => (
                     <div key={key} className={`${top}`}>
                         <div className={`${topBackground1}`}></div>
                         <div className={`${topBackground2}`}></div>
@@ -380,7 +378,7 @@ const Market = () => {
             
             <div className={`${typeList}`}>
                 { Object.keys(type).map(key => (
-                    <div style={{ position: 'relative', bottom: '0px', display: 'inline-block' }}>
+                    <React.Fragment>
                         <input type="radio" id={key} value={key} name="tab" className={`${radio}`} onClick={handleRadioOnClick}/>
                         <label htmlFor={key} className={`${tabContainer}`}>
                             <img src={labelImg[key]} style={{marginRight: '4px'}}/>
@@ -388,39 +386,28 @@ const Market = () => {
                                 {type[key].name}
                             </Typography>
                         </label>
-                    </div>
+                    </React.Fragment>
                 ))}
             </div>
             
             {/* <button onClick={handleClickOpenIngredient}>open ingredient</button> */}
 
-            <div className={`${body}`}>
+            <div className={`${body}`} id='body'>
                 { (type[tab].ids).map(id => (
-                <Grid container direction="column" spacing={0} sx={{display: "grid"}}>
-                        <Grid item xs={2} onClick={handleClickOpenIngredient}>
-                            <img src={img[`${id + "_1"}`]} className={`${ingredientImg}`} id={id + "_1"} />
-                            {/* <div className={`${labelContainer}`}>
-                                <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500px' }}>
-                                    {ingredients[id + "_1"].name}
+                <Grid container direction="column" spacing={0}>
+                    {["_1", "_2", "_3"].map(val => (
+                    <Grid item xs='auto' onClick={handleClickOpenIngredient} sx={{height: imageSize }}>
+                        <img src={img[id + val]} style={{ height: '100%' }} />
+                        { ingredients[id + val] !== undefined && 
+                            <div className={`${labelContainer}`}>
+                                <Typography variant='body1' color={theme.palette.secondary[400]} sx={{fontWeight: 500}}>
+                                    {ingredients[id + val].name}
                                 </Typography>
-                            </div> */}
-                        </Grid>
-                        <Grid item xs={2} onClick={handleClickOpenIngredient}>
-                            <img src={img[`${id + "_2"}`]} className={`${ingredientImg}`} id={id + "_2"} />
-                            {/* <div className={`${labelContainer}`}>
-                                <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500px' }}>
-                                    {ingredients[id + "_2"].name}
-                                </Typography>
-                            </div> */}
-                        </Grid>
-                        <Grid item xs={2} onClick={handleClickOpenIngredient}>
-                            <img src={img[`${id + "_3"}`]} className={`${ingredientImg}`} id={id + "_3"} />
-                            {/* <div className={`${labelContainer}`}>
-                                <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500px' }}>
-                                    {ingredients[id + "_3"].name}
-                                </Typography>
-                            </div> */}
-                        </Grid>
+                            </div>
+                        }
+
+                    </Grid>
+                    ))}
                 </Grid>
                 ))}
             </div>
