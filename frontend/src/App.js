@@ -19,10 +19,13 @@ import Requirement from './Components/Requirement';
 import Cart from './Components/Cart';
 import Market from './Components/Market';
 import Ingredient from './Components/Ingredient';
+import ScoreDrawer from './Components/ScoreDrawer';
 
 import theme from './Themes/Theme';
 
 const queryClient = new QueryClient()
+
+const testData = {img: '3', nickname: "tester", score: 33, cuisine: [1,2,3]}
 
 const App = () => {
   return (
@@ -38,7 +41,8 @@ const App = () => {
 
             <Route path="/" element={<Game />} />
             <Route path="*" element={<Error />} />
-            <Route path="/feeds" element={<Feeds />} />
+            <Route path="/feeds" element={<Feeds _data={testData} />} />
+            <Route path="/feeds_nodata" element={<Feeds />} />
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/terms" element={<Terms />} /> */}
 
@@ -48,6 +52,7 @@ const App = () => {
             <Route path="/story/:id" element={<Story />} />
             <Route path="/requirement" element={<Requirement />} />
             <Route path="/market" element={<Market />} />
+            <Route path="/score_drawer" element={<ScoreDrawer data={testData} />} />
 
           </Routes>
         </Router>

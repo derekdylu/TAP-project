@@ -34,21 +34,21 @@ const medals = {
 
 const Comment = ({nickname, profilePhoto, content, score}) => {
   const [img, setImg] = useState(0)
-  const [title, setTitle] = useState("木牌廚師")
+  const [title, setTitle] = useState("廚房災殃")
   const [level, setLevel] = useState(0)
 
   const init = () => {
     if (score > 20 && score <= 40) {
-      setTitle("石牌捷運站廚師")
+      setTitle("新世紀料理苦手")
       setLevel(1)
     } else if (score > 40 && score <= 60) {
-      setTitle("銅牌廚師")
+      setTitle("廚房主宰者")
       setLevel(2)
     } else if (score > 60 && score <= 80) {
-      setTitle("銀牌廚師")
+      setTitle("天才大主廚")
       setLevel(3)
     } else if (score > 80 && score <= 100) {
-      setTitle("天才大主廚")
+      setTitle("蓋世廚神")
       setLevel(4)
     }
     switch(profilePhoto){
@@ -74,62 +74,59 @@ const Comment = ({nickname, profilePhoto, content, score}) => {
   }, [])
 
   return (
-    <div>
+    <>
       <Grid
         container
         direction="row"
         justifyContent="flex-start"
-        alignItems="flex-start"
-        sx={{mb: 1.5}}
+        alignItems="center"
+        sx={{py: 1}}
+        style={{
+          borderBottom: "2px dashed #FCD219"
+        }}
       >
-        <Grid
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="center"
-          sx={{mr:1.5}}
-        >
-          <Grid
-            style={{width: "24px", height: "24px", background:"#fff", borderRadius: '40px', }}
-          >
-            {<img src={imgs[img]} alt="" width="24px" />}
-          </Grid>
-        </Grid>
-        <Grid
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          style={{width: "328px", background:"transparent"}}
-        >
+        <Grid item xs={2}>
           <Grid
             container
-            direction="row"
-            justifyContent="flex-start"
+            direction="column"
+            justifyContent="center"
             alignItems="center"
-            sx={{pb: 0.5}}
-            style={{background:"transparent"}}
+            sx={{mr: 3}}
           >
-            <Typography variant="body2" color="#4C3F08" fontWeight="700" sx={{pb:0.3}}>
-              {nickname} • 
-            </Typography>
             {<img src={medals[level]} alt="" width="24px" />}
-            <Typography variant="body2" color="#4C3F08" fontWeight="500" noWrap sx={{pl:0.5, pb:0.2}}>
-              {score} 分
+            <Typography variant="body2" color="#4C3F08" fontWeight="500" noWrap sx={{pt: 0.1}}>
+              {score}pt
             </Typography>
           </Grid>
+        </Grid>
+        <Grid item xs={10}>
           <Grid
+            container
             direction="column"
             justifyContent="flex-start"
             alignItems="flex-start"
-            style={{background:"#FEF6D1", borderRadius: "4px 16px 16px 16px"}}
-            sx={{pt:1, px: 1.5, pb:1}}
+            style={{background: "transparent"}}
           >
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              sx={{pb: 0.5}}
+              style={{background:"transparent"}}
+            >
+              {<img src={imgs[img]} style={{background: "#FCD219", borderRadius: '64px'}} alt="" width="24px" />}
+              <Typography variant="body2" color="#4C3F08" fontWeight="700" sx={{pl: 0.75, pb: 0.25}}>
+                {nickname}
+              </Typography>
+            </Grid>
             <Typography variant="body1" color="#4C3F08" fontWeight="400">
               {content}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </>
   )
 }
 

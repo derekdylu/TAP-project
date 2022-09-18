@@ -101,6 +101,7 @@ const globalPalette = createTheme({
       lineHeight: 1.5,
     },
     button: {
+      color: '#251A0D',
       fontSize: '18px',
       fontWeight: '600',
       lineHeight: '27px',
