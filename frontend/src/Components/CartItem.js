@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Slide from '@mui/material/Slide';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -59,8 +59,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
+  console.log("cart item index", index)
+
   const [open, setOpen] = useState(false)
-  const [imgIdx, setImgIdx] = useState(0)
+  // const [imgIdx, setImgIdx] = useState(0)
 
   let onClickCross
   let localCuisines = ["(無需要)"]
@@ -85,27 +87,32 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
     setOpen(false);
   };
 
-  const handleImage = () => {
-    if (index !== undefined) {
-      if (Number.isInteger(index) === true) {
-        setImgIdx(index)
-      } else {
-        if (index === "11_2") {
-          setImgIdx(111)
-          return
-        }
-        if (index === "13_2") {
-          setImgIdx(113)
-          return
-        }
-        setImgIdx(parseInt(index.split('_')[0]))
-      }
-    }
-  }
+  // NOTE handle extra images
+  // const handleImage = () => {
+  //   if (index !== undefined) {
+  //     if (Number.isInteger(index) === true) {
+  //       setImgIdx(index)
+  //       // imgIdx.current = index
+  //     } else {
+  //       if (index === "11_2") {
+  //         setImgIdx(111)
+  //         // imgIdx.current = 111
+  //         return
+  //       }
+  //       if (index === "13_2") {
+  //         setImgIdx(113)
+  //         // imgIdx.current = 113
+  //         return
+  //       }
+  //       setImgIdx(parseInt(index.split('_')[0]))
+  //       // imgIdx.current = parseInt(index.split('_')[0])
+  //     }
+  //   }
+  // }
 
-  useEffect(() => {
-    handleImage()
-  }, [])
+  // useEffect(() => {
+  //   handleImage()
+  // }, [])
 
   return (
     <>
@@ -141,7 +148,7 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
       }}
     >
       <Grid item sx={{ mr: 3, ml: 1 }}>
-        <img src={img[imgIdx]} alt="ing" style={{ maxWidth: "88px" }}/>
+        <img src={img[Number.isInteger(index) ? index : parseInt(index.split('_')[0])]} alt="ing" style={{ maxWidth: "88px" }}/>
       </Grid>
       <Grid item sx={{ minWidth: '168px' }}>
         <Typography variant="h5">

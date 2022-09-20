@@ -52,7 +52,7 @@ const img = {
 
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
-    height: '100vh',
+    // height: '100vh',
 }));
 
 const headerContainer = css`
@@ -240,7 +240,7 @@ const Menu = ({ type }) => {
                     </Typography>
                 </div>
             </Header>
-            <Grid container spacing={2} px={2} my={0.5}>
+            <Grid container spacing={2} px={2} mt={0.5} pb={3} style={{background: "#FCD219"}}>
                 { Object.keys(cuisines).map(key => (
                     <Grid item xs={6} key={key}>
                         <input type="checkbox" id={key} name={key} onClick={handleCheckbox} className={`${checkbox}`}/>

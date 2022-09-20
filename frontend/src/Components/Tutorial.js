@@ -41,7 +41,7 @@ const styles = {
   stepper: {
     backgroundColor: "transparent",
     marginBottom: "32px",
-  }
+  },
 };
 
 function Tutorial() {
@@ -121,7 +121,7 @@ function Tutorial() {
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇經過認證的食材，吃得安全又放心。
           </Typography>
-          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick1}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon sx={{pt: 0.5}}/>} onClick={handleClick1}>
             觀看採購密技
           </Button>
           <img src={safetyImg} alt="test" width="256px"/>
@@ -155,7 +155,7 @@ function Tutorial() {
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇產品資訊透明詳盡，對消費者有保障的食材，買得安心才吃得開心。
           </Typography>
-          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick2}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon sx={{pt: 0.5}}/>} onClick={handleClick2}>
             觀看採購密技
           </Button>
           <img src={trustImg} alt="test" width="256px"/>
@@ -188,7 +188,7 @@ function Tutorial() {
           <Typography variant="body1" color="#4A5568" sx={{ mb: 2 }}>
             選擇離家近的在地食材，我們吃得新鮮，環境也更健康。
           </Typography>
-          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon />} onClick={handleClick3}>
+          <Button variant="secondary" sx={{ mb: 4 }} endIcon={<SearchRoundedIcon sx={{pt: 0.5}}/>} onClick={handleClick3}>
             觀看採購密技
           </Button>
           <img src={mileageImg} alt="test" width="256px"/>

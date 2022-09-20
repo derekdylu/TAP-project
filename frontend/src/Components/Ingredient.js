@@ -102,6 +102,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Ingredient = ({object, _handleClose}) => {
+  // console.log("object", object);
+
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);

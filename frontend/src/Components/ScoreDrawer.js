@@ -12,6 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Grid from '@mui/material/Grid';
+import { Link } from "react-router-dom";
 
 import pepper from '../Images/IngredientType/甜椒.png'
 import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
@@ -130,7 +131,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ScoreDrawer = ({data}) => {
-  console.log("img, nickname, score, cuisine: ", data.img, data.nickname, data.score, data.cuisine, data.rank)
+  console.log("(sd) img, nickname, score, cuisine: ", data.img, data.nickname, data.score, data.cuisine, data.rank)
 
   const [open, setOpen] = useState(false);
   const [img, setImg] = useState(0)
@@ -460,7 +461,9 @@ const ScoreDrawer = ({data}) => {
               分享遊戲成果
             </Button>
             <Button variant="outlined" style={{ width: '100%'}} sx={{mb:4}}>
-              再次挑戰
+              <Link to="/" style={{ textDecoration: 'none', color: "#44C177"}}>
+                再次挑戰
+              </Link>
             </Button>
             <Typography color="#2D3748" variant="body1" fontWeight="500">
               深入了解產銷履歷更多面向吧！

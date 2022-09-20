@@ -11,6 +11,7 @@ import theme from '../Themes/Theme';
 import Navigation from "../Components/Navigation";
 import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Link, useNavigate } from 'react-router-dom';
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -277,7 +278,9 @@ const helpContainer = css`
 const fakeScore = [60, 20, 15, 15, 10];
 
 const Score = () => {
-    const [rank, setRank] = useState(1);
+	const navigate = useNavigate();
+
+  const [rank, setRank] = useState(1);
 	const [tab, setTab] = useState(0);
 	const [hiddenStatus, setHiddenStatus] = useState(true);
 	const [show, setShow] = useState("+");
@@ -341,14 +344,14 @@ const Score = () => {
 	}
 
 	const handleShowOnClick = async() => {
-		setShow(prevState => (prevState == "+") ? "-" : "+");
+		setShow(prevState => (prevState === "+") ? "-" : "+");
 		setHiddenStatus(prevState => (!prevState));
 	}
 
 	const handleHelpOnClick = async() => {
 		const helpElement = document.getElementById('help');
 		console.log(helpElement.style.display);
-		if (helpElement.style.display == 'flex') {
+		if (helpElement.style.display === 'flex') {
 			helpElement.style.display = 'none';
 		} else {
 			helpElement.style.display = 'flex';
@@ -356,12 +359,12 @@ const Score = () => {
 	}
 
 	const handleButtonOnClick = async() => {
-		if (buttonStatus == 0) {
+		if (buttonStatus === 0) {
 			setButtonStatus(1);
 			setHideForm(false);
 		}
 
-		else if (buttonStatus == 1) {
+		else if (buttonStatus === 1) {
 			// add API
 			const emailInput = document.getElementById("email");
 			sendEmail(emailInput.value);
@@ -373,7 +376,7 @@ const Score = () => {
 			const profile_photo = document.querySelector('input[name="profile"]:checked');
 			const comment = document.getElementById("comment");
 
-			createComment(nickname.value, profile_photo.value, comment.value, score[0])
+			createComment(nickname.value, profile_photo.value, comment.value, score[0], Date.now().toString())
 			.then((res) => {
 				nickname.value = "";
 				profile_photo.checked = false;
@@ -386,7 +389,7 @@ const Score = () => {
 			setHideAll(true);
 		}
 
-		else if (buttonStatus == 2) {
+		else if (buttonStatus === 2) {
 			window.location.href = '/feeds';
 		}
 	}
@@ -449,7 +452,7 @@ const Score = () => {
 				<div style={{ width: '100%', position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -40%)' }}>
 					<img src={pot} style={{ width: '70%' }} />
 					<Typography variant='h2' color={theme.palette.secondary[900]} sx={{fontWeight: 700}}>
-						主菜中...
+						煮菜中...
 					</Typography>
 				</div>
 				<div style={{ width: '100%', position: 'absolute', bottom: '75px' }}>
