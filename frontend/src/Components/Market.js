@@ -484,7 +484,7 @@ const Market = () => {
 
             <div className={`${footer}`}>
                 <Grid container px={2}>
-                    {/* <Grid item xs={3}>
+                    <Grid item xs={3}>
                         <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <ListAltRoundedIcon />
                         </div>
@@ -495,7 +495,7 @@ const Market = () => {
                                 查看購物車 ({ _game[0].cart.length })
                             </Typography>
                         </Button>
-                    </Grid> */}
+                    </Grid>
                 </Grid>
             </div>
             </Page>
