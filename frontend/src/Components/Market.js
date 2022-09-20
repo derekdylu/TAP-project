@@ -206,7 +206,7 @@ const tabContainer = css`
 const body = css`
     overflow-x: scroll;
     width: 100%;
-    // background: black;
+    background: black;
     display: flex;
     position: absolute;
     top: 166px;
@@ -280,10 +280,15 @@ const Market = () => {
     const [width, setWidth] = useState(window.innerWidth);
     const [totalGrocery, setTotalGrocery] = useState(0);
     const [ingredients, setIngredients] = useState({});
+    const [prevPercentage, setPrevPercentage] = useState(0);
+
+    const sortedId = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 13, 0, 1]
+
     const type = {
         0: {
             "name": "鮮蔬區",
-            "ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15]
+            // "ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15],
+            "ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 13, 0, 1]
         },
         1: {
             "name": "蛋品區",
@@ -324,9 +329,75 @@ const Market = () => {
         setImageSize(Math.floor(body.offsetHeight / 3));
     }, [])
 
+    const [offset, setOffset] = useState(0);
+
+    useEffect(() => {
+        const onScroll = () => {
+            setOffset(window.pageYOffset);
+        }
+        // clean up code
+        window.removeEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    const bodyOnScroll = async(e) => {
+        // const scrollLeft = e.target.scrollLeft;
+        // const width = e.target.width;
+        // const scrollWidth = e.target.scrollWidth;
+        const percentage = e.target.scrollLeft / e.target.scrollWidth * 100;
+        // const direction = percentage - prevPercentage;
+
+        setPrevPercentage(percentage);
+
+        console.log('scroll', percentage);
+
+        // 57 轉蛋品區
+        // 68 轉肉品區
+
+        let id = 0;
+
+        // if (direction > 0) {
+            if (percentage <= 57) {
+                id = 0;
+            } else if (percentage <= 68) {
+                id = 1;
+            } else {
+                id = 2;
+            }
+        // } else {
+        //     if (percentage < 68) {
+        //         id = 0;
+        //     } else if (percentage < 79) {
+        //         id = 1;
+        //     } else {
+        //         id = 2;
+        //     }
+        // }
+        
+        const radio = document.getElementById(id);
+        radio.checked = true;
+    }
+
     const handleRadioOnClick = async(e) => {
         const checkedRadio = document.querySelector('input[name="tab"]:checked');
-        setTab(checkedRadio.value);
+        // setTab(checkedRadio.value);
+
+        console.log(checkedRadio.value);
+
+        const body = document.getElementById('body');
+        const tabValue = checkedRadio.value;
+
+        if (tabValue == '0') {
+            console.log(body.scrollLeft);
+            body.scrollLeft = 0;
+        } else if (tabValue == '1') {
+            console.log(body.scrollLeft);
+            body.scrollLeft = 68 / 100 * body.scrollWidth;
+        } else {
+            console.log(body.scrollLeft);
+            body.scrollLeft = 79 / 100 * body.scrollWidth;
+        }
     }
 
     const handleClickOpenCart = () => {
@@ -346,7 +417,7 @@ const Market = () => {
     };
 
     const handleClickOpenIngredient = (e) => {
-        console.log(e.target);
+        console.log(e.target.id);
         setOpenIngredient([ingredients[e.target.id], true]);
     };
 
@@ -392,29 +463,28 @@ const Market = () => {
             
             {/* <button onClick={handleClickOpenIngredient}>open ingredient</button> */}
 
-            <div className={`${body}`} id='body'>
-                { (type[tab].ids).map(id => (
+            <div className={`${body}`} id='body' onScroll={bodyOnScroll}>
                 <Grid container direction="column" spacing={0}>
-                    {["_1", "_2", "_3"].map(val => (
+                { sortedId.map(id => (
+                    ["_1", "_2", "_3"].map(val => (
                     <Grid item xs='auto' onClick={handleClickOpenIngredient} sx={{height: imageSize }}>
-                        <img src={img[id + val]} style={{ height: '100%' }} />
+                        <img src={img[id + val]} style={{ height: '100%' }} id={id + val} />
                         { ingredients[id + val] !== undefined && 
-                            <div className={`${labelContainer}`}>
-                                <Typography variant='body1' color={theme.palette.secondary[400]} sx={{fontWeight: 500}}>
+                            <div className={`${labelContainer}`} id={id + val}>
+                                <Typography variant='body1' color={theme.palette.secondary[400]} sx={{fontWeight: 500}} id={id + val}>
                                     {ingredients[id + val].name}
                                 </Typography>
                             </div>
                         }
-
                     </Grid>
-                    ))}
-                </Grid>
+                    ))
                 ))}
+                </Grid>
             </div>
 
             <div className={`${footer}`}>
                 <Grid container px={2}>
-                    <Grid item xs={3}>
+                    {/* <Grid item xs={3}>
                         <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <ListAltRoundedIcon />
                         </div>
@@ -425,7 +495,7 @@ const Market = () => {
                                 查看購物車 ({ _game[0].cart.length })
                             </Typography>
                         </Button>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </div>
             </Page>
