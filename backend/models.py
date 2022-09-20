@@ -170,6 +170,7 @@ class Comment(BaseModel):
     profile_photo: str = Field(...)
     content: str = Field(...)
     score: int = Field(...)
+    timestamp: Optional[str]
 
     class Config:
         allow_population_by_field_name = True
@@ -181,6 +182,7 @@ class Comment(BaseModel):
                 "profile_photo": ":)",
                 "content": "test",
                 "score": 0,
+                "timestamp": '"1234567890'
             }
         }
         
