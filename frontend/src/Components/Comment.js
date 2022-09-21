@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getComments } from '../Utils/Axios';
 import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
@@ -34,21 +34,16 @@ const medals = {
 
 const Comment = ({nickname, profilePhoto, content, score}) => {
   const [img, setImg] = useState(0)
-  const [title, setTitle] = useState("廚房災殃")
   const [level, setLevel] = useState(0)
 
   const init = () => {
     if (score > 20 && score <= 40) {
-      setTitle("新世紀料理苦手")
       setLevel(1)
     } else if (score > 40 && score <= 60) {
-      setTitle("廚房主宰者")
       setLevel(2)
     } else if (score > 60 && score <= 80) {
-      setTitle("天才大主廚")
       setLevel(3)
     } else if (score > 80 && score <= 100) {
-      setTitle("蓋世廚神")
       setLevel(4)
     }
     switch(profilePhoto){

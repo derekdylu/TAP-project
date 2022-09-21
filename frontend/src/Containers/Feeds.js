@@ -44,22 +44,29 @@ const zigzag = css`
   }
 `;
 
-// ---
 // TODO ref div 與我相近 can't run by first click
 
-const Feeds = ({_data}) => {
+const Feeds = () => {
+
   const refMine = useRef(null);
   const refTop = useRef(null);
-  const [comments, setComments] = useState([])
+  const [commentsHighest, setCommentsHighest] = useState([])
+  const [commentsLowest, setCommentsLowest] = useState([])
+  const [commentsLatest, setCommentsLatest] = useState([])
   const [comments1, setComments1] = useState([])
   const [comments2, setComments2] = useState([])
   const [filter, setFilter] = useState('')
   const data = useRef()
   const rank = useRef(0)
+  
+  const gameId = sessionStorage.getItem('gameId')
+  const img = sessionStorage.getItem('profile_photo')
+  const nickname = sessionStorage.getItem('nickname')
+  const score = sessionStorage.getItem('score')
+  const cuisine = sessionStorage.getItem('cuisine')
 
   const handleFilter = (newValue) => {
     setFilter(newValue)
-    sortComments(newValue)
     autoScroll(newValue)
   }
 
@@ -72,36 +79,31 @@ const Feeds = ({_data}) => {
   }
 
   const init = async() => {
+    if (gameId && img && nickname && score && cuisine) {
+      data.current = {
+        img: img,
+        nickname: nickname,
+        score: score,
+        cuisine: JSON.parse('[' + cuisine + ']'),
+      }
+    }
     const fetchedComments = await getComments()
-    setComments(fetchedComments)
     console.log("fetched comments", fetchedComments)
-    if (_data !== undefined) {
-      const upComments = fetchedComments.filter(x => x.score > _data.score).sort((a,b) => b.score - a.score)
-      const downComments = fetchedComments.filter(x => x.score <= _data.score).sort((a,b) => b.score - a.score)
+    const highest = fetchedComments.filter(x => x.score !== null).sort((a,b) => b.score - a.score)
+    setCommentsHighest(highest)
+    const lowest = fetchedComments.filter(x => x.score !== null).sort((a,b) => a.score - b.score)
+    setCommentsLowest(lowest)
+    const latest = fetchedComments.filter(x => x.score !== null).sort((a,b) => parseInt(b.timestamp) - parseInt(a.timestamp))
+    setCommentsLatest(latest)
+    if (data.current !== undefined) {
+      const upComments = fetchedComments.filter(x => x.score > data.current.score).sort((a,b) => b.score - a.score)
+      const downComments = fetchedComments.filter(x => x.score <= data.current.score).sort((a,b) => b.score - a.score)
       setComments1(upComments)
       setComments2(downComments)
       if (upComments.length + downComments.length > 0) {
         rank.current = Math.round(100 * (downComments.length / (upComments.length + downComments.length)))
-        data.current = {..._data, rank: rank.current}
+        data.current = {...data.current, rank: rank.current}
       }
-    }
-  }
-
-  const sortComments = (rule) => {
-    if (rule === "排名最高") {
-      const _comments = comments.sort((a,b) => b.score - a.score);
-      setComments(_comments)
-      return
-    }
-    if (rule === "排名最低") {
-      const _comments = comments.sort((a,b) => a.score - b.score);
-      setComments(_comments)
-      return
-    }
-    if (rule === "最新") {
-      const _comments = comments.sort((a,b) => parseInt(b.timestamp) - parseInt(a.timestamp));
-      setComments(_comments)
-      return
     }
   }
 
@@ -131,7 +133,7 @@ const Feeds = ({_data}) => {
             filter === "與我相近" ?
             <>
               {
-                data !== undefined ?
+                data.current !== undefined ?
                 <div>
                   <div>
                     {comments1.map(c => 
@@ -165,10 +167,30 @@ const Feeds = ({_data}) => {
             :
             <div>
               <div style={{position: 'relative', top: '-40px'}} ref={refTop} id="top"></div>
-              <div>
-              {comments.map(c => 
-                <Comment nickname={c.nickname} profilePhoto={c.profile_photo} content={c.content} score={c.score} />)}
-              </div>
+              <>
+                {
+                  filter === "排名最高" ?
+                  <>
+                    {commentsHighest.map(c => 
+                      <Comment nickname={c.nickname} profilePhoto={c.profile_photo} content={c.content} score={c.score} />)}
+                  </>
+                  :
+                  <>
+                    {
+                      filter === "排名最低" ?
+                      <>
+                        {commentsLowest.map(c => 
+                          <Comment nickname={c.nickname} profilePhoto={c.profile_photo} content={c.content} score={c.score} />)}
+                      </>
+                      :
+                      <>
+                        {commentsLatest.map(c => 
+                          <Comment nickname={c.nickname} profilePhoto={c.profile_photo} content={c.content} score={c.score} />)}
+                      </>
+                    }
+                  </>
+                }
+              </>
             </div>
           }
         </Grid>

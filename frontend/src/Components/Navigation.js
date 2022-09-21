@@ -8,7 +8,7 @@ const easeSlow = css`
 
 const menuBtn = css`
   position: absolute;
-  z-index: 3;
+  z-index: 101;
   right: 35px;
   top: 35px;
   cursor: pointer;
@@ -41,7 +41,7 @@ const btnLine = css`
 `;
 
 const menuOverlay = css`
-  z-index: 2;
+  z-index: 100;
   position: fixed;
   top: 0;
   right: 0;

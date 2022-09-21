@@ -11,7 +11,9 @@ import theme from '../Themes/Theme';
 import Navigation from "../Components/Navigation";
 import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -57,7 +59,7 @@ const content = {
         "img": medal_silver
     },
     3: {
-        "title": "新世紀料理苦手",
+        "title": "料理苦手",
         "quote": "我不應該猜贏你的，都是我的錯...",
         "comment": [
             "看來你對採購食材的要點還不太熟悉...",
@@ -278,6 +280,7 @@ const helpContainer = css`
 const fakeScore = [60, 20, 15, 15, 10];
 
 const Score = () => {
+	const reduxGame = useSelector(selectAllGames)
 	const navigate = useNavigate();
 
   const [rank, setRank] = useState(1);
@@ -375,6 +378,11 @@ const Score = () => {
 			const nickname = document.getElementById("nickname");
 			const profile_photo = document.querySelector('input[name="profile"]:checked');
 			const comment = document.getElementById("comment");
+
+			sessionStorage.setItem('nickname', nickname.value);
+			sessionStorage.setItem('profile_photo', profile_photo.value);
+			sessionStorage.setItem('score', score[0]);
+			sessionStorage.setItem('cuisine', reduxGame[0].cuisine)
 
 			createComment(nickname.value, profile_photo.value, comment.value, score[0], Date.now().toString())
 			.then((res) => {

@@ -13,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Grid from '@mui/material/Grid';
 import { Link } from "react-router-dom";
+import html2canvas from 'html2canvas';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import Divider from '@mui/material/Divider';
 
 import pepper from '../Images/IngredientType/甜椒.png'
 import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
@@ -51,6 +55,8 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import SentimentSatisfiedAltRoundedIcon from '@mui/icons-material/SentimentSatisfiedAltRounded';
 import LocalDiningRoundedIcon from '@mui/icons-material/LocalDiningRounded';
+
+import tapShare from '../Images/tap_share.png';
 
 const imgs = {
   0: spinach,
@@ -177,6 +183,15 @@ const ScoreDrawer = ({data}) => {
     setOpen(newOpen);
   };
 
+  const share = () => {
+    console.log("share clicked")
+    html2canvas(document.querySelector("#capture")).then(canvas => {
+      var dataURL = canvas.toDataURL("image/png");
+      var newTab = window.open('about:blank', 'image from canvas');
+      newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+  });
+  }
+
   return (
     <>
       <Global
@@ -256,12 +271,14 @@ const ScoreDrawer = ({data}) => {
             overflow: 'scroll',
           }}
         >
+          
           <Grid
             container
             direction="column"
             justifyContent="flex-start"
             alignItems="center"
           >
+            <div id="capture">
             <Grid
               container
               direction="row"
@@ -457,17 +474,35 @@ const ScoreDrawer = ({data}) => {
                 }
               </Grid>
             </Grid>
-            <Button variant="primary" style={{ width: '100%'}} sx={{mb:2}}>
+            </div>
+            <Button variant="primary" style={{ width: '100%'}} sx={{mb:2}} onClick={() => share()}>
               分享遊戲成果
             </Button>
-            <Button variant="outlined" style={{ width: '100%'}} sx={{mb:4}}>
+            <Button variant="outlined" style={{ width: '100%'}} sx={{mb:2}}>
               <Link to="/" style={{ textDecoration: 'none', color: "#44C177"}}>
                 再次挑戰
               </Link>
             </Button>
-            <Typography color="#2D3748" variant="body1" fontWeight="500">
+            <Divider flexItem sx={{ borderWidth: '1px', borderRadius: '10px', mx: 0.5 }} />
+            <Typography color="#2D3748" variant="body1" fontWeight="500" sx={{mt: 2}}>
               深入了解產銷履歷更多面向吧！
             </Typography>
+            <Card elevation={0} sx={{ my: 2, width: '100%' }} style={{ background: '#DAF3E4', borderRadius: '16px',}}>
+              {<img src={tapShare} alt=""/>}
+              <CardActions sx={{px: 2}}>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="body1">
+                    產銷履歷農產品資訊網
+                  </Typography>
+                  <Button target="_blank" href="https://taft.coa.gov.tw/default.html">瞭解更多</Button>
+                </Grid>
+              </CardActions>
+            </Card>
           </Grid>
         </StyledBox>
       </SwipeableDrawer>

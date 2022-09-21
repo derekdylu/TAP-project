@@ -41,8 +41,7 @@ const App = () => {
 
             <Route path="/" element={<Game />} />
             <Route path="*" element={<Error />} />
-            <Route path="/feeds" element={<Feeds _data={testData} />} />
-            <Route path="/feeds_nodata" element={<Feeds />} />
+            <Route path="/feeds" element={<Feeds />} />
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/terms" element={<Terms />} /> */}
 
