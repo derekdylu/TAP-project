@@ -18,10 +18,10 @@ import score_helper
 load_dotenv()
 app = FastAPI()
 
-MONGO_DETAILS = "mongodb://redacted.invalid/removed"
+MONGO_URI = "mongodb://redacted.invalid/removed"
 port = 8000
 
-client = MongoClient(MONGO_DETAILS, port)
+client = MongoClient(MONGO_URI, port)
 database = client["db"]
 comment_col = database["comment"]
 cuisine_col = database["cuisine"]
@@ -30,7 +30,7 @@ ingredient_col = database["ingredient"]
 ingredient_type_col = database["ingredient_type"]
 
 # NOTE alternative collection retriever of above ones
-# client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_DETAILS))
+# client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get(MONGO_URI))
 # database = client.db
 # comment_col = database.get_collection("comment")
 # cuisine_col = database.get_collection("cuisine")
