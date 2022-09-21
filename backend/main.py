@@ -18,8 +18,14 @@ import score_helper
 load_dotenv()
 app = FastAPI()
 
-MONGO_URI = "mongodb://redacted.invalid/removed"
-port = 8000
+is_prod = os.environ.get('IS_HEROKU', None)
+
+if is_prod:
+    MONGO_URI = process.env.MONGO_URI
+    port = process.env.PORT
+else:
+    MONGO_URI = "mongodb://redacted.invalid/removed"
+    port = 8000
 
 client = MongoClient(MONGO_URI, port)
 database = client["db"]
