@@ -2,6 +2,7 @@ import axios from "axios"
 // import "dotenv/config"
 
 const SERVER_URL = process.env.baseURL;
+console.log("server_url", SERVER_URL);
 const instance = axios.create({ baseURL: SERVER_URL || 'http://127.0.0.1:8000' });
 const jsonHeader = {
     headers: {
