@@ -1,0 +1,19 @@
+{
+  "name": "tap-project",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derekdylu/TAP-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/derekdylu/TAP-Project/issues"
+  },
+  "homepage": "https://github.com/derekdylu/TAP-Project#readme"
+}
