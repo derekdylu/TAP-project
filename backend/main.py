@@ -22,7 +22,6 @@ PORT = os.environ.get("PORT")
 from . import models
 from . import sendgrid_api
 from . import score_helper
-# client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI+PORT)
 client = MongoClient(MONGO_URI, int(PORT))
 
 # --- for local testing
