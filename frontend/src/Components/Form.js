@@ -238,7 +238,7 @@ const submitButton = css`
 `
 
 
-const Form = ({score, _handleClose, _setEmail}) => {
+const Form = ({score, _handleClose, _setEmail, cuisineId}) => {
     const [currIndex, setCurrIndex] = useState(0);
     const [answer, setAnswer] = useState({});
     const [buttonDisabled, setButtonDisabled] = useState({
@@ -414,7 +414,7 @@ const Form = ({score, _handleClose, _setEmail}) => {
 
     const sendAgain = async() => {
 		console.log("send")
-		sendEmail(email);
+		sendEmail(email, cuisineId);
 	}
 
     const identityForm = () => (
@@ -555,7 +555,7 @@ const Form = ({score, _handleClose, _setEmail}) => {
         console.log(answer);
         // add API
         const emailInput = document.getElementById("email");
-        sendEmail(emailInput.value);
+        sendEmail(emailInput.value, cuisineId);
         setEmail(emailInput.value);
 
         // TODO: menu type for email
@@ -563,7 +563,6 @@ const Form = ({score, _handleClose, _setEmail}) => {
         const nickname = document.getElementById("nickname");
         const profile_photo = document.querySelector('input[name="profile"]:checked');
 
-        // createComment(nickname.value, profile_photo.value, comment.value, score[0])
         createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer)
         .then((res) => {
             // nickname.value = "";

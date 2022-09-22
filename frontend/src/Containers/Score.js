@@ -407,7 +407,7 @@ const Score = () => {
 
 	const sendAgain = async() => {
 		console.log("send")
-		sendEmail(email);
+		sendEmail(email, cuisineId);
 	}
 
 	useEffect(() => {
@@ -471,7 +471,7 @@ const Score = () => {
     return (
         <ThemeProvider theme={theme}>
 			<Dialog open={openForm} onClose={handleCloseForm} fullScreen TransitionComponent={Transition}>
-                <Form score={score[0]} _handleClose={handleCloseForm} _setEmail={setEmail} />
+                <Form score={score[0]} _handleClose={handleCloseForm} _setEmail={setEmail} cuisineId={cuisineId} />
             </Dialog>
             {/* <Page> */}
 			<Page hidden={hidePot}>
