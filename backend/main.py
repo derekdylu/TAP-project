@@ -15,32 +15,20 @@ if __name__ == "__main__":
 load_dotenv()
 app = FastAPI()
 
-is_prod = os.environ.get('IS_HEROKU', None)
-
-if is_prod:
-    from . import models
-    from . import sendgrid_api
-    from . import score_helper
-else:
-    import models
-    import sendgrid_api
-    import score_helper
-
-# if is_prod:
-#     MONGO_URI = config("MONGO_URI")
-#     PORT = config("PORT")
-#     client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
-# else:
-#     MONGO_URI = "mongodb://redacted.invalid/removed"
-#     PORT = 8000
-#     client = MongoClient(MONGO_URI, PORT)
+from . import models
+from . import sendgrid_api
+from . import score_helper
+# import models
+# import sendgrid_api
+# import score_helper
 
 # MONGO_URI = config("MONGO_URI")
 # PORT = config("PORT")
 MONGO_URI = os.environ.get("MONGO_URI")
 PORT = os.environ.get("PORT")
-# client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI+PORT)
-client = MongoClient(MONGO_URI, int(PORT))
+
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI+PORT)
+# client = MongoClient(MONGO_URI, int(PORT))
 
 database = client["db"]
 comment_col = database["comment"]
