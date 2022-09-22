@@ -9,6 +9,7 @@ import theme from '../Themes/Theme';
 import logo from '../Images/logo1.gif'
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllPages, pageChanged } from '../Features/PagesSlice'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
@@ -131,6 +132,7 @@ const StartPage = () => {
                             <Typography variant="h2" color={theme.palette.primary[900]} sx={{ fontWeight: '900' }}>
                                 START
                             </Typography>
+                            {/* <ArrowForwardIcon sx={{ fontSize: '36px', color: '#143A24' }} /> */}
                             <div className={`${arrow}`} />
                         </div>
                         <div className={`${rightButton}`}></div>

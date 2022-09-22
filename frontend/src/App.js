@@ -20,8 +20,10 @@ import Cart from './Components/Cart';
 import Market from './Components/Market';
 import Ingredient from './Components/Ingredient';
 import ScoreDrawer from './Components/ScoreDrawer';
+import Form from './Components/Form';
 
 import theme from './Themes/Theme';
+import MarketInstruction from './Components/MarketInstruction';
 
 const queryClient = new QueryClient()
 
@@ -53,6 +55,8 @@ const App = () => {
             <Route path="/requirement" element={<Requirement />} />
             <Route path="/market" element={<Market />} />
             <Route path="/score_drawer" element={<ScoreDrawer data={testData} />} />
+            <Route path="/form" element={<Form />} />
+            <Route path="/market_instruction" element={<MarketInstruction />} />
 
           </Routes>
         </Router>

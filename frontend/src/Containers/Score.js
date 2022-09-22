@@ -8,13 +8,16 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from '@mui/material';
 import theme from '../Themes/Theme';
-import Navigation from "../Components/Navigation";
 import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Dialog from '@mui/material/Dialog';
+import Slide from '@mui/material/Slide';
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
 import medal_copper from "../Images/Medal/medal_copper.png"
+import medal_stone from "../Images/Medal/medal_stone.png"
+import medal_wood from "../Images/Medal/medal_wood.png"
 import total from "../Images/Score/total.png"
 import safety from "../Images/Score/safety.png"
 import transparency from "../Images/Score/transparency.png"
@@ -30,40 +33,63 @@ import cuisine_6 from "../Images/Cuisine/cuisine_6.png"
 import cuisine_7 from "../Images/Cuisine/cuisine_7.png"
 import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
 import spinach from '../Images/IngredientType/菠菜.png'
-import redish from '../Images/IngredientType/白蘿蔔.png'
+import redish from '../Images/IngredientType/甜椒.png'
 import cucumber from '../Images/IngredientType/胡瓜.png'
 import pot from '../Images/Score/pot.gif'
 import nameLogo from '../Images/nameLogo.png'
+import manyEggplants from '../Images/Score/manyEggplants.png'
+import done from '../Images/Score/done.png'
 import CloseIcon from '@mui/icons-material/Close'
 
+import { Chart } from 'primereact/chart';
+import Form from '../Components/Form';
+
 const content = {
-    1: {
-        "title": "天才大主廚",
-        "quote": "好啦...我承認，你完全俘虜了我的味蕾",
+	1: {
+        "title": "蓋世廚神",
+        "quote": "只有你自己可以超越你了！",
         "comment": [
             "智慧滿分的採購，高超的料理，看來你已經無所不能了。",
             "但還是仔細看看沒有滿分的地方，登上更完美的境界吧！",
         ],
-        "img": medal_gold
+        "img": medal_silver
     },
     2: {
+        "title": "天才大主廚",
+        "quote": "好啦...我承認，你完全俘虜了我的味蕾",
+        "comment": [
+            "把超市當自家廚房晃悠的你，對聰明的採購充滿餘裕。",
+            "只要再清除那些沒有滿分的地方，你就無人能敵了！",
+        ],
+        "img": medal_silver
+    },
+    3: {
         "title": "大當鋪，小當家",
         "quote": "恩...不得不說，這真的可圈可點",
         "comment": [
             "雖然你能做出正確的抉擇，但在某些方面似乎還不太成熟。",
             "參考下方的說明，讓自己成為名符其實的大主廚吧！"
         ],
-        "img": medal_silver
+        "img": medal_copper
     },
-    3: {
+    4: {
         "title": "新世紀料理苦手",
         "quote": "我不應該猜贏你的，都是我的錯...",
         "comment": [
             "看來你對採購食材的要點還不太熟悉...",
-            "沒關係！",
+            "不過沒關係！",
             "跟著我們的腳步就可以把這些通通搞懂，輕鬆掌握健康又友善環境的採購模式。"
         ],
-        "img": medal_copper
+        "img": medal_stone
+    },
+	5: {
+        "title": "廚房災殃",
+        "quote": "你...該不會是第一次煮飯吧。",
+        "comment": [
+            "相信我，沒有甚麼是做不到的，讓我們從頭來過！",
+            "只要仔細閱讀每個要點，你一定也能做出聰明的抉擇，擺脫災殃之稱！"
+        ],
+        "img": medal_wood
     },
 }
 
@@ -158,31 +184,29 @@ const scoreContainer = css`
 
 const mainCircle = css`
 	margin: 20px 0px;
-	width: 250px;
-	height: 250px;
+	width: 280px;
+	height: 280px;
 	position: relative;
 `
 
-const scoreCircle = (type, score) => ({
-    width: '250px',
-    height: '250px', 
-    borderRadius: '50%',
-    background: (type == 0) ?
-	`conic-gradient(#F3C522 0deg, #F3C522 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
-	(type == 1) ?
-	`conic-gradient(#F16063 0deg, #F16063 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
-	(type == 2) ?
-	`conic-gradient(#44C177 0deg, #44C177 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
-	(type == 3) ?
-	`conic-gradient(#1B71B2 0deg, #1B71B2 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
-	`conic-gradient(#F46B3B 0deg, #F46B3B ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)`
-});
+// const scoreCircle = (type, score) => ({
+//     width: '250px',
+//     height: '250px', 
+//     borderRadius: '50%',
+//     background: (type == 0) ?
+// 	`conic-gradient(#F3C522 0deg, #F3C522 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+// 	(type == 1) ?
+// 	`conic-gradient(#F16063 0deg, #F16063 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+// 	(type == 2) ?
+// 	`conic-gradient(#44C177 0deg, #44C177 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+// 	(type == 3) ?
+// 	`conic-gradient(#1B71B2 0deg, #1B71B2 ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)` :
+// 	`conic-gradient(#F46B3B 0deg, #F46B3B ${score}deg, #FEF6D1 ${score}deg, #FEF6D1 360deg)`
+// });
 
-const whiteCircle = css`
-	background: white;
-	border-radius: 50%;
-	width: 170px;
-	height: 170px;
+const scoreCircle = css`
+	width: 100%;
+	height: 100%;
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -192,9 +216,14 @@ const whiteCircle = css`
 const scoreContent = css`
 	position: absolute;
 	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	width: 100%;
+	top: 53%;
+	transform: translate(-50%, -53%);
+	width: 170px;
+	height: 170px;
+	background: white;
+	border-radius: 50%;
+	box-sizing: border-box;
+	padding-top: 28px;
 `
 
 const explanation = css`
@@ -276,6 +305,10 @@ const helpContainer = css`
 // total_score, safety_score, transparency_score, emission_score, season_score
 const fakeScore = [60, 20, 15, 15, 10];
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Score = () => {
     const [rank, setRank] = useState(1);
 	const [tab, setTab] = useState(0);
@@ -285,55 +318,60 @@ const Score = () => {
 	const [cuisineId, setCuisineId] = useState({});
 	const [hideForm, setHideForm] = useState(true);
 	const [hideAll, setHideAll] = useState(false);
-	const [score, setScore] = useState({})
+	const [score, setScore] = useState([0]);
 	const [scoreToDeg, setScoreToDeg] = useState([]);
 	const [email, setEmail] = useState("");
 	const [renderStatus, setRenderStatus] = useState(false);
 	const [countRender, setRender] = useState(0);
 	const [hidePot, setHidePot] = useState(false);
+	const [openForm, setOpenForm] = useState(false)
 
 	const type = {
 		0: {
 			"img": total,
-			"title": "",
+			"title": "總得分",
 			"text": "",
 			"totalScore": 100,
-			"scoreTitle": "總得分"
+			"scoreTitle": "總得分",
+			"color": "#F3C522",
 		},
 		1: {
 			"img": safety,
 			"title": "用藥安全",
 			"text": "標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，認證機構都會註明在每一個蔬果的包裝上。消費者可以安心買到對健康有所保障的食品。",
 			"totalScore": 25,
-			"scoreTitle": "用藥安全得分"
+			"scoreTitle": "用藥安全得分",
+			"color": "#F16063",
 		},
 		2: {
 			"img": transparency,
 			"title": "食材可信度",
 			"text": "消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等。透過查看食材的詳細資訊，消費者不僅可以更加認識自己所購買食物的來源，若需要申請權益救濟時也不會求助無門。",
 			"totalScore": 25,
-			"scoreTitle": "食材可信度得分"
+			"scoreTitle": "食材可信度得分",
+			"color": "#44C177",
 		},
 		3: {
 			"img": emission,
 			"title": "食物里程",
 			"text": "標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以根據產地選擇在地食材，支持地產地銷不僅能降低碳排，也可以獲得更新鮮的食材。",
 			"totalScore": 25,
-			"scoreTitle": "食物里程得分"
+			"scoreTitle": "食物里程得分",
+			"color": "#1B71B2",
 		},
 		4: {
 			"img": season,
 			"title": "當季蔬果",
 			"text": "每一種蔬果都有特定的產季，購買當季蔬果可以避免吃到需要經過特殊保存處理的食材，也可以透過不去選擇國外進口的食材來降低食物從產地到餐桌的距離，減少碳排放。",
 			"totalScore": 25,
-			"scoreTitle": "當季蔬果得分"
+			"scoreTitle": "當季蔬果得分",
+			"color": "#F46B3B",
 		},
 	}
 
 	const buttonContext = {
 		0: "留言解鎖食譜",
-		1: "送出",
-		2: "查看排名"
+		1: "查看排名"
 	}
 
 	const handleTabChange = async(e, newValue) => {
@@ -359,34 +397,10 @@ const Score = () => {
 		if (buttonStatus == 0) {
 			setButtonStatus(1);
 			setHideForm(false);
+			setOpenForm(true);
 		}
 
 		else if (buttonStatus == 1) {
-			// add API
-			const emailInput = document.getElementById("email");
-			sendEmail(emailInput.value);
-			setEmail(emailInput.value);
-
-			// TODO: menu type for email
-
-			const nickname = document.getElementById("nickname");
-			const profile_photo = document.querySelector('input[name="profile"]:checked');
-			const comment = document.getElementById("comment");
-
-			createComment(nickname.value, profile_photo.value, comment.value, score[0])
-			.then((res) => {
-				nickname.value = "";
-				profile_photo.checked = false;
-				comment.value = "";
-				emailInput.value = "";
-			}).catch((error) => {
-				console.log(error);
-			});
-			setButtonStatus(2);
-			setHideAll(true);
-		}
-
-		else if (buttonStatus == 2) {
 			window.location.href = '/feeds';
 		}
 	}
@@ -397,8 +411,8 @@ const Score = () => {
 	}
 
 	useEffect(() => {
-		// const gameId = sessionStorage.getItem('gameId');
-		const gameId = '631715de971d50827ee63b11'; // 固定 gameID 測試用
+		const gameId = sessionStorage.getItem('gameId');
+		// const gameId = '631715de971d50827ee63b11'; // 固定 gameID 測試用
 
 		const init = async() => {
 			const game = await getGameById(gameId);
@@ -407,49 +421,64 @@ const Score = () => {
 		}
 
 		const calculateScore = async() => {
-			const scoreRes = await getScoreById(gameId);
-			let originalScore = [...scoreRes]
-			setScore(originalScore);
+			await getScoreById(gameId)
+			.then((res) => {
 
-			if (originalScore[0] <= 30) {
-				setRank(3);
-			} else if (originalScore[0] <= 60) {
-				setRank(2);
-			}
-			
-			for (var i = 0; i < scoreRes.length; i++) {
-				if (i == 0) {
-					scoreRes[i] *= 3.6
+				let originalScore = [...res]
+				setScore(originalScore);
+	
+				if (originalScore[0] <= 20) {
+					setRank(5);
+				} else if (originalScore[0] <= 40) {
+					setRank(4);
+				} else if (originalScore[0] <= 60) {
+					setRank(3);
+				} else if (originalScore[0] <= 80) {
+					setRank(2);
 				}
-				else {
-					scoreRes[i] *= 14.4
+				
+				for (var i = 0; i < res.length; i++) {
+					if (i == 0) {
+						res[i] *= 3.6
+					}
+					else {
+						res[i] *= 14.4
+					}
 				}
-			}
+	
+				setScoreToDeg(res);
 
-			setScoreToDeg(scoreRes);
-			console.log("done" + scoreRes);
+				setHidePot(true);
+
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
 		}
 
 		init();
 		calculateScore();
 	}, []);
 
-	useEffect(() => {
-		setRender(prevState => (prevState + 1));
-		console.log(countRender);
-		if (countRender == 3) {
-			setHidePot(true);
-		}
-	}, [scoreToDeg]);
+
+	const handleCloseForm = () => {
+		setOpenForm(false);
+		setButtonStatus(1);
+		setHideAll(true);
+	}
 
     return (
         <ThemeProvider theme={theme}>
+			<Dialog open={openForm} onClose={handleCloseForm} fullScreen TransitionComponent={Transition}>
+                <Form score={score[0]} _handleClose={handleCloseForm} _setEmail={setEmail} />
+            </Dialog>
             {/* <Page> */}
 			<Page hidden={hidePot}>
 				<div style={{ width: '100%', position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -40%)' }}>
 					<img src={pot} style={{ width: '70%' }} />
 					<Typography variant='h2' color={theme.palette.secondary[900]} sx={{fontWeight: 700}}>
-						主菜中...
+						煮菜中...
 					</Typography>
 				</div>
 				<div style={{ width: '100%', position: 'absolute', bottom: '75px' }}>
@@ -457,8 +486,8 @@ const Score = () => {
 				</div>
 			</Page>
             {/* <Page hidden> */}
+			{/* <Page> */}
             <Page hidden={!hidePot}>
-                <Navigation />
                 <div className={`${container}`}>
                     <div className={`${review}`}>
                         <Typography variant="h3" color={theme.palette.grey[800]} sx={{ fontWeight: '700' }}>
@@ -484,13 +513,29 @@ const Score = () => {
                     </div>
                     <div className={`${scoreContainer}`}> {/*calculate degree*/}
 						<div className={`${mainCircle}`}>
-							<div style={ scoreCircle(tab, scoreToDeg[tab]) } />
-							<div className={`${whiteCircle}`} />
+							{/* <div style={ scoreCircle(tab, scoreToDeg[tab]) } />
+							<div className={`${whiteCircle}`} /> */}
+							{ score[tab] !== null &&
+								<Chart type="doughnut"
+									data={{
+										datasets: [{
+											data: [score[tab], type[tab].totalScore],
+											backgroundColor: [
+												type[tab].color,
+												'#FEF6D1'
+											],
+											borderWidth: 0,
+										}]
+									}}
+									className={`${scoreCircle}`}
+								/>
+							}
+
 							<div className={`${scoreContent}`}>
 								<Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: '500', m: '0px', p: '0px' }}>
-									{type[tab].title}得分
+									{type[tab].scoreTitle}
 								</Typography>
-								<Typography sx={{ fontSize: '54px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
+								<Typography sx={{ fontSize: '48px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
 									{score[tab]}
 								</Typography>
 								<Typography sx={{ fontSize: '20px', fontWeight: '700', m: '0px', p: '0px', display: 'inline' }}>
@@ -556,7 +601,7 @@ const Score = () => {
 					</div>
                 </div>
 
-				<div className={`${container}`} style={{ margin: '8px 24px' }} hidden={hideAll}>
+				<div className={`${container}`} style={{ margin: '8px 24px 144px 24px' }} hidden={hideAll}>
 					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
 					想獲得本次遊戲的完整食譜嗎？
 					</Typography>
@@ -574,51 +619,6 @@ const Score = () => {
 						</Grid>
 					</div>
 
-					<div hidden={hideForm}>
-						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-						名稱
-						</Typography>
-						<input type="text" placeholder='請輸入你的暱稱' className={`${inputText}`} id='nickname' />
-
-						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-						選擇一個最能代表你的頭像
-						</Typography>
-						<Grid container>
-							{ Object.keys(profileImg).map(key => (
-								<Grid item xs={3}>
-									<input type="radio" id={"radio" + key} value={key} name="profile" className={`${profileRadio}`}/>
-									<label htmlFor={"radio" + key} className={`${profileContainer}`}>
-										<div className={`${centerProfile}`} />
-										<img src = {profileImg[key]} style={{ width: '80%', position: 'absolute', top: '10%', left: '10%' }} />
-									</label>
-								</Grid>
-							))}
-						</Grid>
-
-						<div style={{width: '100%',  alignItems: 'center', justifyContent: 'left', display: 'flex'}}>
-							<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px', display: 'inline-block' }}>
-							電子郵件 
-							</Typography>
-							<HelpOutlineIcon fontSize='small' sx={{ pl: '5px', display: 'inline-block'}} onClick={handleHelpOnClick}/>
-						</div>
-						<input type="text" placeholder='12345678@123.com' className={`${inputText}`} id='email' />
-						<div className={`${helpContainer}`} id='help' style={{display: 'none'}}>
-							<Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', width: '80%', display: 'inline-block'}}>
-							食譜會以電子郵件寄送給您，並不會將您的郵件地址另作他用，請放心。
-							</Typography>
-							<div onClick={handleHelpOnClick} 
-								style={{ borderRadius: '50%', background:'#FEF6D1', width: '40px', height: '40px', marginLeft: '10px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
-								<CloseIcon />
-							</div>
-						</div>
-
-						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-						你認為產銷履歷怎麼樣？
-						</Typography>
-						<textarea placeholder='我覺得......' className={`${inputTextarea}`} rows={3} id='comment' />
-
-					</div>
-
 					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
                         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
                             {buttonContext[buttonStatus]}
@@ -627,25 +627,32 @@ const Score = () => {
 				</div>
 
 				<div className={`${container}`} style={{ margin: '8px 24px' }} hidden={!hideAll}>
-					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
-					食譜已經寄到你的信箱
+					<img src={done} />
+					<Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
+					問卷填寫完成！
 					</Typography>
+					<Typography variant='body1' color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
+					感謝你願意利用寶貴時間留下你的想法。按照約定，我們已經將食譜寄到你的電子郵件信箱。記得去看看喔～
+					</Typography>
+
 					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline' }}>
-					沒收到？
+						沒收到？
 					</Typography>
 					<Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline', textDecoration: 'underline' }} onClick={sendAgain}>
-					再寄一次
+						再寄一次
 					</Typography>
+				</div>
 
 
-					<div className={`${additional}`} style={{ display: 'block' }}>
-						<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
-						好奇自己與其他玩家的差異？
-						</Typography>
-						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-						按一下下方的神奇按鈕，你可以看到大家的得分，同時也可以看到大家對TAP的想法。聽起來很棒對吧!
-						</Typography>
-					</div>
+
+				<div className={`${container}`} style={{ margin: '8px 24px 144px 24px' }} hidden={!hideAll}>
+					<img src={manyEggplants} style={{ marginBottom: '20px' }}/>
+					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
+					好奇自己與其他玩家的差異？
+					</Typography>
+					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
+					按一下下方的神奇按鈕，你可以看到大家的得分，同時也可以看到大家對TAP的想法。聽起來很棒對吧!
+					</Typography>
 
 					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
                         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>

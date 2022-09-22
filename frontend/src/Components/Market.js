@@ -74,6 +74,7 @@ import img14_3 from '../Images/Ingredient/14_3.png'
 import img15_1 from '../Images/Ingredient/15_1.png'
 import img15_2 from '../Images/Ingredient/15_2.png'
 import img15_3 from '../Images/Ingredient/15_3.png'
+import MarketInstruction from './MarketInstruction';
 
 const img = {
     "0_1": img0_1,
@@ -221,7 +222,8 @@ const labelContainer = css`
     box-sizing: border-box;
     position: relative;
     bottom: 27%;
-    right: -30%;
+    left: 50%;
+    transform: translateX(-50%);
     width: fit-content;
     border-radius: 0px 0px 10px 10px;
     display: flex;
@@ -281,6 +283,7 @@ const Market = () => {
     const [totalGrocery, setTotalGrocery] = useState(0);
     const [ingredients, setIngredients] = useState({});
     const [prevPercentage, setPrevPercentage] = useState(0);
+    const [openInstruction, setOpenInstruction] = useState(false);
 
     const sortedId = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 13, 0, 1]
 
@@ -327,6 +330,8 @@ const Market = () => {
 
         const body = document.getElementById('body');
         setImageSize(Math.floor(body.offsetHeight / 3));
+
+        setOpenInstruction(true);
     }, [])
 
     const [offset, setOffset] = useState(0);
@@ -350,7 +355,7 @@ const Market = () => {
 
         setPrevPercentage(percentage);
 
-        console.log('scroll', percentage);
+        // console.log('scroll', percentage);s
 
         // 57 轉蛋品區
         // 68 轉肉品區
@@ -425,8 +430,19 @@ const Market = () => {
         setOpenIngredient(prevState => ([prevState[0], false]));
     };
 
+    const handleCloseInstruction = (event, reason= "backdropClick" | "escapeKeyDown") => {
+        if (reason === "backdropClick") {
+            console.log(reason);
+        } else {
+            setOpenInstruction(false);
+        }
+    };
+
     return (
         <ThemeProvider theme={theme}>
+            <Dialog open={openInstruction} onClose={handleCloseInstruction} fullWidth={true} TransitionComponent={Transition} PaperProps={{style: { borderRadius: '32px' }}}>
+                <MarketInstruction _handleClose={handleCloseInstruction} />
+            </Dialog>
             <Dialog open={openIngredient[1]} onClose={handleCloseIngredient} fullScreen TransitionComponent={Transition}>
                 <Ingredient object={openIngredient[0]} _handleClose={handleCloseIngredient} />
             </Dialog>
