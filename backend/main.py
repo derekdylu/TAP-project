@@ -11,23 +11,32 @@ import models
 from fastapi.responses import JSONResponse
 import sendgrid_api
 import score_helper
+from decouple import config
 
-# if __name__ == "__main__":
-#     uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
+if __name__ == "__main__":
+    uvicorn.run("app", host="0.0.0.0", port=8000, reload=True)
 
 load_dotenv()
 app = FastAPI()
 
 is_prod = os.environ.get('IS_HEROKU', None)
 
-if is_prod:
-    MONGO_URI = process.env.MONGO_URI
-    port = process.env.PORT
-else:
-    MONGO_URI = "mongodb://redacted.invalid/removed"
-    port = 8000
+# if is_prod:
+#     MONGO_URI = config("MONGO_URI")
+#     PORT = config("PORT")
+#     client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
+# else:
+#     MONGO_URI = "mongodb://redacted.invalid/removed"
+#     PORT = 8000
+#     client = MongoClient(MONGO_URI, PORT)
 
-client = MongoClient(MONGO_URI, port)
+# MONGO_URI = config("MONGO_URI")
+# PORT = config("PORT")
+MONGO_URI = os.environ.get("MONGO_URI")
+PORT = os.environ.get("PORT")
+# client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI+PORT)
+client = MongoClient(MONGO_URI, int(PORT))
+
 database = client["db"]
 comment_col = database["comment"]
 cuisine_col = database["cuisine"]
