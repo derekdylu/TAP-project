@@ -7,7 +7,6 @@ from typing import List
 from pymongo import MongoClient
 import uvicorn
 import motor.motor_asyncio
-import models
 from fastapi.responses import JSONResponse
 import sendgrid_api
 import score_helper
@@ -20,6 +19,11 @@ load_dotenv()
 app = FastAPI()
 
 is_prod = os.environ.get('IS_HEROKU', None)
+
+if is_prod:
+    from . import models
+else:
+    import models
 
 # if is_prod:
 #     MONGO_URI = config("MONGO_URI")
