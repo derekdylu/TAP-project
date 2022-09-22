@@ -1,15 +1,12 @@
 import os
+import uvicorn
+import motor.motor_asyncio
 from dotenv import load_dotenv
 from fastapi import FastAPI, Body, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from typing import List
 from pymongo import MongoClient
-import uvicorn
-import motor.motor_asyncio
-from fastapi.responses import JSONResponse
-import sendgrid_api
-import score_helper
 from decouple import config
 
 if __name__ == "__main__":
@@ -22,8 +19,12 @@ is_prod = os.environ.get('IS_HEROKU', None)
 
 if is_prod:
     from . import models
+    from . import sendgrid_api
+    from . import score_helper
 else:
     import models
+    import sendgrid_api
+    import score_helper
 
 # if is_prod:
 #     MONGO_URI = config("MONGO_URI")
