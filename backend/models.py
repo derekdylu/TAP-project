@@ -171,6 +171,7 @@ class Comment(BaseModel):
     content: str = Field(...)
     score: int = Field(...)
     timestamp: str = Field(...)
+    answer: Optional[object]
 
     class Config:
         allow_population_by_field_name = True
