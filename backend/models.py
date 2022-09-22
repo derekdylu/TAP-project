@@ -171,6 +171,7 @@ class Comment(BaseModel):
     content: str = Field(...)
     score: int = Field(...)
     timestamp: Optional[str]
+    answer: Optional[object]
 
     class Config:
         allow_population_by_field_name = True
@@ -194,6 +195,7 @@ def comment_helper(comment) -> dict:
         "profile_photo": comment["profile_photo"],
         "content": comment["content"],
         "score": comment["score"],
+        "timestamp": comment["timestamp"]
     }
 
 
