@@ -15,19 +15,19 @@ if __name__ == "__main__":
 load_dotenv()
 app = FastAPI()
 
-from . import models
-from . import sendgrid_api
-from . import score_helper
-# import models
-# import sendgrid_api
-# import score_helper
-
-# MONGO_URI = config("MONGO_URI")
-# PORT = config("PORT")
 MONGO_URI = os.environ.get("MONGO_URI")
 PORT = os.environ.get("PORT")
 
+# --- for production
+from . import models
+from . import sendgrid_api
+from . import score_helper
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI+PORT)
+
+# --- for local testing
+# import models
+# import sendgrid_api
+# import score_helper
 # client = MongoClient(MONGO_URI, int(PORT))
 
 database = client["db"]
