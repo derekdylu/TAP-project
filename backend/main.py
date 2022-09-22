@@ -51,6 +51,7 @@ from fastapi.middleware.cors import CORSMiddleware
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "https://ntu-tap-game.netlify.app/"
 ]
 
 app.add_middleware(
