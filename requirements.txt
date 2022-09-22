@@ -7,4 +7,4 @@ sendgrid==6.9.7
 sympy==1.10.1
 uvicorn==0.17.6
 python-decouple==3.6
-models==0.9.7
+doqu==0.28.2
