@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useRef, useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
-import { useQuery, useQueryClient, useMutation, QueryClient, QueryClientProvider } from 'react-query'
+import { css } from "@emotion/css";
+import { getGameById } from '../Utils/Axios';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -25,6 +25,19 @@ import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRound
 import safetyImg from '../Images/Tutorial/safety.png';
 import trustImg from '../Images/Tutorial/trust.png'
 import mileageImg from '../Images/Tutorial/mileage.png'
+
+const content = {
+  "title": "採買小撇步",
+  "text": "前往超市前，別忘了帶上採買秘笈！要成為世紀大主廚，食材的選擇必不可輕忽。只要檢查食材符合以下幾個要點，就可以放心地丟進購物車。"
+}
+
+const headerContainer = css`
+    margin: 16px 0px 0px 0px;
+`
+
+const bodyContainer = css`
+    margin: 8px 0px 0px 0px;
+`
 
 const Page = styled('div')(({ theme }) => ({
   background: theme.palette.secondary.main,
@@ -209,11 +222,19 @@ function Tutorial() {
 
   return (
     <div>
-    <Page sx={{pb: 19}}>
-      <Header
-        _titleText="採買小撇步"
-        _contentText="前往超市前，別忘了帶上採買秘笈！要成為世紀大主廚，食材的選擇必不可輕忽。只要檢查食材符合以下幾個要點，就可以放心地丟進購物車。"
-      />
+    <Page sx={{ pb: (106-window.innerHeight/8) }}>
+      <Header>
+        <div className={`${headerContainer}`}>
+          <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }} align="left">
+            { content.title }
+          </Typography>
+        </div>
+        <div className={`${bodyContainer}`}>
+          <Typography variant="body1" color={theme.palette.carton[700]} sx={{ fontWeight: '400' }} align="left">
+            { content.text }
+          </Typography>
+        </div>
+      </Header>
       <SwipeableViews
         index={activeStep}
         style={styles.swipeable}
@@ -228,7 +249,7 @@ function Tutorial() {
             alignItems="center"
             sx={{ minWidth: 304, height: 421, margin: "auto"}}
           >
-            <Card sx={{ width: 304, height: 357, borderRadius: '16px', overflow: 'auto', margin: "auto" }}>{x}</Card>
+            <Card sx={{ width: 304, height: 357, borderRadius: '16px', overflow: 'hidden', margin: "auto" }}>{x}</Card>
           </Grid>
         )}
       </SwipeableViews>
@@ -266,9 +287,8 @@ function Tutorial() {
           </Button>
         }
       />
-      <Container />
-      <Footer text="採買去！" _disabled={!next} />
     </Page>
+    <Footer text="採買去！" _disabled={!next} />
     </div>
   );
 }

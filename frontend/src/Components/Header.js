@@ -12,7 +12,7 @@ import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 const header = css`
     position: sticky;
     top: 0px;
-    padding: 80px 24px 32px 24px;
+    padding: 24px 24px 24px 24px;
     background: inherit;
     overflow: hidden;
 `;
@@ -78,7 +78,7 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
                 </a>
             </Typography>
             { titleText !== null &&
-                <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{textAlign: "left", mt:3}}>
+                <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{textAlign: "left"}}>
                 {titleText}
                 </Typography>
             }

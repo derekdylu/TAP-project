@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import { Grid } from '@mui/material'
 import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
@@ -127,7 +127,7 @@ const Page = styled('div')(({ theme }) => ({
 
 const container = css`
     padding: 20px 16px;
-    margin: 144px 24px 0px 24px;
+    margin: 24px 24px 0px 24px;
     border-radius: 32px;
     background: white;
 `
@@ -323,8 +323,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Score = () => {
+	const refBottom = useRef(null);
 	const reduxGame = useSelector(selectAllGames)
-    const [rank, setRank] = useState(1);
+  const [rank, setRank] = useState(1);
 	const [tab, setTab] = useState(0);
 	const [hiddenStatus, setHiddenStatus] = useState(true);
 	const [show, setShow] = useState("+");
@@ -480,6 +481,7 @@ const Score = () => {
 		setOpenForm(false);
 		setButtonStatus(1);
 		setHideAll(true);
+		refBottom.current?.scrollIntoView({behavior: 'smooth'});
 	}
 
     return (
@@ -659,8 +661,8 @@ const Score = () => {
 
 
 
-				<div className={`${container}`} style={{ margin: '8px 24px 144px 24px' }} hidden={!hideAll}>
-					<img src={manyEggplants} style={{ marginBottom: '20px' }}/>
+				<div className={`${container}`} style={{ margin: '8px 24px 24px 24px' }} hidden={!hideAll}>
+					<img src={manyEggplants} style={{ marginBottom: '20px' }} width="100%" />
 					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
 					好奇自己與其他玩家的差異？
 					</Typography>
@@ -669,7 +671,7 @@ const Score = () => {
 					</Typography>
 					
 					<Link to="/feeds" style={{ pointerEvents: 'none' }} id="linkToFeeds" className={`${linkStyle}`}>
-					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
+					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick} ref={refBottom}>
                         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
 							{buttonContext[buttonStatus]}
                         </Typography>

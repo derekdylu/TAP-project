@@ -1,14 +1,11 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { getCuisines } from '../Utils/Axios';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { grey } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
+import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Grid from '@mui/material/Grid';
@@ -17,6 +14,12 @@ import html2canvas from 'html2canvas';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import DialogActions from '@mui/material/DialogActions';
+import Slide from '@mui/material/Slide';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import theme from '../Themes/Theme';
 
 import pepper from '../Images/IngredientType/甜椒.png'
 import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
@@ -55,8 +58,13 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import SentimentSatisfiedAltRoundedIcon from '@mui/icons-material/SentimentSatisfiedAltRounded';
 import LocalDiningRoundedIcon from '@mui/icons-material/LocalDiningRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import tapShare from '../Images/tap_share.png';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const imgs = {
   0: spinach,
@@ -137,11 +145,16 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ScoreDrawer = ({data}) => {
-
   const [open, setOpen] = useState(false);
   const [img, setImg] = useState(0)
   const [level, setLevel] = useState(0)
   const [cuisinesInfo, setCuisinesInfo] = useState()
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [isRendered, setIsRendered] = useState(false)
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
 
   const init = async() => {
     if (data.score > 20 && data.score <= 40) {
@@ -182,16 +195,47 @@ const ScoreDrawer = ({data}) => {
     setOpen(newOpen);
   };
 
+  const openDialog = () => {
+    setDialogOpen(true)
+  }
+
   const share = () => {
+    let render = document.getElementById('renderer')
     html2canvas(document.querySelector("#capture")).then(canvas => {
-      var dataURL = canvas.toDataURL("image/png");
-      var newTab = window.open('about:blank', 'image from canvas');
-      newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
-  });
+      let dataURL = canvas.toDataURL("image/png")
+      render.innerHTML = "<img src='" + dataURL + "' alt='render' width='100%' />"
+      setIsRendered(true)
+    });
   }
 
   return (
     <>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        TransitionComponent={Transition}
+        keepMounted
+        PaperProps={{style: { borderRadius: '16px' }}}
+      >
+        <IconButton
+          color="primary"
+          onClick={handleDialogClose}
+          aria-label="close"
+          sx={{my: 1}}
+        >
+          <CloseRoundedIcon />
+        </IconButton>
+        <div id="renderer">
+        </div>
+        {
+          isRendered === false && 
+          <Button variant="primary" onClick={share} autoFocus style={{height: '64px'}}>
+            <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+              生成圖片
+            </Typography>
+          </Button>
+        }
+      </Dialog>
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
@@ -473,7 +517,7 @@ const ScoreDrawer = ({data}) => {
               </Grid>
             </Grid>
             </div>
-            <Button variant="primary" style={{ width: '100%'}} sx={{mb:2}} onClick={() => share()}>
+            <Button variant="primary" style={{ width: '100%'}} sx={{mb:2}} onClick={() => openDialog()}>
               分享遊戲成果
             </Button>
             <Button variant="outlined" style={{ width: '100%'}} sx={{mb:2}}>
@@ -486,7 +530,7 @@ const ScoreDrawer = ({data}) => {
               深入了解產銷履歷更多面向吧！
             </Typography>
             <Card elevation={0} sx={{ my: 2, width: '100%' }} style={{ background: '#DAF3E4', borderRadius: '16px',}}>
-              {<img src={tapShare} alt=""/>}
+              {<img src={tapShare} alt="" width="100%" />}
               <CardActions sx={{px: 2}}>
                 <Grid
                   container

@@ -12,7 +12,7 @@ const zigzag = css`
   bottom: 0px;
   box-sizing: border-box;
   width: 100%;
-  padding: 16px 24px 54px 24px;
+  padding: 16px 24px 16px 24px;
   background: #fff;
   zIndex: '100';
   &:after {

@@ -207,11 +207,11 @@ const tabContainer = css`
 const body = css`
     overflow-x: scroll;
     width: 100%;
-    background: black;
+    background: "#FCD219";
     display: flex;
     position: absolute;
     top: 166px;
-    bottom: 137px;
+    bottom: 96px;
 `
 
 
@@ -235,7 +235,7 @@ const footer = css`
     bottom: 0px;
     left: 0px;
     width: 100%;
-    padding: 19px 0px 54px 0px;
+    padding: 16px 0px 16px 0px;
 
     display: flex;
     justify-content: center;

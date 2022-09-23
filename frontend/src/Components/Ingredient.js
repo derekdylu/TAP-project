@@ -73,7 +73,7 @@ const img = {
 const header = css`
     position: sticky;
     top: 0px;
-    padding: 80px 24px 32px 24px;
+    padding: 24px 24px 24px 24px;
     background: inherit;
     overflow: hidden;
 `;
@@ -142,7 +142,7 @@ const Ingredient = ({object, _handleClose}) => {
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose} TransitionComponent={Transition} PaperProps={{style: { borderRadius: '32px' }}} >
+      <Dialog scroll="body" open={open} onClose={handleClose} TransitionComponent={Transition} PaperProps={{style: { borderRadius: '32px' }}} >
         <Grid
           container
           direction="column"
@@ -152,16 +152,16 @@ const Ingredient = ({object, _handleClose}) => {
           style={{background: "#DAF3E4"}}
         >
           <Grid
-          container
-          direction="column"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{width: '286px', height: '611px', borderRadius: '32px'}}
-          style={{background: "#fff"}}
+            container
+            direction="column"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{width: '286px', height: '611px', borderRadius: '32px'}}
+            style={{background: "#fff"}}
           >
             <Grid container justifyContent="center" alignItems="center" sx={{px: 3, width: '100%'}} >
-              <Grid sx={{borderRadius: '0 0 10px 10px', width: '115px', height: '25px'}} style={{background: "#DAF3E4"}} />
-              <Typography variant="h6" color="primary" fontWeight="500" sx={{mt:3}}>
+              <Grid sx={{borderRadius: '100px', width: '80px', height: '24px', mt: 1}} style={{background: "#DAF3E4"}} />
+              <Typography variant="h6" color="primary" fontWeight="500" sx={{mt:1.5}}>
                 產銷履歷農產品二維條碼認證追溯服務
               </Typography>
             </Grid>
@@ -257,7 +257,7 @@ const Ingredient = ({object, _handleClose}) => {
           </Grid>
         </Grid>
       </Dialog>
-      <Grid container sx={{pb: 19, px: 1}} direction="column"
+      <Grid container sx={{pb: 3, px: 1}} direction="column"
           justifyContent="flex-start"
           alignItems="center"
           style={{background: "#FCD219", minHeight: '100vh'}}

@@ -209,11 +209,10 @@ const content = {
 
 const footerContainer = css`
     position: fixed;
-    padding: 8px;
     width: 78%;
     bottom: 20px;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
 `
 
 const button = css`
@@ -225,8 +224,9 @@ const button = css`
 `
 
 const submitButton = css`
-    margin-left: 30px;
     background: #44C177;
+    margin-left: 9.085px;
+    margin-right: 9.085px;
     padding: 12px 38px;
     border: none;
     display: inline-block;
@@ -596,10 +596,16 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                                   (content[key].type === 'identity') ? identityForm() : <></> }
 
                                 <div className={`${footerContainer}`}>
-                                    { currIndex !== 0 &&
-                                        <button className={`${button}`} id={'buttonPrev' + key} disabled={false}>
+                                    { currIndex !== 0 ?
+                                        <button className={`${button}`} id={'buttonPrev' + key}>
                                             <Typography variant='body1' color={theme.palette.primary.main} sx={{fontWeight: '700'}} onClick={e => handlePrevButton(e, key)}>
                                             上一題
+                                            </Typography>
+                                        </button>
+                                        :
+                                        <button className={`${button}`} id={'buttonPrev' + key} disabled={true}>
+                                            <Typography variant='body1' color={theme.palette.primary.main} sx={{fontWeight: '700'}}>
+                                            
                                             </Typography>
                                         </button>
                                     }

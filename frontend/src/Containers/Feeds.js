@@ -111,20 +111,20 @@ const Feeds = () => {
   }, [])
 
   return (
-    <>
+    <div style={{backgroundColor: '#FEF6D'}}>
       { data.current && <ScoreDrawer data={data.current} /> }
       <Grid
         container
         direction="column"
         justifyContent="flex-start"
         alignItems="center"
-        sx={{pt: 6, pb: 12}}
+        sx={{pt: 1.5}}
         style={{
           background: '#FEF6D1',
           height: '75vh',
           overflow: 'auto',
           position: 'fixed',
-          bottom: '0px',
+          top: '182px',
         }}
       >
         <Grid item>
@@ -192,9 +192,9 @@ const Feeds = () => {
               </>
             </div>
           }
+          <Grid sx={{width: "1px", height: "160px"}} style={{background: "#FEF6D"}} />
         </Grid>
       </Grid>
-
       <div className={`${zigzag}`}>
         <Navigation />
         <Grid
@@ -206,7 +206,7 @@ const Feeds = () => {
         >
           <Grid
             container
-            sx={{mt:13, pb: 1.5}}
+            sx={{mt: 6, pb: 1.5}}
             direction="column"
             justifyContent="flex-start"
             alignItems="flex-start"
@@ -230,7 +230,7 @@ const Feeds = () => {
           </Grid>
         </Grid>
       </div>
-    </>
+    </div>
   )
 }
 

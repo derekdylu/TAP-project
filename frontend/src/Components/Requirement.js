@@ -44,11 +44,11 @@ const Page = styled('div')(({ theme }) => ({
 }));
 
 const headerContainer = css`
-    margin: 33px 0px 0px 0px;
+    margin: 16px 0px 0px 0px;
 `
 
 const bodyContainer = css`
-    margin: 11px 0px 0px 0px;
+    margin: 8px 0px 0px 0px;
 `
 
 const menuContainer = css`

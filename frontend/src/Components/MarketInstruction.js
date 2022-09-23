@@ -49,7 +49,7 @@ const cardContainer = css`
 const footerContainer = css`
     position: fixed;
     width: 90%;
-    padding: 8px;
+    padding: 0px;
     bottom: 20px;
     justify-content: center;
 `
@@ -108,13 +108,13 @@ const MarketInstruction = ({_handleClose}) => {
                     {/* <p style={{textAlign: 'center'}}> */}
                         <img src={content[key].img} style={{width: '50%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}} />
                     {/* </p> */}
-                    <MobileStepper
+                    {/* <MobileStepper
                         style={stepperStyle}
                         steps={maxSteps}
                         activeStep={currIndex}
-                    />
+                    /> */}
 
-                    <Typography variant='h6' color={theme.palette.grey[800]} sx={{ fontWeight: '700', textAlign: 'center' }}>
+                    <Typography variant='h6' color={theme.palette.grey[800]} sx={{ fontWeight: '700', textAlign: 'center', mt: 1.5}}>
                     { content[key].title }
                     </Typography>
                     <Typography variant='body1' color={theme.palette.grey[800]} sx={{ fontWeight: '400', marginTop: '9px', textAlign: 'center' }}>
