@@ -59,6 +59,7 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 import SentimentSatisfiedAltRoundedIcon from '@mui/icons-material/SentimentSatisfiedAltRounded';
 import LocalDiningRoundedIcon from '@mui/icons-material/LocalDiningRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 
 import tapShare from '../Images/tap_share.png';
 
@@ -225,6 +226,12 @@ const ScoreDrawer = ({data}) => {
         >
           <CloseRoundedIcon />
         </IconButton>
+        <Grid container direction="row" alignItems="center" justifyContent="center" sx={{ mt:2 }}>
+          <ErrorOutlineRoundedIcon style={{ width: '16px' }} />
+          <Typography variant="body3" color="#4A5568" fontWeight="700" sx={{ml: 0.5}}>
+            同類食材只能加入一項喔
+          </Typography>
+        </Grid>
         <div id="renderer">
         </div>
         {
