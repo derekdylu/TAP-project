@@ -305,6 +305,16 @@ const helpContainer = css`
     align-items: center;
 `
 
+const linkStyle = css`
+	color: inherit;
+	text-decoration: none;
+
+	&: link, visited, hover, active {
+		color: inherit;
+		text-decoration: none;
+	}
+`
+
 // fake score
 // total_score, safety_score, transparency_score, emission_score, season_score
 const fakeScore = [60, 20, 15, 15, 10];
@@ -660,12 +670,14 @@ const Score = () => {
 					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
 					按一下下方的神奇按鈕，你可以看到大家的得分，同時也可以看到大家對TAP的想法。聽起來很棒對吧!
 					</Typography>
-
+					
+					<Link to="/feeds" style={{ pointerEvents: 'none' }} id="linkToFeeds" className={`${linkStyle}`}>
 					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
                         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-							<Link to="/feeds" style={{ pointerEvents: 'none' }} id="linkToFeeds">{buttonContext[buttonStatus]}</Link>
+							{buttonContext[buttonStatus]}
                         </Typography>
                     </Button>
+					</Link>
 				</div>
             </Page>
         </ThemeProvider>
