@@ -399,7 +399,6 @@ const Score = () => {
 
 	const handleHelpOnClick = async() => {
 		const helpElement = document.getElementById('help');
-		console.log(helpElement.style.display);
 		if (helpElement.style.display == 'flex') {
 			helpElement.style.display = 'none';
 		} else {
@@ -422,7 +421,6 @@ const Score = () => {
 	}
 
 	const sendAgain = async() => {
-		console.log("send")
 		sendEmail(email, cuisineId);
 	}
 

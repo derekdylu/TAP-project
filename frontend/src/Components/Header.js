@@ -62,7 +62,6 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
   }
 
   function handlePageBack(e) {
-    // console.log("back")
     e.preventDefault()
     dispatch(
       pageChanged(-1)

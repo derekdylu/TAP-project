@@ -59,8 +59,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
-  // console.log("cart item index", index)
-
   const [open, setOpen] = useState(false)
   // const [imgIdx, setImgIdx] = useState(0)
 

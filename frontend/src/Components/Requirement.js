@@ -114,7 +114,7 @@ const Requirement = () => {
             game.grocery.map(async(key) => {
                 const ingredient = sortedIngredientTypes[key];
 
-                if (ingredient.special_requirement == true)  {
+                if (ingredient.special_requirement === true)  {
                     let name = ingredient.source + ingredient.name;
                     let id = ingredient.id
                     special.push({id, name});
@@ -124,15 +124,13 @@ const Requirement = () => {
             game.cuisine.map(async(key) => {
                 special.map(s => {
                     if ((sortedCuisines[key].required_ingredient_types).includes(s.id)) {
-                        if (pair[key] == undefined) {
+                        if (pair[key] === undefined) {
                             pair[key] = {name: sortedCuisines[key].name, ingredients: []};
                         }
                         pair[key]["ingredients"].push(s.name)
                     }
                 });
             });
-
-            // console.log(pair);
 
             setSpecialCuisine(pair);
         }

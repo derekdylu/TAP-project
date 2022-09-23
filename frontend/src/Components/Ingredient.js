@@ -102,10 +102,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Ingredient = ({object, _handleClose}) => {
-  // console.log("object", object);
-
   const dispatch = useDispatch()
-
   const [open, setOpen] = useState(false);
   const [ingredientTypeId, setIngredientTypeId] = useState(object.id.split('_')[0])
   // let ingredientTypeId = parseInt(object.id.split('_')[0])
@@ -132,7 +129,6 @@ const Ingredient = ({object, _handleClose}) => {
   }
 
   useEffect(() => {
-    // console.log("imported object", object);
     handleImage()
   }, [])
 

@@ -107,7 +107,6 @@ const StartPage = () => {
     // }
 
     function handlePageNext(e) {
-        // console.log("next")
         e.preventDefault()
         dispatch(
           pageChanged(1)

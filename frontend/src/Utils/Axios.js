@@ -79,8 +79,6 @@ export const getGameById = async (id) => {
         score: _score
     });
 
-    console.log(param);
-
     return await instance.post('/create_game', param, jsonHeader).then((res) => {
         return res.data;
     })
@@ -102,8 +100,6 @@ export const getGameById = async (id) => {
     if (_score != null) {
         param = {...param, "score": _score}
     }
-
-    console.log(param)
 
     param = JSON.stringify(param);
     return await instance.put(`/update_game/${id}`, param, jsonHeader).then((res) => {

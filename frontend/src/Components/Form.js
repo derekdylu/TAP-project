@@ -256,7 +256,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
     const handleRadio = (e, key) => {
         const chosen = document.querySelector(`input[name=${'answer' + key}]:checked`);
 
-        if (chosen != null) {
+        if (chosen !== null) {
             document.getElementById('text' + key).style.color = '#44C177';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
         } else {
@@ -269,7 +269,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         const chosen = document.querySelector(`input[name=${'answer' + key}]:checked`);
         const input = document.getElementById('answer_other' + key);
 
-        if (e.target.id == 'answer_other' + key) {
+        if (e.target.id === 'answer_other' + key) {
             document.getElementById('text' + key).style.color = '#A0AEC0';
             setButtonDisabled(prevState => ({...prevState, [key]: true}));
             chosen.checked = false;
@@ -279,7 +279,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
             input.value = "";
         }
 
-        if (chosen.length == 0 && input.value == "") {
+        if (chosen.length === 0 && input.value === "") {
             document.getElementById('text' + key).style.color = '#A0AEC0';
             setButtonDisabled(prevState => ({...prevState, [key]: true}));
         }
@@ -288,7 +288,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
     function handleRadioInputOtherChange (e, key) {
         const input = document.getElementById('answer_other' + key);
 
-        if (input.value != "") {
+        if (input.value !== "") {
             input.style.background = '#FDE475';
             document.getElementById('text' + key).style.color = '#44C177';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
@@ -303,7 +303,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         const chosen = document.querySelectorAll(`input[name=${'answer' + key}]:checked`);
         const input = document.getElementById('answer_other' + key);
 
-        if (chosen.length != 0 || input.value != "") {
+        if (chosen.length !== 0 || input.value !== "") {
             document.getElementById('text' + key).style.color = '#44C177';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
         } else {
@@ -316,13 +316,13 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         const chosen = document.querySelectorAll(`input[name=${'answer' + key}]:checked`);
         const input = document.getElementById('answer_other' + key);
         
-        if (input.value != "") {
+        if (input.value !== "") {
             input.style.background = '#FDE475';
             document.getElementById('text' + key).style.color = '#44C177';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
         } else {
             input.style.background = '#FFFFFF';
-            if (chosen.length == 0) {
+            if (chosen.length === 0) {
                 document.getElementById('text' + key).style.color = '#A0AEC0';
                 setButtonDisabled(prevState => ({...prevState, [key]: true}));
             }
@@ -331,7 +331,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
 
     const handleTextInput = (e, key) => {
         const input = document.getElementById('answer' + key);
-        if (input.value != "") {
+        if (input.value !== "") {
             document.getElementById('text' + key).style.color = '#44C177';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
         } else {
@@ -343,7 +343,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
     const handlePrevButton = (e, key) => {
         const button = document.getElementById('buttonPrev' + key);
         
-        if (button.disabled == false) {
+        if (button.disabled === false) {
             setCurrIndex((prevState) => prevState - 1);
         }
     }
@@ -351,39 +351,39 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
     const handleNextButton = (e, key, type) => {
         const button = document.getElementById('buttonNext' + key);
 
-        if (button.disabled == false) {
+        if (button.disabled === false) {
             setCurrIndex((prevState) => prevState + 1);
 
             let result = '';
     
-            if (type == 'single') {
+            if (type === 'single') {
                 const chosen = document.querySelector(`input[name=${'answer' + key}]:checked`);
                 result = content[key].choice[chosen.value[1]];
             }
             
-            else if (type == 'singleOther') {
+            else if (type === 'singleOther') {
                 const chosen = document.querySelector(`input[name=${'answer' + key}]:checked`);
                 const inputOther = document.getElementById('answer_other' + key);
-                if (chosen != null) {
+                if (chosen !== null) {
                     result = content[key].choice[chosen.value[1]];
                 } else {
                     result = inputOther.value;
                 }
             }
 
-            else if (type == 'multiple') { // 另外處理如果最後是 text
+            else if (type === 'multiple') { // 另外處理如果最後是 text
                 const chosen = document.querySelectorAll(`input[name=${'answer' + key}]:checked`);
                 const inputOther = document.getElementById('answer_other' + key);
                 result = [];
                 for (var i = 0; i < chosen.length; i++) {
                     result.push(content[key].choice[chosen[i].value[1]]);
                 }
-                if (inputOther.value != "") {
+                if (inputOther.value !== "") {
                     result.push(inputOther.value);
                 }
             }
             
-            else if (type == 'text') {
+            else if (type === 'text') {
                 const textarea = document.getElementById('answer' + key);
                 result = textarea.value;
             }
@@ -402,7 +402,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         const profilePicture = document.querySelector(`input[name=profile]:checked`);
         const email = document.getElementById('email');
 
-        if (nickname.value != "" && profilePicture != null && email.value != "") {
+        if (nickname.value !== "" && profilePicture !== null && email.value !== "") {
             document.getElementById('text' + key).style.color = '#143A24';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
         } else {
@@ -540,7 +540,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
 
     const handleHelpOnClick = (e, type) => {
 		const helpElement = document.getElementById('help');
-        if (type == 0) {
+        if (type === 0) {
 			helpElement.style.display = 'flex';
         }
         else {
@@ -589,11 +589,11 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                     <SwipeableViews index={currIndex} onChangeIndex={handleChangeIndex} disabled style={{ height: '100%' }} hidden={hideSlide}>
                         {Object.keys(content).map(key => (
                             <div className={`${cardContainer}`}>
-                                { (content[key].type == 'single') ? singleChoice(content[key], key) :
-                                  (content[key].type == 'singleOther') ? singleChoiceWithOther(content[key], key) :
-                                  (content[key].type == 'multiple') ? multipleChoice(content[key], key) :
-                                  (content[key].type == 'text') ? textInput(content[key], key) :
-                                  (content[key].type == 'identity') ? identityForm() : <></> }
+                                { (content[key].type === 'single') ? singleChoice(content[key], key) :
+                                  (content[key].type === 'singleOther') ? singleChoiceWithOther(content[key], key) :
+                                  (content[key].type === 'multiple') ? multipleChoice(content[key], key) :
+                                  (content[key].type === 'text') ? textInput(content[key], key) :
+                                  (content[key].type === 'identity') ? identityForm() : <></> }
 
                                 <div className={`${footerContainer}`}>
                                     { currIndex !== 0 &&

@@ -137,7 +137,6 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ScoreDrawer = ({data}) => {
-  // console.log("(sd) img, nickname, score, cuisine: ", data.img, data.nickname, data.score, data.cuisine, data.rank)
 
   const [open, setOpen] = useState(false);
   const [img, setImg] = useState(0)
@@ -184,7 +183,6 @@ const ScoreDrawer = ({data}) => {
   };
 
   const share = () => {
-    console.log("share clicked")
     html2canvas(document.querySelector("#capture")).then(canvas => {
       var dataURL = canvas.toDataURL("image/png");
       var newTab = window.open('about:blank', 'image from canvas');

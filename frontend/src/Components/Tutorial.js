@@ -66,7 +66,6 @@ function Tutorial() {
       dispatch(gameGroceryUpdated({grocery: res.grocery, cuisine: res.cuisine}))
       setNext(true)
     })
-    console.log("redux _game", _game)
   }
 
   useEffect(() => {

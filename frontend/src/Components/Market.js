@@ -355,8 +355,6 @@ const Market = () => {
 
         setPrevPercentage(percentage);
 
-        // console.log('scroll', percentage);s
-
         // 57 轉蛋品區
         // 68 轉肉品區
 
@@ -388,19 +386,14 @@ const Market = () => {
         const checkedRadio = document.querySelector('input[name="tab"]:checked');
         // setTab(checkedRadio.value);
 
-        // console.log(checkedRadio.value);
-
         const body = document.getElementById('body');
         const tabValue = checkedRadio.value;
 
-        if (tabValue == '0') {
-            // console.log(body.scrollLeft);
+        if (tabValue === '0') {
             body.scrollLeft = 0;
-        } else if (tabValue == '1') {
-            // console.log(body.scrollLeft);
+        } else if (tabValue === '1') {
             body.scrollLeft = 68 / 100 * body.scrollWidth;
         } else {
-            // console.log(body.scrollLeft);
             body.scrollLeft = 79 / 100 * body.scrollWidth;
         }
     }
@@ -422,7 +415,6 @@ const Market = () => {
     };
 
     const handleClickOpenIngredient = (e) => {
-        // console.log(e.target.id);
         setOpenIngredient([ingredients[e.target.id], true]);
     };
 
@@ -432,7 +424,7 @@ const Market = () => {
 
     const handleCloseInstruction = (event, reason= "backdropClick" | "escapeKeyDown") => {
         if (reason === "backdropClick") {
-            // console.log(reason);
+
         } else {
             setOpenInstruction(false);
         }

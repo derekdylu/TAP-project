@@ -14,12 +14,9 @@ import { useSelector } from 'react-redux';
 import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
 import { useDispatch } from 'react-redux';
 import { pageChanged } from '../Features/PagesSlice'
-import { useQuery, useQueryClient, useMutation, QueryClient, QueryClientProvider } from 'react-query'
 
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
-import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
-import ReviewsRoundedIcon from '@mui/icons-material/ReviewsRounded';
 
 const header = css`
     position: sticky;
@@ -52,7 +49,6 @@ const Cart = ({_tab, handleClose}) => {
   const dispatch = useDispatch()
 
   const game = useSelector(selectAllGames)
-  console.log("redux game", game)
   const gameId = game[0].id.id
 
   const [tab, setTab] = useState(_tab);
