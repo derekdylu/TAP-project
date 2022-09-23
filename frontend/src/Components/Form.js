@@ -238,7 +238,7 @@ const submitButton = css`
 `
 
 
-const Form = ({score, _handleClose, _setEmail}) => {
+const Form = ({score, _handleClose, _setEmail, cuisineId}) => {
     const [currIndex, setCurrIndex] = useState(0);
     const [answer, setAnswer] = useState({});
     const [buttonDisabled, setButtonDisabled] = useState({
@@ -388,7 +388,6 @@ const Form = ({score, _handleClose, _setEmail}) => {
                 result = textarea.value;
             }
 
-            console.log(result);
             setAnswer(prevState => ({...prevState, [key]: result}));
         }
     }
@@ -413,8 +412,7 @@ const Form = ({score, _handleClose, _setEmail}) => {
     }
 
     const sendAgain = async() => {
-		console.log("send")
-		sendEmail(email);
+		sendEmail(email, cuisineId);
 	}
 
     const identityForm = () => (
@@ -542,7 +540,6 @@ const Form = ({score, _handleClose, _setEmail}) => {
 
     const handleHelpOnClick = (e, type) => {
 		const helpElement = document.getElementById('help');
-		console.log(type, helpElement.style.display);
         if (type == 0) {
 			helpElement.style.display = 'flex';
         }
@@ -552,10 +549,9 @@ const Form = ({score, _handleClose, _setEmail}) => {
 	}
 
     const handleSubmit = async() => {
-        console.log(answer);
         // add API
         const emailInput = document.getElementById("email");
-        sendEmail(emailInput.value);
+        sendEmail(emailInput.value, cuisineId);
         setEmail(emailInput.value);
 
         // TODO: menu type for email
