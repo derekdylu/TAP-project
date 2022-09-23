@@ -71,6 +71,7 @@ const GamesSlice = createSlice({
               forCuisine: [],
               inCart: false
             }
+            console.log("GAME.CUISINE", game.cuisine)
             game.cuisine.map((x) => {
               console.log("mapped x", x)
               let rqmt = cuisines.filter(y => y.id === x)[0].required_ingredient_types
