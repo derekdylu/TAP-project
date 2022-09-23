@@ -62,8 +62,8 @@ function Tutorial() {
 
   const updateRedux = () => {
     getGameById(gameId).then((res) => {
-      dispatch(gameGroceryUpdated(res.grocery))
       dispatch(gameCuisineUpdated(res.cuisine))
+      dispatch(gameGroceryUpdated({grocery: res.grocery, cuisine: res.cuisine}))
       setNext(true)
     })
     console.log("redux _game", _game)

@@ -56,7 +56,7 @@ const GamesSlice = createSlice({
         const g = action.payload
         const game = state.find(x => x.id !== undefined)
         if(game) {
-          game.grocery = g
+          game.grocery = g.grocery
 
           // NOTE modify grocery
           let _grocery = []
@@ -66,6 +66,7 @@ const GamesSlice = createSlice({
             _grocery.push(neededIngredient)
           })
           let __grocery = []
+          console.log("selected cuisine", g.cuisine)
           _grocery.map((key) => {
             console.log("_grocery", key)
             let item = {
@@ -73,7 +74,7 @@ const GamesSlice = createSlice({
               forCuisine: [],
               inCart: false
             }
-            game.cuisine.map((x) => {
+            g.cuisine.map((x) => {
               console.log("mapped x", x)
               let rqmt = cuisines.filter(y => y.id === x)[0].required_ingredient_types
               console.log("my selected cuisine's required_ingredient_types", rqmt)
