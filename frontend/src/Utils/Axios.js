@@ -137,7 +137,7 @@ export const getGameById = async (id) => {
 
  // --- Email
  // send email to user
- export const sendEmail = async (_to_emails) => {
+ export const sendEmail = async (_to_emails, id) => {
     const imgLink = {
         0: 'https://i.ibb.co/QY1Kw0P/image.png', //馬鈴薯燉肉
         1: 'https://i.ibb.co/yB0ZGdq/image.png', //蘿蔔燉牛肉
