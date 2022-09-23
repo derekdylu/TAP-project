@@ -519,7 +519,7 @@ const Score = () => {
 								<Chart type="doughnut"
 									data={{
 										datasets: [{
-											data: [score[tab], type[tab].totalScore],
+											data: [scoreToDeg[tab], (360 - scoreToDeg[tab])],
 											backgroundColor: [
 												type[tab].color,
 												'#FEF6D1'
