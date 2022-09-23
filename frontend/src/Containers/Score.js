@@ -12,6 +12,10 @@ import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Ax
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
+import { Link } from "react-router-dom";
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -310,6 +314,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Score = () => {
+	const reduxGame = useSelector(selectAllGames)
     const [rank, setRank] = useState(1);
 	const [tab, setTab] = useState(0);
 	const [hiddenStatus, setHiddenStatus] = useState(true);
@@ -398,10 +403,12 @@ const Score = () => {
 			setButtonStatus(1);
 			setHideForm(false);
 			setOpenForm(true);
+			const link = document.getElementById('linkToFeeds');
+			link.style.pointerEvents = 'auto';
 		}
 
 		else if (buttonStatus == 1) {
-			window.location.href = '/feeds';
+			// window.location.href = '/feeds';
 		}
 	}
 
@@ -471,7 +478,7 @@ const Score = () => {
     return (
         <ThemeProvider theme={theme}>
 			<Dialog open={openForm} onClose={handleCloseForm} fullScreen TransitionComponent={Transition}>
-                <Form score={score[0]} _handleClose={handleCloseForm} _setEmail={setEmail} cuisineId={cuisineId}/>
+                <Form score={score[0]} _handleClose={handleCloseForm} _setEmail={setEmail} cuisineId={cuisineId} reduxGame={reduxGame}/>
             </Dialog>
             {/* <Page> */}
 			<Page hidden={hidePot}>
@@ -656,7 +663,7 @@ const Score = () => {
 
 					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
                         <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-                            {buttonContext[buttonStatus]}
+							<Link to="/feeds" style={{ pointerEvents: 'none' }} id="linkToFeeds">{buttonContext[buttonStatus]}</Link>
                         </Typography>
                     </Button>
 				</div>
