@@ -137,7 +137,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ScoreDrawer = ({data}) => {
-  console.log("(sd) img, nickname, score, cuisine: ", data.img, data.nickname, data.score, data.cuisine, data.rank)
+  // console.log("(sd) img, nickname, score, cuisine: ", data.img, data.nickname, data.score, data.cuisine, data.rank)
 
   const [open, setOpen] = useState(false);
   const [img, setImg] = useState(0)

@@ -61,35 +61,27 @@ const GamesSlice = createSlice({
           // NOTE modify grocery
           let _grocery = []
           game.grocery.map((key) => {
-            console.log("mapped grocery", key)
             const neededIngredient = ingredientTypes.find(x => x.id === key)
             _grocery.push(neededIngredient)
           })
           let __grocery = []
-          console.log("selected cuisine", g.cuisine)
           _grocery.map((key) => {
-            console.log("_grocery", key)
             let item = {
               ...key,
               forCuisine: [],
               inCart: false
             }
             g.cuisine.map((x) => {
-              console.log("mapped x", x)
               let rqmt = cuisines.filter(y => y.id === x)[0].required_ingredient_types
-              console.log("my selected cuisine's required_ingredient_types", rqmt)
               let pair = rqmt.find(z => z === key.id)
-              console.log("pair", pair)
               if(pair !== undefined) {
                 item.forCuisine.push(cuisines.find(l => l.id === x).name)
               }
             })
-            console.log("grocery done for", key)
             __grocery.push(item)
           })
 
           game.grocery = __grocery
-          console.log("grocery updated!")
         }
       }
     },

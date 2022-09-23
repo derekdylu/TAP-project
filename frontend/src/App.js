@@ -33,11 +33,6 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
-            <Route path="/score" element={<Score />} />
-            <Route path="/navigation" element={<Navigation />} />
-            <Route path="/tutorial" element={<Tutorial />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/ingredient" element={<Ingredient />} />
 
             <Route path="/" element={<Game />} />
             <Route path="*" element={<Error />} />
@@ -46,12 +41,17 @@ const App = () => {
             {/* <Route path="/terms" element={<Terms />} /> */}
 
             {/* <Route path="/test" element={<Test />} /> */}
-            <Route path="/start" element={<StartPage />} />
-            <Route path="/menu/:type" element={<Menu />} />
-            <Route path="/story/:id" element={<Story />} />
-            <Route path="/requirement" element={<Requirement />} />
-            <Route path="/market" element={<Market />} />
-            <Route path="/score_drawer" element={<ScoreDrawer data={testData} />} />
+            {/* <Route path="/score" element={<Score />} /> */}
+            {/* <Route path="/navigation" element={<Navigation />} /> */}
+            {/* <Route path="/tutorial" element={<Tutorial />} /> */}
+            {/* <Route path="/cart" element={<Cart />} /> */}
+            {/* <Route path="/ingredient" element={<Ingredient />} /> */}
+            {/* <Route path="/start" element={<StartPage />} /> */}
+            {/* <Route path="/menu/:type" element={<Menu />} /> */}
+            {/* <Route path="/story/:id" element={<Story />} /> */}
+            {/* <Route path="/requirement" element={<Requirement />} /> */}
+            {/* <Route path="/market" element={<Market />} /> */}
+            {/* <Route path="/score_drawer" element={<ScoreDrawer data={testData} />} /> */}
 
           </Routes>
         </Router>

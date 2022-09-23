@@ -132,7 +132,7 @@ const Requirement = () => {
                 });
             });
 
-            console.log(pair);
+            // console.log(pair);
 
             setSpecialCuisine(pair);
         }

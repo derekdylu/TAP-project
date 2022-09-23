@@ -388,19 +388,19 @@ const Market = () => {
         const checkedRadio = document.querySelector('input[name="tab"]:checked');
         // setTab(checkedRadio.value);
 
-        console.log(checkedRadio.value);
+        // console.log(checkedRadio.value);
 
         const body = document.getElementById('body');
         const tabValue = checkedRadio.value;
 
         if (tabValue == '0') {
-            console.log(body.scrollLeft);
+            // console.log(body.scrollLeft);
             body.scrollLeft = 0;
         } else if (tabValue == '1') {
-            console.log(body.scrollLeft);
+            // console.log(body.scrollLeft);
             body.scrollLeft = 68 / 100 * body.scrollWidth;
         } else {
-            console.log(body.scrollLeft);
+            // console.log(body.scrollLeft);
             body.scrollLeft = 79 / 100 * body.scrollWidth;
         }
     }
@@ -422,7 +422,7 @@ const Market = () => {
     };
 
     const handleClickOpenIngredient = (e) => {
-        console.log(e.target.id);
+        // console.log(e.target.id);
         setOpenIngredient([ingredients[e.target.id], true]);
     };
 
@@ -432,7 +432,7 @@ const Market = () => {
 
     const handleCloseInstruction = (event, reason= "backdropClick" | "escapeKeyDown") => {
         if (reason === "backdropClick") {
-            console.log(reason);
+            // console.log(reason);
         } else {
             setOpenInstruction(false);
         }

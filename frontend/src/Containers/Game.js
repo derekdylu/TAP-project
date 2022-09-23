@@ -18,7 +18,7 @@ const Game = () => {
   let component;
 
   function handlePageNext(e) {
-    console.log("next")
+    // console.log("next")
     e.preventDefault()
     dispatch(
       pageChanged(1)
@@ -26,7 +26,7 @@ const Game = () => {
   }
 
   function handlePageBack(e) {
-    console.log("back")
+    // console.log("back")
     e.preventDefault()
     dispatch(
       pageChanged(-1)

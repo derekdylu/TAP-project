@@ -249,7 +249,7 @@ async def send_email(data: models.Email = Body(...)):
         data["html_content"]
     )
 
-    print(response)
+    # print(response)
 
     return JSONResponse(status_code=response.status_code, content=jsonable_encoder(response.headers))
 

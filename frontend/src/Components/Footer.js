@@ -47,7 +47,7 @@ function Footer({text, _disabled, _onClick}) {
   }
 
   function handlePageNext(e) {
-    console.log("next")
+    // console.log("next")
     e.preventDefault()
     dispatch(
       pageChanged(1)

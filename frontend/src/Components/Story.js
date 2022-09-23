@@ -71,7 +71,7 @@ const Story = ({ id }) => {
     const dispatch = useDispatch()
 
     function handlePageNext(e) {
-        console.log("next")
+        // console.log("next")
         e.preventDefault()
         dispatch(
           pageChanged(1)
@@ -79,12 +79,12 @@ const Story = ({ id }) => {
     }
 
     const handleOnClick = async(event) => {
-        console.log("submit");
+        // console.log("submit");
         if (id === 1) {
             createGame([], [], [], 0)
             .then((res) => {
                 sessionStorage.setItem('gameId', res.id);
-                console.log(sessionStorage);
+                // console.log(sessionStorage);
                 // window.location.href = content[id].hrefNext;
                 dispatch(gameAdded({id: res.id}));
                 handlePageNext(event)

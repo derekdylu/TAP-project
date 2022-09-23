@@ -134,7 +134,7 @@ const Menu = ({ type }) => {
     }
 
     useEffect(() => {
-        console.log(type);
+        // console.log(type);
         init();
 
         const fetchCuisines = async () => {
@@ -191,7 +191,7 @@ const Menu = ({ type }) => {
     const dispatch = useDispatch()
 
     function handlePageNext(e) {
-        console.log("next")
+        // console.log("next")
         e.preventDefault()
         dispatch(
           pageChanged(1)
@@ -201,8 +201,8 @@ const Menu = ({ type }) => {
     const handleSubmit = async(event) => {
         event.preventDefault();
         
-        console.log("submit")
-        console.log(checkboxState);
+        // console.log("submit")
+        // console.log(checkboxState);
 
         const game = await getGameById(gameId);
         let menuId = [];

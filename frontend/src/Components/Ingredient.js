@@ -132,7 +132,7 @@ const Ingredient = ({object, _handleClose}) => {
   }
 
   useEffect(() => {
-    console.log("imported object", object);
+    // console.log("imported object", object);
     handleImage()
   }, [])
 

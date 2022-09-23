@@ -88,7 +88,7 @@ const Feeds = () => {
       }
     }
     const fetchedComments = await getComments()
-    console.log("fetched comments", fetchedComments)
+    // console.log("fetched comments", fetchedComments)
     const highest = fetchedComments.filter(x => x.score !== null).sort((a,b) => b.score - a.score)
     setCommentsHighest(highest)
     const lowest = fetchedComments.filter(x => x.score !== null).sort((a,b) => a.score - b.score)
