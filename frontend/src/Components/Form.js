@@ -238,7 +238,7 @@ const submitButton = css`
 `
 
 
-const Form = ({score, _handleClose, _setEmail, cuisineId}) => {
+const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
     const [currIndex, setCurrIndex] = useState(0);
     const [answer, setAnswer] = useState({});
     const [buttonDisabled, setButtonDisabled] = useState({
@@ -558,6 +558,11 @@ const Form = ({score, _handleClose, _setEmail, cuisineId}) => {
 
         const nickname = document.getElementById("nickname");
         const profile_photo = document.querySelector('input[name="profile"]:checked');
+
+        sessionStorage.setItem('nickname', nickname.value);
+        sessionStorage.setItem('profile_photo', profile_photo.value);
+        sessionStorage.setItem('score', score);
+        sessionStorage.setItem('cuisine', reduxGame[0].cuisine)
 
         // createComment(nickname.value, profile_photo.value, comment.value, score[0])
         createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer)
