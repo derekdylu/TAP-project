@@ -82,6 +82,7 @@ const GamesSlice = createSlice({
           })
 
           game.grocery = __grocery
+          console.log("grocery updated!")
         }
       }
     },

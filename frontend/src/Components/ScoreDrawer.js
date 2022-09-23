@@ -479,7 +479,7 @@ const ScoreDrawer = ({data}) => {
               分享遊戲成果
             </Button>
             <Button variant="outlined" style={{ width: '100%'}} sx={{mb:2}}>
-              <Link to="/" style={{ textDecoration: 'none', color: "#44C177"}}>
+              <Link to="/" onClick={() => window.location.reload()} style={{ textDecoration: 'none', color: "#44C177"}}>
                 再次挑戰
               </Link>
             </Button>
