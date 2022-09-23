@@ -15,7 +15,6 @@ import Slide from '@mui/material/Slide';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
-import { Link } from "react-router-dom";
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
