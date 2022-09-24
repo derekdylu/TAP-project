@@ -149,8 +149,7 @@ const MarketInstruction = ({_handleClose}) => {
                 </div>      
             ))}
         </SwipeableViews>
-                
-        
+
     )
 }
 

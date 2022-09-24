@@ -140,10 +140,10 @@ function Tutorial() {
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-用藥安全
           </Typography>
-          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }} ref={ref1}>
             標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，因此選擇具有標章的產品絕不會錯！
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick1b} ref={ref1}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick1b}>
             返回
           </Button>
           
@@ -174,10 +174,10 @@ function Tutorial() {
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-食材可信度
           </Typography>
-          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }} ref={ref2}>
             消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等，為消費者的權益把關。
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick2b} ref={ref2}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick2b}>
             返回
           </Button>
         </Grid>
@@ -207,10 +207,10 @@ function Tutorial() {
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-食物里程
           </Typography>
-          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }} ref={ref3}>
             標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以選擇在地食材降低碳排也獲得更新鮮的食材。
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick3b} ref={ref3}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick3b}>
             返回
           </Button>
           
