@@ -102,7 +102,7 @@ class Menu extends React.Component {
         <div className={`${menuOverlay} ${isMenuOpen ? "show" : null}`}>
           <nav>
             <Link to="/">開始遊戲</Link>
-            <Link to="/feeds">最新動態</Link>
+            <Link to="/feeds">排行榜</Link>
             <Link to="/about">關於</Link>
             <Link to="/terms">使用條款</Link>
           </nav>

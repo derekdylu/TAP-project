@@ -213,7 +213,7 @@ const Feeds = () => {
             style={{}}
           >
             <Typography variant="h1" color="#4a341a" sx={{pl:3}}>
-              留言板
+              排行榜
             </Typography>
             <Typography variant="body1" color="#704E27" sx={{pl:3}}>
               在這裡可以看到大家的發言與得分
