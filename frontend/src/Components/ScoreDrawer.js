@@ -222,14 +222,14 @@ const ScoreDrawer = ({data}) => {
           color="primary"
           onClick={handleDialogClose}
           aria-label="close"
-          sx={{my: 1}}
+          sx={{mt: 1}}
         >
           <CloseRoundedIcon />
         </IconButton>
-        <Grid container direction="row" alignItems="center" justifyContent="center" sx={{ mt:2 }}>
+        <Grid container direction="row" alignItems="center" justifyContent="center" sx={{ my: 1 }}>
           <ErrorOutlineRoundedIcon style={{ width: '16px' }} />
           <Typography variant="body3" color="#4A5568" fontWeight="700" sx={{ml: 0.5}}>
-            同類食材只能加入一項喔
+            長按下載圖片
           </Typography>
         </Grid>
         <div id="renderer">
@@ -528,7 +528,7 @@ const ScoreDrawer = ({data}) => {
               分享遊戲成果
             </Button>
             <Button variant="outlined" style={{ width: '100%'}} sx={{mb:2}}>
-              <Link to="/" onClick={() => window.location.reload()} style={{ textDecoration: 'none', color: "#44C177"}}>
+              <Link to="/" style={{ textDecoration: 'none', color: "#44C177"}}>
                 再次挑戰
               </Link>
             </Button>

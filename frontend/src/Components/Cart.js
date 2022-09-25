@@ -21,7 +21,7 @@ import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 const header = css`
     position: sticky;
     top: 0px;
-    padding: 80px 24px 32px 24px;
+    padding: 24px 24px 32px 24px;
     background: inherit;
     overflow: hidden;
 `;
