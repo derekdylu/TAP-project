@@ -163,7 +163,7 @@ const top = css`
 
 const header = css`
     width: 100%;
-    height: 100px;
+    height: 50px;
     display: flex;
     position: sticky;
     bavkground: black;
@@ -210,7 +210,7 @@ const body = css`
     background: black;
     display: flex;
     position: absolute;
-    top: 166px;
+    top: 116px;
     bottom: 137px;
 `
 
@@ -279,7 +279,7 @@ const Market = () => {
     const [openCart, setOpenCart] = useState(false);
     const [openList, setOpenList] = useState(false);
     const [openIngredient, setOpenIngredient] = useState([{}, false]);
-    const [width, setWidth] = useState(window.innerWidth);
+    // const [width, setWidth] = useState(window.innerWidth);
     const [totalGrocery, setTotalGrocery] = useState(0);
     const [ingredients, setIngredients] = useState({});
     const [prevPercentage, setPrevPercentage] = useState(0);
@@ -302,8 +302,39 @@ const Market = () => {
             "ids": [0, 1]
         }
     };
+
     const [tab, setTab] = useState(0);
     const [imageSize, setImageSize] = useState(0);
+
+    const getHeight = () => window.innerHeight;
+
+    const [height, setHeight] = useState(getHeight());
+
+    useEffect(() => {
+        // timeoutId for debounce mechanism
+        let timeoutId = null;
+        const resizeListener = () => {
+          // prevent execution of previous setTimeout
+          clearTimeout(timeoutId);
+          // change width from the state object after 150 milliseconds
+          timeoutId = setTimeout(() => setHeight(getHeight()), 150);
+        };
+
+        // set resize listener
+        window.addEventListener('resize', resizeListener);
+    
+        // clean up function
+        return () => {
+          // remove resize listener
+          window.removeEventListener('resize', resizeListener);
+        }
+    }, [])
+
+    useEffect(() => {
+        const body = document.getElementById('body');
+        setImageSize(Math.floor(body.offsetHeight / 3));
+
+    }, [height]);
 
     useEffect(() => {
         const radio_0 = document.querySelector('input[name="tab"][value="0"]');
@@ -327,24 +358,10 @@ const Market = () => {
         }
 
         init();
-
-        const body = document.getElementById('body');
-        setImageSize(Math.floor(body.offsetHeight / 3));
-
         setOpenInstruction(true);
     }, [])
 
-    const [offset, setOffset] = useState(0);
-
-    useEffect(() => {
-        const onScroll = () => {
-            setOffset(window.pageYOffset);
-        }
-        // clean up code
-        window.removeEventListener('scroll', onScroll);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+    const [offset, setOffset] = useState(0);;
 
     const bodyOnScroll = async(e) => {
         // const scrollLeft = e.target.scrollLeft;
