@@ -279,7 +279,6 @@ const Market = () => {
     const [openCart, setOpenCart] = useState(false);
     const [openList, setOpenList] = useState(false);
     const [openIngredient, setOpenIngredient] = useState([{}, false]);
-    const [width, setWidth] = useState(window.innerWidth);
     const [totalGrocery, setTotalGrocery] = useState(0);
     const [ingredients, setIngredients] = useState({});
     const [prevPercentage, setPrevPercentage] = useState(0);
@@ -304,6 +303,36 @@ const Market = () => {
     };
     const [tab, setTab] = useState(0);
     const [imageSize, setImageSize] = useState(0);
+
+    const getHeight = () => window.innerHeight;
+
+    const [height, setHeight] = useState(getHeight());
+
+    useEffect(() => {
+        // timeoutId for debounce mechanism
+        let timeoutId = null;
+        const resizeListener = () => {
+          // prevent execution of previous setTimeout
+          clearTimeout(timeoutId);
+          // change width from the state object after 150 milliseconds
+          timeoutId = setTimeout(() => setHeight(getHeight()), 150);
+        };
+
+        // set resize listener
+        window.addEventListener('resize', resizeListener);
+    
+        // clean up function
+        return () => {
+          // remove resize listener
+          window.removeEventListener('resize', resizeListener);
+        }
+    }, [])
+
+    useEffect(() => {
+        const body = document.getElementById('body');
+        setImageSize(Math.floor(body.offsetHeight / 3));
+
+    }, [height]);
 
     useEffect(() => {
         const radio_0 = document.querySelector('input[name="tab"][value="0"]');
@@ -334,24 +363,9 @@ const Market = () => {
         setOpenInstruction(true);
     }, [])
 
-    const [offset, setOffset] = useState(0);
-
-    useEffect(() => {
-        const onScroll = () => {
-            setOffset(window.pageYOffset);
-        }
-        // clean up code
-        window.removeEventListener('scroll', onScroll);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
 
     const bodyOnScroll = async(e) => {
-        // const scrollLeft = e.target.scrollLeft;
-        // const width = e.target.width;
-        // const scrollWidth = e.target.scrollWidth;
         const percentage = e.target.scrollLeft / e.target.scrollWidth * 100;
-        // const direction = percentage - prevPercentage;
 
         setPrevPercentage(percentage);
 
@@ -360,23 +374,13 @@ const Market = () => {
 
         let id = 0;
 
-        // if (direction > 0) {
-            if (percentage <= 57) {
-                id = 0;
-            } else if (percentage <= 68) {
-                id = 1;
-            } else {
-                id = 2;
-            }
-        // } else {
-        //     if (percentage < 68) {
-        //         id = 0;
-        //     } else if (percentage < 79) {
-        //         id = 1;
-        //     } else {
-        //         id = 2;
-        //     }
-        // }
+        if (percentage <= 57) {
+            id = 0;
+        } else if (percentage <= 68) {
+            id = 1;
+        } else {
+            id = 2;
+        }
         
         const radio = document.getElementById(id);
         radio.checked = true;
