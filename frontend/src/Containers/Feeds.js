@@ -11,6 +11,7 @@ import Chip from '@mui/material/Chip';
 import Comment from '../Components/Comment'
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import theme from '../Themes/Theme';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { selectAllGames } from '../Features/GamesSlice'
@@ -22,6 +23,8 @@ import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded';
 import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
+
+const ArrowUpwardRoundedIconColored = <ArrowUpwardRoundedIcon sx={{ color: theme.palette.secondary[900] }}/>
 
 const zigzag = css`
   position: fixed;
@@ -44,10 +47,18 @@ const zigzag = css`
   }
 `;
 
+const drawer = css`
+  transform: translateY(0px);
+  transition: all 500ms ease-in-out;
+  &.show {
+    transform: translateY(80px); 
+  }
+;`
+
 // TODO ref div 與我相近 can't run by first click
 
 const Feeds = () => {
-
+  const [navOpen, setNavOpen] = useState(false)
   const refMine = useRef(null);
   const refTop = useRef(null);
   const [commentsHighest, setCommentsHighest] = useState([])
@@ -106,13 +117,18 @@ const Feeds = () => {
     }
   }
 
+  const clickNav = () => {
+    setNavOpen(!navOpen)
+    console.log('nav', navOpen)
+  }
+
   useEffect(() => {
     init()
   }, [])
 
   return (
     <div style={{backgroundColor: '#FEF6D'}}>
-      { data.current && <ScoreDrawer data={data.current} /> }
+      { (data.current && !navOpen) ? <ScoreDrawer data={data.current}/> : <></>}
       <Grid
         container
         direction="column"
@@ -168,7 +184,7 @@ const Feeds = () => {
               <div style={{position: 'relative', top: '-40px'}} ref={refTop} id="top"></div>
               <>
                 {
-                  filter === "排名最高" ?
+                  filter === "最高分" ?
                   <>
                     {commentsHighest.map(c => 
                       <Comment nickname={c.nickname} profilePhoto={c.profile_photo} content={c.content} score={c.score} />)}
@@ -176,7 +192,7 @@ const Feeds = () => {
                   :
                   <>
                     {
-                      filter === "排名最低" ?
+                      filter === "最低分" ?
                       <>
                         {commentsLowest.map(c => 
                           <Comment nickname={c.nickname} profilePhoto={c.profile_photo} content={c.content} score={c.score} />)}
@@ -196,7 +212,9 @@ const Feeds = () => {
         </Grid>
       </Grid>
       <div className={`${zigzag}`}>
-        <Navigation />
+        <div onClick={() => {clickNav()}}>
+          <Navigation />
+        </div>
         <Grid
           container
           direction="column"
@@ -210,7 +228,9 @@ const Feeds = () => {
             direction="column"
             justifyContent="flex-start"
             alignItems="flex-start"
-            style={{}}
+            style={{
+              overflowX: 'hidden'
+            }}
           >
             <Typography variant="h1" color="#4a341a" sx={{pl:3}}>
               排行榜
@@ -218,12 +238,12 @@ const Feeds = () => {
             <Typography variant="body1" color="#704E27" sx={{pl:3}}>
               在這裡可以看到大家的發言與得分
             </Typography>
-            <Paper elevation={0} style={{maxWidth: '100vw', background: 'transparent', overflow: 'auto'}}>
-              <Stack direction="row" spacing={1.5} sx={{mt:1.5, px: 3,}}>
-                <Chip icon={<ArrowUpwardRoundedIcon />} label="排名最高" style={{background: filter === "排名最高" ? "#FEF6D1" : "#FCD219"}} onClick={() => handleFilter("排名最高")} />
-                <Chip icon={<ArrowDownwardRoundedIcon />} label="排名最低" style={{background: filter === "排名最低" ? "#FEF6D1" : "#FCD219"}} onClick={() => handleFilter("排名最低")} />
-                <Chip icon={<MilitaryTechRoundedIcon />} label="與我相近" style={{background: filter === "與我相近" ? "#FEF6D1" : "#FCD219"}} onClick={() => handleFilter("與我相近")} />
-                <Chip icon={<VerifiedRoundedIcon />} label="最新" style={{background: filter === "最新" ? "#FEF6D1" : "#FCD219"}} onClick={() => handleFilter("最新")}/>
+            <Paper elevation={0} style={{maxWidth: '100vw', background: 'transparent', overflow: 'hidden'}}>
+              <Stack direction="row" spacing={0.2} sx={{mt:1.5, px: 3,}} style={{overflow: 'auto'}}>
+                <Chip icon={<ArrowUpwardRoundedIcon sx={{ "&&": { color: theme.palette.secondary[900] } }} />} label="最高分" style={{background: filter === "最高分" ? "#FEF6D1" : "#FCD219", color: theme.palette.secondary[900]}} onClick={() => handleFilter("最高分")} />
+                <Chip icon={<ArrowDownwardRoundedIcon sx={{ "&&": { color: theme.palette.secondary[900] } }} />} label="最低分" style={{background: filter === "最低分" ? "#FEF6D1" : "#FCD219", color: theme.palette.secondary[900]}} onClick={() => handleFilter("最低分")} />
+                <Chip icon={<MilitaryTechRoundedIcon sx={{ "&&": { color: theme.palette.secondary[900] } }} />} label="與我相近" style={{background: filter === "與我相近" ? "#FEF6D1" : "#FCD219", color: theme.palette.secondary[900]}} onClick={() => handleFilter("與我相近")} />
+                <Chip icon={<VerifiedRoundedIcon sx={{ "&&": { color: theme.palette.secondary[900] } }} />} label="最新" style={{background: filter === "最新" ? "#FEF6D1" : "#FCD219", color: theme.palette.secondary[900]}} onClick={() => handleFilter("最新")}/>
                 <Grid sx={{px: 1}}></Grid>
               </Stack>
             </Paper>

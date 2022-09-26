@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import { css } from "@emotion/css";
+import theme from '../Themes/Theme'
 
 import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
@@ -58,12 +59,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
+const CartItem = ({index, name, cuisines, type, added, onClickDelete, loading}) => {
   const [open, setOpen] = useState(false)
   // const [imgIdx, setImgIdx] = useState(0)
 
-  let onClickCross
+  let deleteFunction 
   let localCuisines = ["(無需要)"]
+  let localLoading = false
+
+  if (loading !== undefined) {
+    localLoading = loading
+  }
+
   if (cuisines !== undefined) {
     localCuisines = cuisines
   }
@@ -74,7 +81,14 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
   }
 
   if (onClickDelete !== undefined) {
-    onClickCross = onClickDelete
+    deleteFunction = onClickDelete
+  }
+
+  const handleDelete = () => {
+    if (onClickDelete !== undefined) {
+      deleteFunction()
+    }
+    setOpen(false)
   }
 
   const handleClickOpen = () => {
@@ -121,15 +135,15 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
         justifyContent="center"
         alignItems="center"
         sx={{ borderRadius: '16px', px: 2, py: 2 }}
-        style={{ background: "#fff" }}
+        style={{ background: "#fff", width: '300px' }}
       >
         <Typography variant="body2" color="grey[700]" fontWeight="500">
           要從購物車移除「{name !== undefined ? name : "name"}」嗎？
         </Typography>
-        <Button sx={{width: "300px", mt: 1}} onClick={onClickCross} variant="secondary3">
+        <Button sx={{width: "100%", mt: 1}} onClick={handleDelete} variant="secondary3">
           移除
         </Button>
-        <Button sx={{width: "300px", mt: 0.5}} onClick={handleClose} variant="secondary4">
+        <Button sx={{width: "100%", mt: 0.5}} onClick={handleClose} variant="secondary4">
           取消
         </Button>
       </Grid>
@@ -166,7 +180,13 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete}) => {
           }
           </>
         :
-          <HighlightOffRoundedIcon color="error" onClick={handleClickOpen} />
+          <>
+          {localLoading ?
+            <HighlightOffRoundedIcon sx={{ color: theme.palette.grey[300] }}/>
+            :
+            <HighlightOffRoundedIcon color="error" onClick={handleClickOpen}/>
+          }
+          </>
         }
       </Grid>
     </Grid>

@@ -4,6 +4,7 @@ import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
+import CircularProgress from '@mui/material/CircularProgress';
 import theme from '../Themes/Theme';
 import Header from "./Header.js"
 import Footer from './Footer';
@@ -88,6 +89,7 @@ const footer = css`
 
 const Requirement = () => {
     const [specialCuisine, setSpecialCuisine] = useState({});
+    const [loadingItems, setLoadingItems] = useState(true);
 
     useEffect(() => {
         const fetchGrocery = async() => {
@@ -133,6 +135,7 @@ const Requirement = () => {
             });
 
             setSpecialCuisine(pair);
+            setLoadingItems(false)
         }
 
         fetchGrocery();
@@ -141,7 +144,7 @@ const Requirement = () => {
     return (
         <ThemeProvider theme={theme}>
             <Page> 
-                <Header _returnLink={ content.hrefPrev }>
+                <Header _returnLink={ content.hrefPrev } _loading={loadingItems}>
                     <div className={`${headerContainer}`}>
                         <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
                             { content.title }
@@ -153,8 +156,21 @@ const Requirement = () => {
                         </Typography>
                     </div>
                 </Header>
-                <Grid container spacing={2} px={2} my={0.5}>
-                    { Object.keys(specialCuisine).map(key => (
+                <Grid container spacing={2} px={2} py={0.5} style={{background: "theme.palette.secondary.main"}}>
+                    {loadingItems ?
+                    (<CircularProgress
+                        size={24}
+                        sx={{
+                        color: theme.palette.primary[500],
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: '-12px',
+                        marginLeft: '-12px',
+                        }}
+                    />)
+                    :
+                    (Object.keys(specialCuisine).map(key => (
                         <Grid item xs={12} key={key}>
                             <div className={`${menuContainer}`}>
                                 <img src={ img[key] } className={`${imageContainer}`} />
@@ -173,10 +189,11 @@ const Requirement = () => {
                                 </div>
                             </div>
                         </Grid>
-                    ))}
+                    )))
+                    }
                 </Grid>
                 <div className={`${footer}`}>
-                    <Footer text="確定"/>
+                    <Footer text="確定" _disabled={loadingItems}/>
                 </div>
             </Page>
         </ThemeProvider>

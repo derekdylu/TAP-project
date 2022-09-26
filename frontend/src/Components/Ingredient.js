@@ -24,6 +24,8 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import CircularProgress from '@mui/material/CircularProgress';
+import theme from '../Themes/Theme';
 
 import TabBadgeImg from '../Images/tab_badge.png'
 import QrCodeScannerRoundedIcon from '@mui/icons-material/QrCodeScannerRounded';
@@ -105,9 +107,11 @@ const Ingredient = ({object, _handleClose}) => {
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const [ingredientTypeId, setIngredientTypeId] = useState(object.id.split('_')[0])
+  const [loading, setLoading] = useState(false);
   // let ingredientTypeId = parseInt(object.id.split('_')[0])
 
   const AddItemToCart = async() => {
+    setLoading(true)
     const item = {
       id: object.id,
       name: object.name,
@@ -117,6 +121,7 @@ const Ingredient = ({object, _handleClose}) => {
       gameCartAdded(item)
     )
     _handleClose()
+    setLoading(false)
   }
 
   const handleImage = () => {
@@ -318,7 +323,22 @@ const Ingredient = ({object, _handleClose}) => {
           </Typography>
         </Grid>
         <Button variant="primary" style={{ width: '100%'}} sx={{mt:1}} onClick={AddItemToCart}>
-            加入購物車 <AddRoundedIcon sx={{ml: 1, mt: 0.25}} />
+          {loading ?
+          (<CircularProgress
+            size={24}
+            sx={{
+            color: theme.palette.primary[500],
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginTop: '-12px',
+            marginLeft: '-12px',
+            }}
+          />)
+          :
+          (
+            <>加入購物車 <AddRoundedIcon sx={{ml: 1, mt: 0.25}} /></>
+          )}
         </Button>
       </Grid>
     </Grid>

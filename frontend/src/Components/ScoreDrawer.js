@@ -16,10 +16,12 @@ import CardActions from '@mui/material/CardActions';
 import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 import Slide from '@mui/material/Slide';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import theme from '../Themes/Theme';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import pepper from '../Images/IngredientType/甜椒.png'
 import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
@@ -152,6 +154,7 @@ const ScoreDrawer = ({data}) => {
   const [cuisinesInfo, setCuisinesInfo] = useState()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [isRendered, setIsRendered] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleDialogClose = () => {
     setDialogOpen(false);
@@ -201,11 +204,13 @@ const ScoreDrawer = ({data}) => {
   }
 
   const share = () => {
+    setLoading(true)
     let render = document.getElementById('renderer')
     html2canvas(document.querySelector("#capture")).then(canvas => {
       let dataURL = canvas.toDataURL("image/png")
       render.innerHTML = "<img src='" + dataURL + "' alt='render' width='100%' />"
       setIsRendered(true)
+      setLoading(false)
     });
   }
 
@@ -217,31 +222,49 @@ const ScoreDrawer = ({data}) => {
         TransitionComponent={Transition}
         keepMounted
         PaperProps={{style: { borderRadius: '16px' }}}
+        scroll="paper"
       >
-        <IconButton
-          color="primary"
-          onClick={handleDialogClose}
-          aria-label="close"
-          sx={{mt: 1}}
-        >
-          <CloseRoundedIcon />
-        </IconButton>
-        <Grid container direction="row" alignItems="center" justifyContent="center" sx={{ my: 1 }}>
-          <ErrorOutlineRoundedIcon style={{ width: '16px' }} />
-          <Typography variant="body3" color="#4A5568" fontWeight="700" sx={{ml: 0.5}}>
-            長按下載圖片
-          </Typography>
-        </Grid>
-        <div id="renderer">
-        </div>
-        {
-          isRendered === false && 
-          <Button variant="primary" onClick={share} autoFocus style={{height: '64px'}}>
-            <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-              生成圖片
+        <DialogContent dividers='paper'>
+          <Grid container direction="row" alignItems="center" justifyContent="center" sx={{ my: 1 }}>
+            <ErrorOutlineRoundedIcon style={{ width: '16px' }} />
+            <Typography variant="body3" color="#4A5568" fontWeight="700" sx={{ml: 0.5}}>
+              生成圖片後請長按下載圖片
+            </Typography>
+          </Grid>
+          <div id="renderer"></div>
+          {
+            isRendered === false && 
+            <Button variant="primary" onClick={share} autoFocus style={{ height: '64px', width: '275px'}} disabled={loading}>
+              {
+                loading ?
+                (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                    color: theme.palette.primary[500],
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                    }}
+                  />
+                ):(
+                  <Typography variant="body1" sx={{ fontWeight: '700' }}>
+                    生成圖片
+                  </Typography>
+                )
+              }
+            </Button>
+          }
+        </DialogContent>
+        <DialogActions>
+          <Button variant="secondary2" onClick={share} autoFocus style={{ height: '64px', width: '100%'}} sx={{  }}>
+            <Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: '700' }} onClick={handleDialogClose}>
+              返回
             </Typography>
           </Button>
-        }
+        </DialogActions>
       </Dialog>
       <Global
         styles={{
@@ -273,7 +296,6 @@ const ScoreDrawer = ({data}) => {
             left: 0,
           }}
         >
-          <div onClick={() => {setOpen(!open)}}>
           <Puller />
           <Grid
             container
@@ -306,7 +328,6 @@ const ScoreDrawer = ({data}) => {
               }
             </Grid>
           </Grid>
-          </div>
         </StyledBox>
         <StyledBox
           style={{
@@ -350,8 +371,8 @@ const ScoreDrawer = ({data}) => {
                   }}
                 >
                   <Grid container direction="row" justifyContent="flex-start" alignItems="center">
-                    <MilitaryTechRoundedIcon color="#4C3F08" />
-                    <Typography color="#4C3F08" variant="body2" fontWeight="700" sx={{pl: 0.25}}>
+                    <MilitaryTechRoundedIcon sx={{ color: theme.palette.secondary[900] }} />
+                    <Typography color="#4C3F08" variant="body2" fontWeight="700" sx={{pl: 0.25, pb: 0.2}}>
                       我的等級
                     </Typography>
                   </Grid>
@@ -387,7 +408,7 @@ const ScoreDrawer = ({data}) => {
                   }}
                   >
                     <Grid container direction="row" justifyContent="flex-start" alignItems="center">
-                      <EmojiEventsRoundedIcon color="#4C3F08" />
+                      <EmojiEventsRoundedIcon sx={{ color: theme.palette.secondary[900] }}/>
                       <Typography color="#4C3F08" variant="body2" fontWeight="700" sx={{pl: 0.25}}>
                         排名百分比
                       </Typography>
@@ -415,7 +436,7 @@ const ScoreDrawer = ({data}) => {
                   }}
                   >
                     <Grid container direction="row" justifyContent="flex-start" alignItems="center">
-                      <StarRoundedIcon color="#143A24" />
+                      <StarRoundedIcon sx={{ color: "#143A24" }}/>
                       <Typography color="#143A24" variant="body2" fontWeight="700" sx={{pl: 0.25}}>
                         總得分
                       </Typography>
@@ -446,8 +467,8 @@ const ScoreDrawer = ({data}) => {
               }}
             >
               <Grid container direction="row" justifyContent="flex-start" alignItems="center" sx={{pb: 2}}>
-                <ChatBubbleOutlineRoundedIcon color="#4C3F08" />
-                <Typography color="#4C3F08" variant="body2" fontWeight="700" sx={{pl: 0.4}}>
+                <ChatBubbleOutlineRoundedIcon sx={{ color: theme.palette.secondary[900] }}/>
+                <Typography color="#4C3F08" variant="body2" fontWeight="700" sx={{pl: 0.4, pb: 0.2}}>
                   室友評語
                 </Typography>
               </Grid>
@@ -473,8 +494,8 @@ const ScoreDrawer = ({data}) => {
               }}
             >
               <Grid container direction="row" justifyContent="flex-start" alignItems="center" sx={{pb: 2}}>
-                <SentimentSatisfiedAltRoundedIcon color="#143A24" />
-                <Typography color="#143A24" variant="body2" fontWeight="700" sx={{pl: 0.4}}>
+                <SentimentSatisfiedAltRoundedIcon sx={{ color: "#143A24" }}/>
+                <Typography color="#143A24" variant="body2" fontWeight="700" sx={{pl: 0.4, pb: 0.2}}>
                   TAP真心話
                 </Typography>
               </Grid>
@@ -496,11 +517,11 @@ const ScoreDrawer = ({data}) => {
                 borderRadius: "16px",
               }}
               sx={{
-                px: 2, py: 2, mt: 1, mb: 4
+                px: 2, py: 2, mt: 1,
               }}
             >
               <Grid container direction="row" justifyContent="flex-start" alignItems="center" sx={{pb: 2}}>
-                <LocalDiningRoundedIcon color="#4C3F08" />
+                <LocalDiningRoundedIcon sx={{ color: theme.palette.secondary[900] }}/>
                 <Typography color="#4C3F08" variant="body2" fontWeight="700" sx={{pl: 0.4}}>
                   本次挑戰
                 </Typography>
@@ -524,7 +545,7 @@ const ScoreDrawer = ({data}) => {
               </Grid>
             </Grid>
             </div>
-            <Button variant="primary" style={{ width: '100%'}} sx={{mb:2}} onClick={() => openDialog()}>
+            <Button variant="primary" style={{ width: '100%'}} sx={{mb:2, mt:2}} onClick={() => openDialog()}>
               分享遊戲成果
             </Button>
             <Button variant="outlined" style={{ width: '100%'}} sx={{mb:2}}>
@@ -548,7 +569,7 @@ const ScoreDrawer = ({data}) => {
                   <Typography variant="body1">
                     產銷履歷農產品資訊網
                   </Typography>
-                  <Button target="_blank" href="https://taft.coa.gov.tw/default.html">瞭解更多</Button>
+                  <Button target="_blank" href="https://taft.coa.gov.tw/default.html" sx={{mb: 0.1}}>瞭解更多</Button>
                 </Grid>
               </CardActions>
             </Card>

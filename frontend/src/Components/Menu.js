@@ -119,6 +119,7 @@ const Menu = ({ type }) => {
     const [totalChosen, setTotalChosen] = useState(-1);
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [gameId, setGameId] = useState();
+    const [loading, setLoading] = useState(false);
 
     function getWindowSize() {
         const {innerWidth, innerHeight} = window;
@@ -197,6 +198,7 @@ const Menu = ({ type }) => {
     }
 
     const handleSubmit = async(event) => {
+        setLoading(true)
         event.preventDefault();
 
         const game = await getGameById(gameId);
@@ -217,12 +219,13 @@ const Menu = ({ type }) => {
         dispatch(
             pageChanged(1)
         )
+        setLoading(false)
     }
 
     return (
         <ThemeProvider theme={theme}>
             <Page>
-            <Header /*_returnLink={ content[type].hrefPrev }*/>
+            <Header /*_returnLink={ content[type].hrefPrev }*/ _loading={loading}>
                 <div className={`${headerContainer}`}>
                     <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
                         選擇你的{ content[type].name }
@@ -254,7 +257,7 @@ const Menu = ({ type }) => {
                 ))}
             </Grid>
             <div className={`${footer}`}>
-                <Footer text="確定" _disabled={ buttonDisabled } _onClick={handleSubmit}/>
+                <Footer text="確定" _disabled={ buttonDisabled } _onClick={handleSubmit} _loading={loading}/>
             </div>
             </Page>
         </ThemeProvider>

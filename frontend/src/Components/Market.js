@@ -170,7 +170,7 @@ const header = css`
 `
 
 const typeList = css`
-    // width: 100%;
+    width: 100%;
     overflow-x: scroll;
     display: flex;
     justify-content: center;
@@ -186,7 +186,7 @@ const radio = css`
         height: 56px;
         bottom: 0px;
         background-image: linear-gradient(#FCD219, #FCD219);
-        background-size: 80% 4px;
+        background-size: 100% 4px;
         background-position: bottom left;
         background-repeat: no-repeat;
     }
@@ -210,7 +210,7 @@ const body = css`
     background: "#FCD219";
     display: flex;
     position: absolute;
-    top: 166px;
+    top: 116px;
     bottom: 96px;
 `
 
@@ -238,8 +238,6 @@ const footer = css`
     padding: 16px 0px 16px 0px;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
 
     background: white;
 `
@@ -251,8 +249,6 @@ const listButton = css`
     border: 2px solid #8FDAAD;
     box-sizing: border-box;
     border-radius: 16px;
-    margin-right: 32px;
-    position: absolute;
 `
 
 const testIngredient = {
@@ -472,8 +468,6 @@ const Market = () => {
                     </React.Fragment>
                 ))}
             </div>
-            
-            {/* <button onClick={handleClickOpenIngredient}>open ingredient</button> */}
 
             <div className={`${body}`} id='body' onScroll={bodyOnScroll}>
                 <Grid container direction="column" spacing={0}>
@@ -495,18 +489,18 @@ const Market = () => {
             </div>
 
             <div className={`${footer}`}>
-                <Grid container px={2}>
-                    <Grid item xs={3}>
-                        <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <ListAltRoundedIcon />
-                        </div>
-                    </Grid>
+                <Grid container px={2} width="100%" direction="row" justifyContent="space-around" alignItems="center">
                     <Grid item xs={9}>
                         <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenCart}>
                             <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
                                 查看購物車 ({ _game[0].cart.length })
                             </Typography>
                         </Button>
+                    </Grid>
+                    <Grid container xs={3} justifyContent="flex-end" alignItems="center">
+                        <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <ListAltRoundedIcon />
+                        </div>
                     </Grid>
                 </Grid>
             </div>

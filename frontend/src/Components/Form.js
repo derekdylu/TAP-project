@@ -10,6 +10,7 @@ import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import Stack from '@mui/material/Stack';
 import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import nameLogo from '../Images/nameLogo.png'
 import CloseIcon from '@mui/icons-material/Close'
@@ -171,8 +172,8 @@ const content = {
         'type': 'singleOther',
         'question': '平時最常買菜的地點是？',
         'choice': {
-            0: '大型量販店（例：Costco、家樂福......）',
-            1: '超級市場（例：全聯、美聯社.....）',
+            0: '大型量販店(Costco、家樂福...)',
+            1: '超級市場(全聯、美聯社...）',
             2: '傳統市場',
             3: '其他......' // input text
         },
@@ -239,6 +240,7 @@ const submitButton = css`
 
 
 const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
+    const [loading, setLoading] = useState(false)
     const [currIndex, setCurrIndex] = useState(0);
     const [answer, setAnswer] = useState({});
     const [buttonDisabled, setButtonDisabled] = useState({
@@ -549,6 +551,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
 	}
 
     const handleSubmit = async() => {
+        setLoading(true);
         // add API
         const emailInput = document.getElementById("email");
         sendEmail(emailInput.value, cuisineId);
@@ -572,8 +575,10 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
             // comment.value = "";
             // emailInput.value = "";
             setHideSlide(true);
+            setLoading(false);
         }).catch((error) => {
             console.log(error);
+            setLoading(false);
         });
     }
 
@@ -597,11 +602,22 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
 
                                 <div className={`${footerContainer}`}>
                                     { currIndex !== 0 ?
-                                        <button className={`${button}`} id={'buttonPrev' + key}>
-                                            <Typography variant='body1' color={theme.palette.primary.main} sx={{fontWeight: '700'}} onClick={e => handlePrevButton(e, key)}>
-                                            上一題
-                                            </Typography>
-                                        </button>
+                                        <>
+                                        {loading ?
+                                        (
+                                            <button className={`${button}`} id={'buttonPrev' + key}>
+                                                <Typography variant='body1' color="transparent" sx={{fontWeight: '700'}} >
+                                                上一題
+                                                </Typography>
+                                            </button>
+                                        ):(
+                                            <button className={`${button}`} id={'buttonPrev' + key}>
+                                                <Typography variant='body1' color={theme.palette.primary.main} sx={{fontWeight: '700'}} onClick={e => handlePrevButton(e, key)}>
+                                                上一題
+                                                </Typography>
+                                            </button>
+                                        )}
+                                        </>
                                         :
                                         <button className={`${button}`} id={'buttonPrev' + key} disabled={true}>
                                             <Typography variant='body1' color={theme.palette.primary.main} sx={{fontWeight: '700'}}>
@@ -617,10 +633,15 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                                             </Typography>
                                         </button>
                                     :
-                                        <button className={`${submitButton}`} id={'buttonNext' + key} disabled={buttonDisabled[key]} onClick={handleSubmit}>
-                                            <Typography variant='body1' id={'text' + key} color={theme.palette.grey[500]} sx={{fontWeight: '700'}}>
-                                            送出
-                                            </Typography>
+                                        <button className={`${submitButton}`} id={'buttonNext' + key} disabled={loading || buttonDisabled[key]} onClick={handleSubmit}>
+                                            {loading ?
+                                            (<Typography variant='body1' id={'text' + key} color={theme.palette.grey[500]} sx={{fontWeight: '700'}}>
+                                                發布中...
+                                            </Typography>)
+                                            :
+                                            (<Typography variant='body1' id={'text' + key} color={theme.palette.grey[500]} sx={{fontWeight: '700'}}>
+                                                送出
+                                            </Typography>)}
                                         </button>
                                     }
                                     

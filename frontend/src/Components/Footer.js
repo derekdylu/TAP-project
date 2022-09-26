@@ -1,8 +1,10 @@
 import React from "react";
+import { useState } from "react";
 // import Paper from '@mui/material/Paper';
 import theme from '../Themes/Theme';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { css } from "@emotion/css";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllPages, pageChanged } from '../Features/PagesSlice'
@@ -30,10 +32,12 @@ const zigzag = css`
   }
 `;
 
-function Footer({text, _disabled, _onClick}) {
+function Footer({text, _disabled, _onClick, _loading}) {
   const dispatch = useDispatch()
   let buttonText = "default text";
   let disabled = false;
+  // const [loading, setLoading] = useState(false)
+  let loading = false;
   let onClick = handlePageNext;
 
   if (text !== undefined) {
@@ -45,6 +49,9 @@ function Footer({text, _disabled, _onClick}) {
   if (_onClick !== undefined) {
     onClick = _onClick
   }
+  if (_loading !== undefined) {
+    loading = _loading
+  }
 
   function handlePageNext(e) {
     e.preventDefault()
@@ -54,18 +61,33 @@ function Footer({text, _disabled, _onClick}) {
   }
 
   function handleClick(e) {
+    // loading = true
     if (onClick !== undefined) {
       onClick()
     }
     handlePageNext(e)
+    // loading = false
   }
 
   return (
     <div className={`${zigzag}`}>
-      <Button variant="primary" style={{ width: '100%'}} disabled={disabled} onClick={onClick}>
-        <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+      <Button variant="primary" style={{ width: '100%'}} disabled={loading || disabled} onClick={onClick}>
+        {loading ?
+        (<CircularProgress
+          size={24}
+          sx={{
+          color: theme.palette.primary[500],
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          marginTop: '-12px',
+          marginLeft: '-12px',
+          }}
+        />)
+        :
+        (<Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
           {buttonText}
-        </Typography>
+        </Typography>)}
       </Button>
     </div>
   )

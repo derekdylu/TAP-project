@@ -36,7 +36,17 @@ const arrow = css`
     -webkit-transform: rotate(135deg);
 `;
 
-function Header(props, {_returnText, _returnLink, _titleText, _contentText, _linkColor}) {
+const arrowTransparent = css`
+    border: transparent;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px; 
+    margin-right: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+`;
+
+function Header(props, {_returnText, _returnLink, _titleText, _contentText, _linkColor, _loading}) {
   const dispatch = useDispatch()
 
   let returnText = "返回";
@@ -44,6 +54,7 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
   let titleText = null;
   let contentText = null;
   let linkColor = theme.palette.carton[700];
+  let loading = false;
 
   if (props._returnText !== undefined) {
     returnText = props._returnText;
@@ -60,6 +71,9 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
   if (props._linkColor !== undefined) {
     linkColor = props._linkColor
   }
+  if (props._loading !== undefined) {
+    loading = props._loading
+  }
 
   function handlePageBack(e) {
     e.preventDefault()
@@ -71,12 +85,21 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
   return (
     <ThemeProvider theme={theme}>
         <div className={`${header}`} id="header">
-            <Typography variant="h5" color={linkColor}>
-                {/* <a href={ returnLink } className={`${link}`}> */}
-                <a className={`${link}`} onClick={handlePageBack}>
-                    <div className={`${arrow}`}/>{ returnText }
-                </a>
-            </Typography>
+            {loading ?
+              (
+                <Typography variant="h5" color="transparent">
+                  <a className={`${link}`}>
+                      <div className={`${arrowTransparent}`}/>{ returnText }
+                  </a>
+                </Typography>
+              ):(
+                <Typography variant="h5" color={linkColor}>
+                  <a className={`${link}`} onClick={handlePageBack}>
+                      <div className={`${arrow}`}/>{ returnText }
+                  </a>
+                </Typography>
+              )
+            }
             { titleText !== null &&
                 <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{textAlign: "left"}}>
                 {titleText}

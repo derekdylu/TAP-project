@@ -1,10 +1,11 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useParams } from 'react-router-dom';
 import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { createGame } from '../Utils/Axios';
+import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import theme from '../Themes/Theme';
 import Header from './Header';
@@ -69,6 +70,7 @@ const buttonContainer = css`
 
 const Story = ({ id }) => { 
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
 
     function handlePageNext(e) {
         e.preventDefault()
@@ -79,6 +81,7 @@ const Story = ({ id }) => {
 
     const handleOnClick = async(event) => {
         if (id === 1) {
+            setLoading(true)
             createGame([], [], [], 0)
             .then((res) => {
                 sessionStorage.setItem('gameId', res.id);
@@ -86,10 +89,12 @@ const Story = ({ id }) => {
                 dispatch(gameAdded({id: res.id}));
                 handlePageNext(event)
             }).catch((error) => {
+                setLoading(false)
                 console.log(error);
             })
         } else if (id === 2) {
             // window.location.href = content[id].hrefNext;
+            setLoading(true)
             handlePageNext(event);
         }
     }
@@ -97,7 +102,7 @@ const Story = ({ id }) => {
     return (
         <ThemeProvider theme={theme}>
             <Page>
-                <Header /*_returnLink={ content[id].hrefPrev }*/ _linkColor={ theme.palette.grey[700] } />
+                <Header /*_returnLink={ content[id].hrefPrev }*/ _linkColor={ theme.palette.grey[700] } _loading={loading} />
                 <img src={ content[id].logo } className={`${imageContainer}`} />
                 <div className={`${headerContainer}`}>
                     <Typography variant="h1" color={theme.palette.grey[800]} sx={{ fontWeight: '900' }}>
@@ -109,10 +114,23 @@ const Story = ({ id }) => {
                     <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>{ key }</Typography>) }
                 </div>
                 <div className={`${buttonContainer}`}>
-                    <Button variant="primary" style={{ width: '50%'}} onClick={handleOnClick}>
-                        <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+                    <Button variant="primary" style={{ width: '50%'}} onClick={handleOnClick} disabled={loading}>
+                        {loading ?
+                        (<CircularProgress
+                            size={24}
+                            sx={{
+                            color: theme.palette.primary[500],
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            marginTop: '-12px',
+                            marginLeft: '-12px',
+                            }}
+                        />)
+                        :
+                        (<Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
                             下一步
-                        </Typography>
+                        </Typography>)}
                     </Button>
                 </div>
             </Page>

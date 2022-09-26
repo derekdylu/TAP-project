@@ -8,6 +8,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from '@mui/material';
 import theme from '../Themes/Theme';
+import CircularProgress from '@mui/material/CircularProgress';
 import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Dialog from '@mui/material/Dialog';
@@ -388,6 +389,8 @@ const Score = () => {
 		1: "查看排名"
 	}
 
+	const [loading, setLoading] = useState(false)
+
 	const handleTabChange = async(e, newValue) => {
 		setTab(newValue);
 	}
@@ -407,15 +410,18 @@ const Score = () => {
 	}
 
 	const handleButtonOnClick = async() => {
+		setLoading(true)
 		if (buttonStatus == 0) {
 			setButtonStatus(1);
 			setHideForm(false);
 			setOpenForm(true);
 			const link = document.getElementById('linkToFeeds');
 			link.style.pointerEvents = 'auto';
+			setLoading(false)
 		}
 
 		else if (buttonStatus == 1) {
+			setLoading(false)
 			// window.location.href = '/feeds';
 		}
 	}
@@ -633,12 +639,27 @@ const Score = () => {
 							))}
 						</Grid>
 					</div>
-
-					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick}>
-                        <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-                            {buttonContext[buttonStatus]}
-                        </Typography>
-                    </Button>
+					
+					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick} disabled={loading}>
+					{loading ?
+					(<CircularProgress
+						size={24}
+						sx={{
+						color: theme.palette.primary[500],
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						marginTop: '-12px',
+						marginLeft: '-12px',
+						}}
+					/>)
+					:
+					(
+						<Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
+							{buttonContext[buttonStatus]}
+						</Typography>
+					)}
+					</Button>
 				</div>
 
 				<div className={`${container}`} style={{ margin: '8px 24px' }} hidden={!hideAll}>

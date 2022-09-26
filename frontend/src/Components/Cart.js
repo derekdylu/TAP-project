@@ -53,6 +53,7 @@ const Cart = ({_tab, handleClose}) => {
 
   const [tab, setTab] = useState(_tab);
   const [filter, setFilter] = useState('全部')
+  const [loading, setLoading] = useState(false)
 
   const [showGrocery, setShowGrocery] = useState(game[0].grocery)
 
@@ -87,16 +88,20 @@ const Cart = ({_tab, handleClose}) => {
   }
 
   const ClickCheckout = () => {
+    setLoading(true)
     updateGameById(gameId, null, game[0].cart).then(() => {
       getScoreById(gameId).then((res) => {
         dispatch(
           pageChanged(1)
         )
+        setLoading(true)
       }).catch((error) => {
         console.log(error)
+        setLoading(false)
       })
     }).catch((error) => {
       console.log(error)
+      setLoading(false)
     })
   }
 
@@ -107,7 +112,7 @@ const Cart = ({_tab, handleClose}) => {
         direction="column"
         justifyContent="flex-start"
         alignItems="center"
-        style={{background: "#FCD219"}}
+        style={{background: "#FCD219", overflowX: 'hidden'}}
       >
         <Grid
           container
@@ -179,7 +184,7 @@ const Cart = ({_tab, handleClose}) => {
               {
                 game[0].cart.length > 0 ?
                 game[0].cart.map(x =>(
-                  <CartItem index={x.id} name={x.name} type={"cart"} cuisines={x.forCuisine} onClickDelete={() => deleteItemFromCart(x.id)} />
+                  <CartItem index={x.id} name={x.name} type={"cart"} cuisines={x.forCuisine} onClickDelete={() => deleteItemFromCart(x.id)} loading={loading}/>
                 ))
                 :
                 <Grid
@@ -219,7 +224,7 @@ const Cart = ({_tab, handleClose}) => {
           }
           </Grid>
         </Grid>
-        <Footer text="結帳回家" _disabled={!game[0].checkout} _onClick={ClickCheckout} />
+        <Footer text="結帳回家" _disabled={loading || !game[0].checkout} _onClick={ClickCheckout} _loading={loading} />
       </Grid>
     </div>
   )
