@@ -102,7 +102,7 @@ const MarketInstruction = ({_handleClose}) => {
     }
 
     return (
-        <SwipeableViews index={currIndex} onChangeIndex={handleChangeIndex} style={{ borderRadius: '32px' }}>
+        <SwipeableViews index={currIndex} onChangeIndex={handleChangeIndex} style={{ borderRadius: '32px' }} disabled>
             {Object.keys(content).map(key => (
                 <div className={`${cardContainer}`}>
                     {/* <p style={{textAlign: 'center'}}> */}

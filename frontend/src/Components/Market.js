@@ -155,7 +155,7 @@ const topBackground2 = css`
 `
 
 const top = css`
-    width: 20%;
+    width: 10%;
     height: inherit;
     display: flex;
     position: sticky;
