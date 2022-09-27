@@ -71,11 +71,11 @@ const imageContainer = css`
 `
 
 const body1 = css`
-    display: inline-block;
+    display: inline;
 `
 
 const body2 = css`
-    display: inline-block;
+    display: inline;
     padding-left: 10px;
 `
 
