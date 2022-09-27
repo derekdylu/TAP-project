@@ -75,13 +75,9 @@ def ErrorResponseModel(error, code, message):
 # ---
 # --- API
 
-@app.get("/loaderio-REMOVED_LOADERIO_TOKEN")
-def loader_io_verify():
-    return "loaderio-REMOVED_LOADERIO_TOKEN"
-
 @app.get("/")
 async def test():
-    return {"message": "Hello World"}
+    return {"ntu-tap-game": "ntu-tap-game"}
 
 # --- Comment
 # get all comments
