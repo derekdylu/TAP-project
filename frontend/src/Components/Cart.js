@@ -81,6 +81,10 @@ const Cart = ({_tab, handleClose}) => {
     }
   };
 
+  useEffect(() => {
+    setShowGrocery(game[0].grocery)
+  }, [game[0].cart])
+
   const deleteItemFromCart = (_id) => {
     dispatch(
       gameCartDeleted(_id)

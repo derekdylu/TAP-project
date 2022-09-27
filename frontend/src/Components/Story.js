@@ -65,7 +65,7 @@ const bodyContainer = css`
 `
 
 const buttonContainer = css`
-    padding: 16px 24px;
+    padding: 16px 24px 72px 24px;
 `
 
 const Story = ({ id }) => { 

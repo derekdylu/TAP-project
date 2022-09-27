@@ -119,7 +119,6 @@ const Feeds = () => {
 
   const clickNav = () => {
     setNavOpen(!navOpen)
-    console.log('nav', navOpen)
   }
 
   useEffect(() => {

@@ -41,13 +41,13 @@ const bodyContainer = css`
 
 const Page = styled('div')(({ theme }) => ({
   background: theme.palette.secondary.main,
-  height: '100vh',
+  paddingBottom: '112px',
 
   displayRaw: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',
-  overflow: 'hidden',
+  overflow: 'scroll',
 }));
 
 const styles = {
@@ -69,9 +69,7 @@ function Tutorial() {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
-  const ref1b = useRef(null);
-  const ref2b = useRef(null);
-  const ref3b = useRef(null);
+  const refTop = useRef(null);
 
   const updateRedux = () => {
     getGameById(gameId).then((res) => {
@@ -106,14 +104,8 @@ function Tutorial() {
   const handleClick3 = () => {
     ref3.current?.scrollIntoView({behavior: 'smooth'});
   };
-  const handleClick1b = () => {
-    ref1b.current?.scrollIntoView({behavior: 'smooth'});
-  };
-  const handleClick2b = () => {
-    ref2b.current?.scrollIntoView({behavior: 'smooth'});
-  };
-  const handleClick3b = () => {
-    ref3b.current?.scrollIntoView({behavior: 'smooth'});
+  const handleClickTop = () => {
+    refTop.current?.scrollIntoView({behavior: 'smooth'});
   };
 
   const cardContents = [
@@ -126,7 +118,7 @@ function Tutorial() {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <div style={{position: 'relative', top: '-24px'}} ref={ref1b}> </div>
+          <div style={{position: 'relative', top: '-24px'}}> </div>
           <Typography variant="h3" sx={{ mb: 1 }}>
             1 用藥安全
           </Typography>
@@ -140,10 +132,10 @@ function Tutorial() {
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-用藥安全
           </Typography>
-          <Typography variant="body1" color="#718096" sx={{ mt: 1 }} ref={ref1}>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，因此選擇具有標章的產品絕不會錯！
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick1b}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClickTop} ref={ref1}>
             返回
           </Button>
           
@@ -160,7 +152,7 @@ function Tutorial() {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <div style={{position: 'relative', top: '-24px'}} ref={ref2b}> </div>
+          <div style={{position: 'relative', top: '-24px'}}> </div>
           <Typography variant="h3" sx={{ mb: 1 }}>
             2 食材可信度
           </Typography>
@@ -174,10 +166,10 @@ function Tutorial() {
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-食材可信度
           </Typography>
-          <Typography variant="body1" color="#718096" sx={{ mt: 1 }} ref={ref2}>
-            消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等，為消費者的權益把關。
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
+            消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝和加工等，為消費者權益把關。
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick2b}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClickTop} ref={ref2}>
             返回
           </Button>
         </Grid>
@@ -193,7 +185,7 @@ function Tutorial() {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <div style={{position: 'relative', top: '-24px'}} ref={ref3b}> </div>
+          <div style={{position: 'relative', top: '-24px'}}> </div>
           <Typography variant="h3" sx={{ mb: 1 }}>
             3 食物里程
           </Typography>
@@ -207,10 +199,10 @@ function Tutorial() {
           <Typography variant="h5" sx={{ mt: 4 }}>
             密技-食物里程
           </Typography>
-          <Typography variant="body1" color="#718096" sx={{ mt: 1 }} ref={ref3}>
+          <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
             標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以選擇在地食材降低碳排也獲得更新鮮的食材。
           </Typography>
-          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClick3b}>
+          <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClickTop} ref={ref3}>
             返回
           </Button>
           
@@ -222,9 +214,9 @@ function Tutorial() {
 
   return (
     <div>
-    <Page sx={{ pb: (106-window.innerHeight/8) }}>
+    <Page>
       <Header>
-        <div className={`${headerContainer}`}>
+        <div className={`${headerContainer}`} ref={refTop}>
           <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }} align="left">
             { content.title }
           </Typography>
@@ -247,9 +239,9 @@ function Tutorial() {
             direction="column"
             justifyContent="center"
             alignItems="center"
-            sx={{ minWidth: 304, height: 421, margin: "auto"}}
+            sx={{ minWidth: 304, margin: "auto" }}
           >
-            <Card sx={{ width: 304, height: 357, borderRadius: '16px', overflow: 'hidden', margin: "auto" }}>{x}</Card>
+            <Card sx={{ width: 304, borderRadius: '16px', margin: "auto" }}>{x}</Card>
           </Grid>
         )}
       </SwipeableViews>

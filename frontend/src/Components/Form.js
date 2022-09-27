@@ -636,7 +636,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                                         <button className={`${submitButton}`} id={'buttonNext' + key} disabled={loading || buttonDisabled[key]} onClick={handleSubmit}>
                                             {loading ?
                                             (<Typography variant='body1' id={'text' + key} color={theme.palette.grey[500]} sx={{fontWeight: '700'}}>
-                                                發布中...
+                                                ...
                                             </Typography>)
                                             :
                                             (<Typography variant='body1' id={'text' + key} color={theme.palette.grey[500]} sx={{fontWeight: '700'}}>

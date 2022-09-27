@@ -234,7 +234,7 @@ const ScoreDrawer = ({data}) => {
           <div id="renderer"></div>
           {
             isRendered === false && 
-            <Button variant="primary" onClick={share} autoFocus style={{ height: '64px', width: '275px'}} disabled={loading}>
+            <Button variant="primary" onClick={share} autoFocus style={{ height: '64px', width: '100%'}} disabled={loading}>
               {
                 loading ?
                 (

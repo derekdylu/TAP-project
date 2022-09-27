@@ -253,9 +253,9 @@ const Ingredient = ({object, _handleClose}) => {
               </List>
             </Grid>
             <Grid container justifyContent="center" alignItems="center" sx={{borderRadius: '0 0 10px 10px', px: 3, py: 2, width: '100%'}} style={{background: "#DAF3E4"}} >
-                <Grid container justifyContent="center" alignItems="center" sx={{borderRadius: '30px', px: 1, py: 1.25, width: '230px'}} style={{background: "#e9f8ef"}} >
+                <Grid container justifyContent="center" alignItems="center" sx={{borderRadius: '30px', px: 1, py: 1.25, width: '230px'}} style={{background: "#e9f8ef"}} onClick={handleClose}>
                   <Typography variant="p3" color="primary" fontWeight="500">
-                    https://taft.coa.gov.tw
+                    關閉
                   </Typography>
                 </Grid>
             </Grid>

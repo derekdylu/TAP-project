@@ -34,7 +34,7 @@ const App = () => {
         <Router>
           <Routes>
 
-            <Route path="/" element={<Game />} />
+            <Route path="/" element={<Game />} forceRefresh={true} />
             <Route path="*" element={<Error />} />
             <Route path="/feeds" element={<Feeds />} />
             {/* <Route path="/about" element={<About />} /> */}
