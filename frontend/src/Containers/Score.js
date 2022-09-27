@@ -16,6 +16,7 @@ import Slide from '@mui/material/Slide';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -395,7 +396,7 @@ const Score = () => {
 	}
 
 	const buttonContext = {
-		0: "留言解鎖食譜",
+		0: "開始填答",
 		1: "查看排名"
 	}
 
@@ -597,7 +598,7 @@ const Score = () => {
 							</Typography>
 						</div>
 					</div>
-					<div className={`${additional}`}>
+					<div className={`${additional}`} onClick={handleShowOnClick}>
 					<Grid container
 							direction="row"
 							justifyContent="space-between"
@@ -653,6 +654,13 @@ const Score = () => {
 								</Grid>
 							))}
 						</Grid>
+					</div>
+
+					<div style={{ width: '100%', marginTop: '20px', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+						<AccessTimeIcon style={{ display: 'inline-block', color: '#4A5568', height: '18px' }}/>
+						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', display: 'inline-block' }}>
+							僅需要1分鐘
+						</Typography>
 					</div>
 					
 					<Button variant="primary" style={{ width: '100%', marginTop: '20px'}} onClick={handleButtonOnClick} disabled={loading}>
