@@ -18,11 +18,17 @@ const PagesSlice = createSlice({
         if(p.pageIndex === -1)  p.pageIndex = 0
       },
     },
+    pageReset: {
+      reducer(state, action) {
+        const p = state.find(x => x.pageIndex)
+        if(p) p.pageIndex = 0
+      }
+    }
   },
 })
 
 export const selectAllPages = (state) => state.pages
 
-export const {pageChanged} = PagesSlice.actions
+export const {pageChanged, pageReset} = PagesSlice.actions
 
 export default PagesSlice.reducer

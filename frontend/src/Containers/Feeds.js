@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import theme from '../Themes/Theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAllPages, pageChanged } from '../Features/PagesSlice'
+import { selectAllPages, pageChanged, pageReset } from '../Features/PagesSlice'
 import { selectAllGames } from '../Features/GamesSlice'
 import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
 import ScoreDrawer from '../Components/ScoreDrawer';
@@ -92,7 +92,7 @@ const Feeds = () => {
 
   const init = async() => {
     dispatch(
-      pageChanged(0)
+      pageReset()
     )
 
     if (gameId && img && nickname && score && cuisine) {

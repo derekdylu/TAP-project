@@ -12,6 +12,7 @@ const menuBtn = css`
   right: 35px;
   top: 35px;
   cursor: pointer;
+  
   ${easeSlow};
   &.closer {
     transform: rotate(180deg);
