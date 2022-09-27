@@ -12,6 +12,8 @@ import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Ax
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -19,10 +21,15 @@ import medal_copper from "../Images/Medal/medal_copper.png"
 import medal_stone from "../Images/Medal/medal_stone.png"
 import medal_wood from "../Images/Medal/medal_wood.png"
 import total from "../Images/Score/total.png"
+import total_chosen from "../Images/Score/total_chosen.png"
 import safety from "../Images/Score/safety.png"
+import safety_chosen from "../Images/Score/safety_chosen.png"
 import transparency from "../Images/Score/transparency.png"
+import transparency_chosen from "../Images/Score/transparency_chosen.png"
 import emission from "../Images/Score/emission.png"
+import emission_chosen from "../Images/Score/emission_chosen.png"
 import season from "../Images/Score/season.png"
+import season_chosen from "../Images/Score/season_chosen.png"
 import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
 import cuisine_1 from "../Images/Cuisine/cuisine_1.png"
 import cuisine_2 from "../Images/Cuisine/cuisine_2.png"
@@ -329,7 +336,8 @@ const Score = () => {
 	const type = {
 		0: {
 			"img": total,
-			"title": "總得分",
+			"img_chosen": total_chosen,
+			"title": "點選觀看不同評分指標",
 			"text": "",
 			"totalScore": 100,
 			"scoreTitle": "總得分",
@@ -337,6 +345,7 @@ const Score = () => {
 		},
 		1: {
 			"img": safety,
+			"img_chosen": safety_chosen,
 			"title": "用藥安全",
 			"text": "標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，認證機構都會註明在每一個蔬果的包裝上。消費者可以安心買到對健康有所保障的食品。",
 			"totalScore": 25,
@@ -345,6 +354,7 @@ const Score = () => {
 		},
 		2: {
 			"img": transparency,
+			"img_chosen": transparency_chosen,
 			"title": "食材可信度",
 			"text": "消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等。透過查看食材的詳細資訊，消費者不僅可以更加認識自己所購買食物的來源，若需要申請權益救濟時也不會求助無門。",
 			"totalScore": 25,
@@ -353,6 +363,7 @@ const Score = () => {
 		},
 		3: {
 			"img": emission,
+			"img_chosen": emission_chosen,
 			"title": "食物里程",
 			"text": "標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以根據產地選擇在地食材，支持地產地銷不僅能降低碳排，也可以獲得更新鮮的食材。",
 			"totalScore": 25,
@@ -361,6 +372,7 @@ const Score = () => {
 		},
 		4: {
 			"img": season,
+			"img_chosen": season_chosen,
 			"title": "當季蔬果",
 			"text": "每一種蔬果都有特定的產季，購買當季蔬果可以避免吃到需要經過特殊保存處理的食材，也可以透過不去選擇國外進口的食材來降低食物從產地到餐桌的距離，減少碳排放。",
 			"totalScore": 25,
@@ -411,8 +423,8 @@ const Score = () => {
 	}
 
 	useEffect(() => {
-		const gameId = sessionStorage.getItem('gameId');
-		// const gameId = '631715de971d50827ee63b11'; // 固定 gameID 測試用
+		// const gameId = sessionStorage.getItem('gameId');
+		const gameId = '631715de971d50827ee63b11'; // 固定 gameID 測試用
 
 		const init = async() => {
 			const game = await getGameById(gameId);
@@ -548,11 +560,11 @@ const Score = () => {
 						</div>
                     </div>
 					<div style={{ width: '100%' }}>
-						<Tabs value={tab} indicatorColor="secondary" textColor="secondary" onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '64px' }}>
+						<Tabs value={tab} indicatorColor="none" textColor="secondary" onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '32px' }}>
 							{ Object.keys(type).map(key => (
 								<Tab
-									label={<img src={type[key].img}/>}
-									style={{ padding: '0px', minWidth: '40px' }}/>
+									label={ tab == key ? <img src={type[key].img_chosen} style={{height: '48px'}} /> : <img src={type[key].img} style={{ height: '24px' }} /> } 
+									style={{ padding: '10px', minWidth: '40px' }}/>
 							))}
 						</Tabs>
 					</div>
@@ -566,19 +578,25 @@ const Score = () => {
 							</Typography>
 						</div>
 					</div>
-					<div className={`${additional}`}>
-						<Grid container>
-							<Grid item xs={10}>
-								<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }} style={{ float: 'left' }}>
-									TAP產銷履歷產品是什麼？
-								</Typography>
-							</Grid>
-							<Grid item xs={2}>
-								<Typography variant="h6" color={theme.palette.secondary[500]} sx={{ fontWeight: 700 }} style={{ float: 'right' }} onClick={handleShowOnClick}>
-									{show}
-								</Typography>
-							</Grid>
+					<div className={`${additional}`} onClick={handleShowOnClick}>
+						<Grid container
+							direction="row"
+							justifyContent="space-between"
+							alignItems="center"
+							style={{ display: 'flex' }}
+						>
+						<Grid item sx={{display: 'flex', justifyContent: 'center'}}>
+							<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
+								TAP產銷履歷產品是什麼？
+							</Typography>
 						</Grid>
+						<Grid item sx={{display: 'flex', justifyContent: 'center'}}>
+							{/* <Typography variant="h2" color={theme.palette.secondary[500]} sx={{ fontWeight: 700 }}> */}
+								<AddIcon sx={{display: 'inline'}} color={theme.palette.secondary[500]}/>
+								{/* {show} */}
+							{/* </Typography> */}
+						</Grid>
+					</Grid>
 					</div>
 					<div className={`${bodyContainer}`} style={{ margin: "0px", textAlign: "left" }} hidden={hiddenStatus}>
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, display: 'inline' }}>
@@ -627,25 +645,6 @@ const Score = () => {
 				</div>
 
 				<div className={`${container}`} style={{ margin: '8px 24px' }} hidden={!hideAll}>
-					<img src={done} />
-					<Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
-					問卷填寫完成！
-					</Typography>
-					<Typography variant='body1' color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-					感謝你願意利用寶貴時間留下你的想法。按照約定，我們已經將食譜寄到你的電子郵件信箱。記得去看看喔～
-					</Typography>
-
-					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline' }}>
-						沒收到？
-					</Typography>
-					<Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline', textDecoration: 'underline' }} onClick={sendAgain}>
-						再寄一次
-					</Typography>
-				</div>
-
-
-
-				<div className={`${container}`} style={{ margin: '8px 24px 144px 24px' }} hidden={!hideAll}>
 					<img src={manyEggplants} style={{ marginBottom: '20px' }}/>
 					<Typography variant="h6" color={theme.palette.grey[700]} sx={{ fontWeight: 700 }}>
 					好奇自己與其他玩家的差異？
@@ -659,6 +658,25 @@ const Score = () => {
                             {buttonContext[buttonStatus]}
                         </Typography>
                     </Button>
+				</div>
+
+
+
+				<div className={`${container}`} style={{ margin: '8px 24px 144px 24px' }} hidden={!hideAll}>
+					<img src={done} style={{width: '100%'}}/>
+					<Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
+					問卷填寫完成！
+					</Typography>
+					<Typography variant='body1' color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
+					感謝你願意利用寶貴時間留下你的想法。按照約定，我們已經將食譜寄到你的電子郵件信箱。記得去看看喔～
+					</Typography>
+
+					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline' }}>
+						沒收到？
+					</Typography>
+					<Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline', textDecoration: 'underline' }} onClick={sendAgain}>
+						再寄一次
+					</Typography>
 				</div>
             </Page>
         </ThemeProvider>
