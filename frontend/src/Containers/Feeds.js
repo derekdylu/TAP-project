@@ -12,8 +12,8 @@ import Comment from '../Components/Comment'
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import theme from '../Themes/Theme';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 import { selectAllGames } from '../Features/GamesSlice'
 import { getCuisines, getIngredientTypes, getGameById, getScoreById, updateGameById } from '../Utils/Axios';
 import ScoreDrawer from '../Components/ScoreDrawer';
@@ -58,6 +58,7 @@ const drawer = css`
 // TODO ref div 與我相近 can't run by first click
 
 const Feeds = () => {
+  const dispatch = useDispatch()
   const [navOpen, setNavOpen] = useState(false)
   const refMine = useRef(null);
   const refTop = useRef(null);
@@ -90,6 +91,10 @@ const Feeds = () => {
   }
 
   const init = async() => {
+    dispatch(
+      pageChanged(0)
+    )
+
     if (gameId && img && nickname && score && cuisine) {
       data.current = {
         img: img,

@@ -77,8 +77,7 @@ def ErrorResponseModel(error, code, message):
 
 @app.get("/loaderio-REMOVED_LOADERIO_TOKEN")
 def loader_io_verify():
-    token = "loaderio-REMOVED_LOADERIO_TOKEN"
-    return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(token))
+    return "loaderio-REMOVED_LOADERIO_TOKEN"
 
 @app.get("/")
 async def test():
