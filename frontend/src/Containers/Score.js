@@ -657,7 +657,7 @@ const Score = () => {
 					</div>
 
 					<div style={{ width: '100%', marginTop: '20px', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-						<AccessTimeIcon style={{ display: 'inline-block', color: '#4A5568', height: '18px' }}/>
+						<AccessTimeIcon style={{ display: 'inline-block', color: '#4A5568', height: '16px' }}/>
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', display: 'inline-block' }}>
 							僅需要1分鐘
 						</Typography>
