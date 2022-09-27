@@ -536,7 +536,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
             <Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700', mt: '140px'}}>
                 { _content.question }
             </Typography>
-            <textarea placeholder={_content.placeholder} className={`${inputTextareaStyle}`} id={'answer' + index_key} onChange={e => handleTextInput(e, index_key)}/>
+            <textarea rows='3' placeholder={_content.placeholder} className={`${inputTextareaStyle}`} id={'answer' + index_key} onChange={e => handleTextInput(e, index_key)}/>
         </React.Fragment>
     )
 
