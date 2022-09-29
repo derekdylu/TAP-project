@@ -133,7 +133,7 @@ function Tutorial() {
             密技-用藥安全
           </Typography>
           <Typography variant="body1" color="#718096" sx={{ mt: 1 }}>
-            標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，因此選擇具有標章的產品絕不會錯！
+            標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎TGAP的規範，因此選擇具有標章的產品絕不會錯！
           </Typography>
           <Button variant="secondary" sx={{ mt: 4 }} endIcon={<KeyboardArrowUpRoundedIcon />} onClick={handleClickTop} ref={ref1}>
             返回
@@ -280,7 +280,7 @@ function Tutorial() {
         }
       />
     </Page>
-    <Footer text="採買去！" _disabled={!next} />
+    <Footer text="採買去！" _disabled={!next} onClick={refTop.current?.scrollIntoView({behavior: 'smooth'})}/>
     </div>
   );
 }

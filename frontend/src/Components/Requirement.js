@@ -42,7 +42,6 @@ const img = {
 
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
-    height: '100vh',
 }));
 
 const headerContainer = css`
