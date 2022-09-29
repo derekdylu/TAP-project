@@ -16,6 +16,7 @@ import cuisine_4 from "../Images/Cuisine/cuisine_4.png"
 import cuisine_5 from "../Images/Cuisine/cuisine_5.png"
 import cuisine_6 from "../Images/Cuisine/cuisine_6.png"
 import cuisine_7 from "../Images/Cuisine/cuisine_7.png"
+import requirement from "../Images/requirement.png"
 
 const content = {
     "title": "室友的奇襲！！！",
@@ -43,8 +44,16 @@ const Page = styled('div')(({ theme }) => ({
     height: '100vh',
 }));
 
+
 const headerContainer = css`
-    margin: 33px 0px 0px 0px;
+    margin: 20px 0px 0px 0px;
+`
+const headerImageContainer = css`
+    width: 90%;
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 `
 
 const bodyContainer = css`
@@ -144,6 +153,7 @@ const Requirement = () => {
         <ThemeProvider theme={theme}>
             <Page> 
                 <Header _returnLink={ content.hrefPrev }>
+                    <img src={ requirement } className={`${headerImageContainer}`} />
                     <div className={`${headerContainer}`}>
                         <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
                             { content.title }
