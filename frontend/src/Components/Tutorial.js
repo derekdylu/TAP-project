@@ -18,6 +18,7 @@ import Footer from './Footer';
 import Header from './Header';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllGames, gameCuisineUpdated, gameGroceryUpdated } from '../Features/GamesSlice'
+import { selectAllPages, pageChanged } from '../Features/PagesSlice'
 
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
@@ -108,8 +109,11 @@ function Tutorial() {
     refTop.current?.scrollIntoView({behavior: 'smooth'});
   };
 
-  const backTop = () => {
-    refTop.current?.scrollIntoView({behavior: 'smooth'})
+  const startGame = () => {
+    refTop.current?.scrollIntoView({behavior: 'auto'})
+    dispatch(
+      pageChanged(1)
+    )
   }
 
   const cardContents = [
@@ -284,7 +288,7 @@ function Tutorial() {
         }
       />
     </Page>
-    <Footer text="採買去！" _disabled={!next} _onClick={backTop}/>
+    <Footer text="採買去！" _disabled={!next} _onClick={startGame}/>
     </div>
   );
 }

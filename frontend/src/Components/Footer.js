@@ -71,7 +71,7 @@ function Footer({text, _disabled, _onClick, _loading}) {
 
   return (
     <div className={`${zigzag}`}>
-      <Button variant="primary" style={{ width: '100%'}} disabled={loading || disabled} onClick={handleClick}>
+      <Button variant="primary" style={{ width: '100%'}} disabled={loading || disabled} onClick={onClick}>
         {loading ?
         (<CircularProgress
           size={24}
