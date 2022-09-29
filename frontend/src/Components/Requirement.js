@@ -165,19 +165,7 @@ const Requirement = () => {
                     </div>
                 </Header>
                 <Grid container spacing={2} px={2} py={0.5} style={{background: "theme.palette.secondary.main"}}>
-                    {loadingItems ?
-                    (<CircularProgress
-                        size={24}
-                        sx={{
-                        color: theme.palette.primary[500],
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        marginTop: '-12px',
-                        marginLeft: '-12px',
-                        }}
-                    />)
-                    :
+                    {
                     (Object.keys(specialCuisine).map(key => (
                         <Grid item xs={12} key={key}>
                             <div className={`${menuContainer}`}>
@@ -201,7 +189,7 @@ const Requirement = () => {
                     }
                 </Grid>
                 <div className={`${footer}`}>
-                    <Footer text="確定" _disabled={loadingItems}/>
+                    <Footer text="確定" _disabled={loadingItems} _loading={loadingItems}/>
                 </div>
             </Page>
         </ThemeProvider>

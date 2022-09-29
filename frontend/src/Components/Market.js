@@ -11,6 +11,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Header from "./Header.js"
 import Footer from './Footer';
+import Snackbar from '@mui/material/Snackbar';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { pageChanged } from '../Features/PagesSlice'
@@ -279,6 +280,7 @@ const Market = () => {
     const [ingredients, setIngredients] = useState({});
     const [prevPercentage, setPrevPercentage] = useState(0);
     const [openInstruction, setOpenInstruction] = useState(false);
+    const [openSnack, setOpenSnack] = useState(false);
 
     const sortedId = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 13, 0, 1]
 
@@ -420,7 +422,16 @@ const Market = () => {
 
     const handleCloseIngredient = async() => {
         setOpenIngredient(prevState => ([prevState[0], false]));
+        // setOpenSnack(true)
     };
+
+    const handleCloseSnack = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenSnack(false);
+      };
 
     const handleCloseInstruction = (event, reason= "backdropClick" | "escapeKeyDown") => {
         if (reason === "backdropClick") {
@@ -432,6 +443,12 @@ const Market = () => {
 
     return (
         <ThemeProvider theme={theme}>
+            {/* <Snackbar
+                open={openSnack}
+                autoHideDuration={3000}
+                onClose={handleCloseSnack}
+                message={"已加入"}
+            /> */}
             <Dialog open={openInstruction} onClose={handleCloseInstruction} fullWidth={true} TransitionComponent={Transition} PaperProps={{style: { borderRadius: '32px' }}}>
                 <MarketInstruction _handleClose={handleCloseInstruction} />
             </Dialog>

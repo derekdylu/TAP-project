@@ -108,6 +108,10 @@ function Tutorial() {
     refTop.current?.scrollIntoView({behavior: 'smooth'});
   };
 
+  const backTop = () => {
+    refTop.current?.scrollIntoView({behavior: 'smooth'})
+  }
+
   const cardContents = [
     (
     <React.Fragment>
@@ -280,7 +284,7 @@ function Tutorial() {
         }
       />
     </Page>
-    <Footer text="採買去！" _disabled={!next} onClick={refTop.current?.scrollIntoView({behavior: 'smooth'})}/>
+    <Footer text="採買去！" _disabled={!next} _onClick={backTop}/>
     </div>
   );
 }
