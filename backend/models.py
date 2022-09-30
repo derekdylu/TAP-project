@@ -189,14 +189,25 @@ class Comment(BaseModel):
         
 
 def comment_helper(comment) -> dict:
-    return {
-        "id": comment["_id"],
-        "nickname": comment["nickname"],
-        "profile_photo": comment["profile_photo"],
-        "content": comment["content"],
-        "score": comment["score"],
-        "timestamp": comment["timestamp"]
-    }
+    if "answer" in comment.keys():
+        return {
+            "id": comment["_id"],
+            "nickname": comment["nickname"],
+            "profile_photo": comment["profile_photo"],
+            "content": comment["content"],
+            "score": comment["score"],
+            "timestamp": comment["timestamp"],
+            "answer": comment["answer"]
+        }
+    else:
+        return {
+            "id": comment["_id"],
+            "nickname": comment["nickname"],
+            "profile_photo": comment["profile_photo"],
+            "content": comment["content"],
+            "score": comment["score"],
+            "timestamp": comment["timestamp"]
+        }
 
 
 # Email
