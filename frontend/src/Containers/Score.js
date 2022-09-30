@@ -706,7 +706,7 @@ const Score = () => {
 
 
 				<div className={`${container}`} style={{ margin: '8px 24px 24px 24px' }} hidden={!hideAll}>
-					<img src={done} />
+					<img src={done} style={{ marginBottom: '20px' }} width="100%"/>
 					<Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
 					問卷填寫完成！
 					</Typography>

@@ -650,7 +650,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                         ))}
                     </SwipeableViews>
                     <div className={`${cardContainer}`} style={{ paddingBottom: '20px' }} hidden={!hideSlide}>
-                        <img src={done} />
+                        <img src={done} style={{ marginBottom: '20px' }} width="100%" />
                         <Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
                         問卷填寫完成！
                         </Typography>
