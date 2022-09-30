@@ -195,7 +195,8 @@ def comment_helper(comment) -> dict:
         "profile_photo": comment["profile_photo"],
         "content": comment["content"],
         "score": comment["score"],
-        "timestamp": comment["timestamp"]
+        "timestamp": comment["timestamp"],
+        "answer": comment["answer"]
     }
 
 
