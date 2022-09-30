@@ -170,7 +170,7 @@ class Comment(BaseModel):
     profile_photo: str = Field(...)
     content: str = Field(...)
     score: int = Field(...)
-    timestamp: str = Field(...)
+    timestamp: Optional[str]
     answer: Optional[object]
 
     class Config:
@@ -183,7 +183,7 @@ class Comment(BaseModel):
                 "profile_photo": ":)",
                 "content": "test",
                 "score": 0,
-                "timestamp": '12345678'
+                "timestamp": '"1234567890'
             }
         }
         
@@ -195,8 +195,7 @@ def comment_helper(comment) -> dict:
         "profile_photo": comment["profile_photo"],
         "content": comment["content"],
         "score": comment["score"],
-        "timestamp": comment["timestamp"],
-        "answer": comment["answer"]
+        "timestamp": comment["timestamp"]
     }
 
 
