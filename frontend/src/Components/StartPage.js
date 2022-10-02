@@ -14,12 +14,12 @@ import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
 import MusicOffRoundedIcon from '@mui/icons-material/MusicOffRounded';
 
 const musicBtn = css`
-    border-radius: 64px;    
+    border-radius: 64px;
     width: 32px;
     height: 32px;
     background: #FEF6D1;
-    right: 32px;
-    top: 8px;
+    left: 35px;
+    top: 35px;
     position: fixed;
     align-items: center;
     padding: 4px 4px;
@@ -137,15 +137,15 @@ const StartPage = () => {
     return (
         <ThemeProvider theme={theme}>
             <Page>
+                <div className={`${musicBtn}`}>
+                {   
+                    playing ?
+                    <MusicNoteRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/> :
+                    <MusicOffRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
+                }
+                </div>
                 <Navigation />
                 <div className={`${contentContainer}`}>
-                    <div className={`${musicBtn}`}>
-                    {   
-                        playing ?
-                        <MusicNoteRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/> :
-                        <MusicOffRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
-                    }
-                    </div>
                     <img src={logo} className={`${imageContainer}`}/>
                     <div className={`${textContainer}`}>
                         <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500' }}>
