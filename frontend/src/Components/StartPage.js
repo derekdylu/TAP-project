@@ -137,13 +137,6 @@ const StartPage = () => {
     return (
         <ThemeProvider theme={theme}>
             <Page>
-                <div className={`${musicBtn}`}>
-                {   
-                    playing ?
-                    <MusicNoteRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/> :
-                    <MusicOffRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
-                }
-                </div>
                 <Navigation />
                 <div className={`${contentContainer}`}>
                     <img src={logo} className={`${imageContainer}`}/>
