@@ -67,7 +67,7 @@ const Game = () => {
 
   return (
     <>
-      {pages[0].pageIndex > 0 && <Music />}
+      {pages[0].pageIndex >= 0 && <Music />}
       {component}
     </>
   )

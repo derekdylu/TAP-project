@@ -16,7 +16,7 @@ import michelle from '../Images/About/avatar/michelle.png'
 import posuke from '../Images/About/avatar/posuke.png'
 
 const about_content = [
-  "關於團隊",
+  "關於",
   "本專案由農經系研究室委託螺絲福祿團隊製作，希望能藉由一款俐落且極富趣味的小品遊戲，向大眾傳達生產履歷在採買農產品所扮演的關鍵角色，以及它對我們的飲食生活能帶來的好處。"
 ]
 
@@ -70,19 +70,28 @@ const members = [
 ]
 
 const Page = styled('div')(({ theme }) => ({
-  background: theme.palette.secondary.main,
+  background: "transparent",
 }));
+
+const backImage = css`
+  position: fixed;
+  z-index: -1;
+  left: -25%;
+`;
 
 const About = () => {
   return (
     <Page>
+      <div className={`${backImage}`}>
+        <img src={bg_about} alt="bg" width="125%"/>
+      </div>
       <Navigation />
       <Grid
         container
         direction="column"
         justifyContent="flex-start"
         alignItems="center"
-        style={{ width: "100%", height: "auto" }}
+        style={{ width: "100%", height: "auto", }}
         sx={{ px: 3, pt: 6 }}
       >
         <img src={about} alt="about" width="100%"/>
@@ -96,7 +105,7 @@ const About = () => {
           <Typography variant="body2" color={theme.palette.primary[900]} sx={{ fontWeight: '500' }}>
             {about_content[0]}
           </Typography>
-          <Typography variant="body1" color={theme.palette.primary[900]} sx={{ fontWeight: '500', mt: 1}}>
+          <Typography variant="body2" color={theme.palette.primary[900]} sx={{ fontWeight: '500', mt: 1}}>
             {about_content[1]}
           </Typography>
         </Grid>
@@ -131,11 +140,9 @@ const About = () => {
         <Grid
           container
           direction="row"
-          justifyContent="space-evenly"
+          justifyContent="space-between"
           alignItems="center"
-          spacing={2}
           sx={{ mt: 2 }}
-          style={{overflow: 'auto'}}
         >
           {
             members.map(m => (<Grid item><Info props={m}/></Grid>))

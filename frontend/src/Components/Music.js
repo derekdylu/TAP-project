@@ -12,23 +12,15 @@ const Music = () => {
   const playing = _playing[0].status
   const pages = useSelector(selectAllPages)
   const page = pages[0].pageIndex
-  const [isScore, setIsScore] = useState(false)
+  const [forceStop, setForceStop] = useState(false)
 
   useEffect(() => {
     playing ? audio.play() : audio.pause()
   }, [playing])
 
   useEffect(() => {
-    if (page >= 8) {
-      setIsScore(true)
-    }
+    if (page >= 8) audio.pause()
   }, [page])
-
-  useEffect(() => {
-    if (isScore) {
-      audio.pause()
-    }
-  }, [isScore])
 
   useEffect(() => {
     audio.addEventListener('ended', function () {

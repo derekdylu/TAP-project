@@ -9,6 +9,22 @@ import theme from '../Themes/Theme';
 import logo from '../Images/logo1.gif'
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllPages, pageChanged } from '../Features/PagesSlice'
+import { selectAllPlayings, playingStatusToggled } from '../Features/PlayingsSlice';
+import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
+import MusicOffRoundedIcon from '@mui/icons-material/MusicOffRounded';
+
+const musicBtn = css`
+    border-radius: 64px;    
+    width: 32px;
+    height: 32px;
+    background: #FEF6D1;
+    right: 32px;
+    top: 8px;
+    position: fixed;
+    align-items: center;
+    padding: 4px 4px;
+    box-sizing: border-box;
+`
 
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
@@ -102,9 +118,8 @@ const contentText = "人類平均一天需花費2小時在想要吃什麼，其�
 
 const StartPage = () => {
     const dispatch = useDispatch()
-    // const handleOnClick = async(event) => {
-    //     window.location.href = "/story/1";
-    // }
+  const _playing = useSelector(selectAllPlayings)
+  const playing = _playing[0].status
 
     function handlePageNext(e) {
         e.preventDefault()
@@ -113,11 +128,24 @@ const StartPage = () => {
         )
     }
 
+    const togglePlaying = () => {
+        dispatch(
+          playingStatusToggled()
+        )
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Page>
                 <Navigation />
                 <div className={`${contentContainer}`}>
+                    <div className={`${musicBtn}`}>
+                    {   
+                        playing ?
+                        <MusicNoteRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/> :
+                        <MusicOffRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
+                    }
+                    </div>
                     <img src={logo} className={`${imageContainer}`}/>
                     <div className={`${textContainer}`}>
                         <Typography variant="body1" color={theme.palette.secondary[900]} sx={{ fontWeight: '500' }}>
