@@ -33,7 +33,7 @@ const GamesSlice = createSlice({
         }
       }
     },
-    gameCheckoutUpdate:{
+    gameCheckoutUpdate: {
       reducer(state, action) {
         const ck = action.payload
         const game = state.find(x => x.id !== undefined)

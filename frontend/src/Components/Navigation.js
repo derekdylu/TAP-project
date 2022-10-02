@@ -23,10 +23,10 @@ const btnLine = css`
   width: 28px;
   height: 4px;
   margin: 0 0 5px 0;
-  background-color: #44C177;
+  background-color: #4C3F08;
   ${easeSlow};
   &.closer {
-    background-color: #44C177;  
+    background-color: #4C3F08;  
     &:nth-child(1) {
       transform: rotate(-45deg) translate(-10px, -5px);
       width: 20px;

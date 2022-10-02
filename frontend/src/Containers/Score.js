@@ -16,7 +16,9 @@ import Slide from '@mui/material/Slide';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
+import { selectAllPlayings } from '../Features/PlayingsSlice';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import sound from '../Images/sound.mp3'
 
 import medal_gold from "../Images/Medal/medal_gold.png"
 import medal_silver from "../Images/Medal/medal_silver.png"
@@ -346,6 +348,10 @@ const Score = () => {
 	const [countRender, setRender] = useState(0);
 	const [hidePot, setHidePot] = useState(false);
 	const [openForm, setOpenForm] = useState(false)
+	const [sfx] = useState(new Audio(sound))
+	const [playing, setPlaying] = useState(true)
+	const _notMute = useSelector(selectAllPlayings)
+  const notMute = _notMute[0].status
 
 	const type = {
 		0: {
@@ -440,6 +446,12 @@ const Score = () => {
 	const sendAgain = async() => {
 		sendEmail(email, cuisineId);
 	}
+
+	useEffect(() => {
+		if (notMute) {
+			hidePot ? sfx.pause() : sfx.play()
+		}
+	}, [hidePot])
 
 	useEffect(() => {
 		const gameId = sessionStorage.getItem('gameId');

@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import './App.css';
-// Debug
+import useWindowDimensions from './Hooks/useWindowDimensions'
 import Score from './Containers/Score'
 import Navigation from './Components/Navigation'
 import Tutorial from './Components/Tutorial';
@@ -28,6 +28,10 @@ const queryClient = new QueryClient()
 const testData = {img: '3', nickname: "tester", score: 33, cuisine: [1,2,3]}
 
 const App = () => {
+  const { height, width } = useWindowDimensions()
+
+  console.log("height", height, "width", width)
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>

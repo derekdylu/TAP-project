@@ -11,6 +11,7 @@ import Tutorial from '../Components/Tutorial'
 import Market from '../Components/Market'
 import Cart from '../Components/Cart'
 import Score from './Score'
+import Music from '../Components/Music'
 
 const Game = () => {
   const dispatch = useDispatch()
@@ -59,20 +60,14 @@ const Game = () => {
     case 8:
       component = <Score /> // Score
       break
-    case 1000:
-      component = <Cart />
-      break
     default:
       component = <div>default</div>
-      break;
+      break
   }
 
   return (
     <>
-      {/* {/* <Navigation /> */}
-      {/* <div>{pages[0].pageIndex}</div> */}
-      {/* <button onClick={handlePageBack}>back</button> */}
-      {/* <button onClick={handlePageNext}>next</button> */}
+      {pages[0].pageIndex > 0 && <Music />}
       {component}
     </>
   )

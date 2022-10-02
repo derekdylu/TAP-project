@@ -1,13 +1,15 @@
 import React, { Children } from "react";
 import Button from '@mui/material/Button';
 import { Link, Typography, useThemeProps } from "@mui/material";
-import { styled } from '@mui/system';
-// import styled from "@mui/materials/styles";
+import Grid from '@mui/material/Grid';
 import { css } from "@emotion/css";
 import theme from '../Themes/Theme';
 import { ThemeProvider } from "@emotion/react";
-import { useSelector, useDispatch } from 'react-redux';
-import { selectAllPages, pageChanged } from '../Features/PagesSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { pageChanged } from '../Features/PagesSlice'
+import { selectAllPlayings, playingStatusToggled } from '../Features/PlayingsSlice';
+import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
+import MusicOffRoundedIcon from '@mui/icons-material/MusicOffRounded';
 
 const header = css`
     position: sticky;
@@ -31,7 +33,8 @@ const arrow = css`
     border-width: 0 2px 2px 0;
     display: inline-block;
     padding: 3px; 
-    margin-right: 3px;
+    margin-right: 5px;
+    margin-top: 3px;
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
 `;
@@ -48,6 +51,8 @@ const arrowTransparent = css`
 
 function Header(props, {_returnText, _returnLink, _titleText, _contentText, _linkColor, _loading}) {
   const dispatch = useDispatch()
+  const _playing = useSelector(selectAllPlayings)
+  const playing = _playing[0].status
 
   let returnText = "返回";
   let returnLink = "";
@@ -82,22 +87,38 @@ function Header(props, {_returnText, _returnLink, _titleText, _contentText, _lin
     )
   }
 
+  const togglePlaying = () => {
+    dispatch(
+      playingStatusToggled()
+    )
+  }
+
   return (
     <ThemeProvider theme={theme}>
         <div className={`${header}`} id="header">
             {loading ?
               (
                 <Typography variant="h5" color="transparent">
-                  <a className={`${link}`}>
+                  <div className={`${link}`}>
                       <div className={`${arrowTransparent}`}/>{ returnText }
-                  </a>
+                  </div>
                 </Typography>
               ):(
-                <Typography variant="h5" color={linkColor}>
-                  <a className={`${link}`} onClick={handlePageBack}>
-                      <div className={`${arrow}`}/>{ returnText }
-                  </a>
-                </Typography>
+                <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="h5" color="#704E27" fontWeight="500">
+                    <a className={`${link}`} onClick={handlePageBack}>
+                        <div className={`${arrow}`}/>{ returnText }
+                    </a>
+                  </Typography>
+                  <>
+                    {
+                      playing ?
+                      <MusicNoteRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
+                      :
+                      <MusicOffRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
+                    }
+                  </>
+                </Grid>
               )
             }
             { titleText !== null &&

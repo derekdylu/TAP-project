@@ -15,6 +15,9 @@ import Snackbar from '@mui/material/Snackbar';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { pageChanged } from '../Features/PagesSlice'
+import { selectAllPlayings, playingStatusToggled } from '../Features/PlayingsSlice';
+import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
+import MusicOffRoundedIcon from '@mui/icons-material/MusicOffRounded';
 import { selectAllGames } from '../Features/GamesSlice'
 import Cart from './Cart'
 import Dialog from '@mui/material/Dialog';
@@ -155,6 +158,19 @@ const topBackground2 = css`
     position: inline-block;
 `
 
+const musicBtn = css`
+    border-radius: 64px;    
+    width: 32px;
+    height: 32px;
+    background: #F5D34C;
+    right: 17px;
+    top: 17px;
+    position: fixed;
+    align-items: center;
+    padding: 4px 4px;
+    box-sizing: border-box;
+`
+
 const top = css`
     width: 20%;
     height: inherit;
@@ -273,6 +289,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Market = () => {
     const dispatch = useDispatch()
     const _game = useSelector(selectAllGames)
+    const _playing = useSelector(selectAllPlayings)
+    const playing = _playing[0].status
     const [openCart, setOpenCart] = useState(false);
     const [openList, setOpenList] = useState(false);
     const [openIngredient, setOpenIngredient] = useState([{}, false]);
@@ -305,6 +323,12 @@ const Market = () => {
     const getHeight = () => window.innerHeight;
 
     const [height, setHeight] = useState(getHeight());
+
+    const togglePlaying = () => {
+        dispatch(
+          playingStatusToggled()
+        )
+    }
 
     useEffect(() => {
         // timeoutId for debounce mechanism
@@ -443,12 +467,6 @@ const Market = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            {/* <Snackbar
-                open={openSnack}
-                autoHideDuration={3000}
-                onClose={handleCloseSnack}
-                message={"已加入"}
-            /> */}
             <Dialog open={openInstruction} onClose={handleCloseInstruction} fullWidth={true} TransitionComponent={Transition} PaperProps={{style: { borderRadius: '32px' }}}>
                 <MarketInstruction _handleClose={handleCloseInstruction} />
             </Dialog>
@@ -469,8 +487,14 @@ const Market = () => {
                         <div className={`${topBackground2}`}></div>
                     </div>
                 ))}
+                <div className={`${musicBtn}`}>
+                {   
+                    playing ?
+                    <MusicNoteRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/> :
+                    <MusicOffRoundedIcon sx={{ color: theme.palette.carton[700] }} onClick={togglePlaying}/>
+                }
+                </div>
             </div>
-
             
             <div className={`${typeList}`}>
                 { Object.keys(type).map(key => (
