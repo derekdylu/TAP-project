@@ -105,7 +105,6 @@ class Menu extends React.Component {
             <Link to="/">開始遊戲</Link>
             <Link to="/feeds">排行榜</Link>
             <Link to="/about">關於</Link>
-            <Link to="/terms">使用條款</Link>
           </nav>
         </div>
       </React.Fragment>
