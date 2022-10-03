@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Info from '../Components/Info'
 
-import bg_about from '../Images/About/bg_about.png'
+import bg_about from '../Images/About/bgbg_about_fill.png'
 import about from '../Images/About/about.png'
 import derek from '../Images/About/avatar/derek.png'
 import grace from '../Images/About/avatar/grace.png'
@@ -142,7 +142,7 @@ const About = () => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mt: 2 }}
+          sx={{ mt: 4 }}
         >
           {
             members.map(m => (<Grid item><Info props={m}/></Grid>))
