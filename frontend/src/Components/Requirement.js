@@ -152,6 +152,8 @@ const Requirement = () => {
         <ThemeProvider theme={theme}>
             <Page> 
                 <Header _returnLink={ content.hrefPrev } _loading={loadingItems}>
+                </Header>
+                <div style={{ padding: '0px 24px 24px 24px' }}>
                     <img src={ requirement } className={`${headerImageContainer}`} />
                     <div className={`${headerContainer}`}>
                         <Typography variant="h1" color={theme.palette.secondary.contrastText} sx={{ fontWeight: '900' }}>
@@ -163,7 +165,7 @@ const Requirement = () => {
                             { content.text }
                         </Typography>
                     </div>
-                </Header>
+                </div>
                 <Grid container spacing={2} px={2} py={0.5} style={{background: "theme.palette.secondary.main"}}>
                     {
                     (Object.keys(specialCuisine).map(key => (
