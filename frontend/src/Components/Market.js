@@ -26,9 +26,9 @@ import Ingredient from './Ingredient';
 import { getCuisines, getIngredientTypes, getGameById, getIngredients } from '../Utils/Axios';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 
-import veg from '../Images/Market/veg.png'
-import egg from '../Images/Market/egg.png'
-import meat from '../Images/Market/meat.png'
+import egg from '../Images/tab_icon/market-tab/egg-line.svg'
+import meat from '../Images/tab_icon/market-tab/meat-line.svg'
+import veg from '../Images/tab_icon/market-tab/veg-line.svg'
 
 import img0_1 from '../Images/Ingredient/0_1.png'
 import img0_2 from '../Images/Ingredient/0_2.png'

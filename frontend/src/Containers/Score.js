@@ -25,16 +25,18 @@ import medal_silver from "../Images/Medal/medal_silver.png"
 import medal_copper from "../Images/Medal/medal_copper.png"
 import medal_stone from "../Images/Medal/medal_stone.png"
 import medal_wood from "../Images/Medal/medal_wood.png"
-import total from "../Images/Score/total.png"
-import total_chosen from "../Images/Score/total_chosen.png"
-import safety from "../Images/Score/safety.png"
-import safety_chosen from "../Images/Score/safety_chosen.png"
-import transparency from "../Images/Score/transparency.png"
-import transparency_chosen from "../Images/Score/transparency_chosen.png"
-import emission from "../Images/Score/emission.png"
-import emission_chosen from "../Images/Score/emission_chosen.png"
-import season from "../Images/Score/season.png"
-import season_chosen from "../Images/Score/season_chosen.png"
+
+import total from "../Images/tab_icon/score-tab/total-line.svg"
+import total_chosen from "../Images/tab_icon/score-tab/total-fill.svg"
+import safety from "../Images/tab_icon/score-tab/safety-line.svg"
+import safety_chosen from "../Images/tab_icon/score-tab/safety-fill.svg"
+import transparency from "../Images/tab_icon/score-tab/credibility-line.svg"
+import transparency_chosen from "../Images/tab_icon/score-tab/credibility-fill.svg"
+import emission from "../Images/tab_icon/score-tab/mileage-line.svg"
+import emission_chosen from "../Images/tab_icon/score-tab/mileage-fill.svg"
+import season from "../Images/tab_icon/score-tab/calendar-line.svg"
+import season_chosen from "../Images/tab_icon/score-tab/calendar-fill.svg"
+
 import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
 import cuisine_1 from "../Images/Cuisine/cuisine_1.png"
 import cuisine_2 from "../Images/Cuisine/cuisine_2.png"
@@ -413,7 +415,7 @@ const Score = () => {
 	}
 
 	const handleShowOnClick = async() => {
-		setShow(prevState => (prevState == "+") ? "-" : "+");
+		setShow(prevState => (prevState == "+") ? "− " : "+");
 		setHiddenStatus(prevState => (!prevState));
 	}
 
@@ -595,7 +597,7 @@ const Score = () => {
 						<Tabs value={tab} indicatorColor="none" textColor="secondary" onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '32px' }}>
 							{ Object.keys(type).map(key => (
 								<Tab
-									label={ tab == key ? <img src={type[key].img_chosen} style={{height: '48px'}} /> : <img src={type[key].img} style={{ height: '24px' }} /> } 
+									label={ tab == key ? <img src={type[key].img_chosen} style={{height: '24px', backgroundColor: '#fff', padding: '8px', borderRadius: '64px'}} /> : <img src={type[key].img} style={{ height: '24px', backgroundColor: 'transparent', padding: '8px', borderRadius: '64px' }} /> } 
 									style={{ padding: '10px', minWidth: '40px' }}/>
 							))}
 						</Tabs>
@@ -623,11 +625,11 @@ const Score = () => {
 							</Typography>
 						</Grid>
 						<Grid item sx={{display: 'flex', justifyContent: 'center'}}>
-							<Typography variant="h2" color={theme.palette.secondary[500]} sx={{ fontWeight: 700 }}>
+							<Typography variant="h2" color={theme.palette.secondary[500]} sx={{ fontWeight: 700, mb: 0.25, mr: 0.25 }} align="center">
 								{show}
 							</Typography>
 						</Grid>
-						</Grid>
+					</Grid>
 					</div>
 					<div className={`${bodyContainer}`} style={{ margin: "0px", textAlign: "left" }} hidden={hiddenStatus}>
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, display: 'inline' }}>
