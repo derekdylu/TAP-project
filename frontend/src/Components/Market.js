@@ -26,6 +26,8 @@ import Ingredient from './Ingredient';
 import { getCuisines, getIngredientTypes, getGameById, getIngredients } from '../Utils/Axios';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+
 import egg from '../Images/tab_icon/market-tab/egg-line.svg'
 import meat from '../Images/tab_icon/market-tab/meat-line.svg'
 import veg from '../Images/tab_icon/market-tab/veg-line.svg'
@@ -532,17 +534,17 @@ const Market = () => {
 
             <div className={`${footer}`}>
                 <Grid container px={2} width="100%" direction="row" justifyContent="space-around" alignItems="center">
+                    <Grid container xs={3} justifyContent="flex-start" alignItems="center">
+                        <div className={`${listButton}`} onClick={handleClickOpenCart} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <ShoppingCartRoundedIcon />
+                        </div>
+                    </Grid>
                     <Grid item xs={9}>
-                        <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenCart}>
+                        <Button variant="primary" style={{ width: '100%', height: '64px' }} onClick={handleClickOpenList}>
                             <Typography variant="body1" color={theme.palette.carton[900]} sx={{ fontWeight: '700' }}>
-                                查看購物車 ({ _game[0].cart.length })
+                                查看購物清單 ({ _game[0].grocery.filter(x => x.inCart === true).length }/{ _game[0].grocery.length })
                             </Typography>
                         </Button>
-                    </Grid>
-                    <Grid container xs={3} justifyContent="flex-end" alignItems="center">
-                        <div className={`${listButton}`} onClick={handleClickOpenList} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <ListAltRoundedIcon />
-                        </div>
                     </Grid>
                 </Grid>
             </div>

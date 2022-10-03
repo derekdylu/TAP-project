@@ -22,7 +22,7 @@ const about_content = [
 
 const lab_content = [
   "臺大農經系",
-  "團隊簡要介紹，在別具特色的英雄等你解鎖升級，使用各種超級技能、能力之星和武裝配件讓對手吃盡苦頭！"
+  "本系設立的宗旨以培養我國高級農業經濟人才，配合國家現代化農業建設，並以追求世界一流之教學與研究水準，提升我國農業經濟學術地位為其發展目標。"
 ]
 
 const dev_content = [
@@ -40,7 +40,7 @@ const members = [
     color: "#F46B3B",
     img: michelle,
     name: "林奕萱",
-    occupation: "PM",
+    occupation: "專案管理",
     email: "mailto:contact@example.invalid",
     linkedin: "https://www.linkedin.com/in/JellyMichelle",
     github: "https://jellyfishlin.github.io",
@@ -48,7 +48,7 @@ const members = [
     color: "#15834A",
     img: derek,
     name: "盧德原",
-    occupation: "Full Stack",
+    occupation: "全端工程",
     email: "mailto:contact@example.invalid",
     linkedin: "https://www.linkedin.com/in/derekdylu",
     github: "https://github.com/derekdylu",
@@ -56,14 +56,14 @@ const members = [
     color: "#5D9FE4",
     img: grace,
     name: "張琪",
-    occupation: "Full Stack",
+    occupation: "全端工程",
     email: "mailto:contact@example.invalid",
     linkedin: "https://www.linkedin.com/in/gracetheo",
   },{
     color: "#FEF6D1",
     img: posuke,
     name: "張育綸",
-    occupation: "Designer",
+    occupation: "設計",
     email: "mailto:contact@example.invalid",
     behance: "https://www.behance.net/lnd870929178d",
   }
