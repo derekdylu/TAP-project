@@ -136,6 +136,7 @@ const labelImg = {
 const Page = styled('div')(({ theme }) => ({
     background: theme.palette.secondary.main,
     height: '100vh',
+    overflow: 'fix',
 }));
 
 const topBackground1 = css`
