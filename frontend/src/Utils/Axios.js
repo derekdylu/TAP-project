@@ -154,7 +154,7 @@ export const getGameById = async (id) => {
         <img src=${imgLink[id[1]]} />
         <img src=${imgLink[id[2]]} />
         <br/><br/>
-        螺獅福祿團隊 敬上`
+        ㄟ今晚吃什麼開發團隊敬上`
     });
 
     return await instance.post('/send_email', param, jsonHeader).then((res) => {

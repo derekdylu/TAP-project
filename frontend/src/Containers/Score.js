@@ -574,6 +574,7 @@ const Score = () => {
 										}]
 									}}
 									className={`${scoreCircle}`}
+									style={{ pointerEvents: 'none' }}
 								/>
 							}
 
