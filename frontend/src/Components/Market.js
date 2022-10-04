@@ -89,18 +89,18 @@ const img = {
     "1_1": img1_1,
     "1_2": img1_2,
     "1_3": img1_3,
-    "2_1": img2_3,
+    "2_1": img2_2,
     "2_2": img2_1,
-    "2_3": img2_2,
+    "2_3": img2_3,
     "3_1": img3_1,
     "3_2": img3_2,
     "3_3": img3_3,
-    "4_1": img4_1,
+    "4_1": img4_3,
     "4_2": img4_2,
-    "4_3": img4_3,
+    "4_3": img4_1,
     "5_1": img5_1,
-    "5_2": img5_3,
-    "5_3": img5_2,
+    "5_2": img5_2,
+    "5_3": img5_3,
     "6_1": img6_3,
     "6_2": img6_2,
     "6_3": img6_1,
@@ -139,10 +139,10 @@ const labelImg = {
     "2": meat
 }
 
-const Page = styled('div')(({ theme }) => ({
+const Page = styled('div')(({ theme, pageHeight }) => ({
     background: theme.palette.secondary.main,
     height: '100vh',
-    overflow: 'hidden',
+    height: pageHeight,
 }));
 
 const topBackground1 = css`
@@ -482,7 +482,7 @@ const Market = () => {
             <Dialog open={openList} onClose={handleCloseList} fullScreen TransitionComponent={Transition}>
                 <Cart _tab={1} handleClose={handleCloseList} />
             </Dialog>
-            <Page>
+            <Page pageHeight={height}>
             <div className={`${header}`}>
                 { [1, 2, 3, 4, 5].map(key => (
                     <div key={key} className={`${top}`}>

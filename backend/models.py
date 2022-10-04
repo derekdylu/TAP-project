@@ -172,6 +172,7 @@ class Comment(BaseModel):
     score: int = Field(...)
     timestamp: Optional[str]
     answer: Optional[object]
+    email: Optional[str]
 
     class Config:
         allow_population_by_field_name = True
@@ -183,7 +184,9 @@ class Comment(BaseModel):
                 "profile_photo": ":)",
                 "content": "test",
                 "score": 0,
-                "timestamp": '"1234567890'
+                "timestamp": '"1234567890',
+                "answer": "{}",
+                "email": "xx@xx.xx"
             }
         }
         

@@ -568,7 +568,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         sessionStorage.setItem('cuisine', reduxGame[0].cuisine)
 
         // createComment(nickname.value, profile_photo.value, comment.value, score[0])
-        createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer)
+        createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer, emailInput.value)
         .then((res) => {
             // nickname.value = "";
             // profile_photo.checked = false;
