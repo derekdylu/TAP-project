@@ -563,7 +563,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId}) => {
         const nickname = document.getElementById("nickname");
         const profile_photo = document.querySelector('input[name="profile"]:checked');
 
-        createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer)
+        createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer, emailInput.value)
         .then((res) => {
             // nickname.value = "";
             // profile_photo.checked = false;

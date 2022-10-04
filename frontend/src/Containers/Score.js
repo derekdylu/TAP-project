@@ -348,6 +348,7 @@ const Score = () => {
 			"img_chosen": safety_chosen,
 			"title": "用藥安全",
 			"text": "標示具有產銷履歷的農產品都已通過第三方認證，由驗證機構查核農友生產過程是否合乎法律和TGAP的規則，認證機構都會註明在每一個蔬果的包裝上。消費者可以安心買到對健康有所保障的食品。",
+			"additional": "依照您是否有選到TAP標章的食材進行評分。",
 			"totalScore": 25,
 			"scoreTitle": "用藥安全得分",
 			"color": "#F16063",
@@ -357,6 +358,7 @@ const Score = () => {
 			"img_chosen": transparency_chosen,
 			"title": "食材可信度",
 			"text": "消費者可以看到具有產銷履歷標章的農產品各階段詳細的產製過程，包含生產、流通、分裝、產製和加工等。透過查看食材的詳細資訊，消費者不僅可以更加認識自己所購買食物的來源，若需要申請權益救濟時也不會求助無門。",
+			"additional": "依照您是否有達到室友奇襲條件來評分。",
 			"totalScore": 25,
 			"scoreTitle": "食材可信度得分",
 			"color": "#44C177",
@@ -366,6 +368,7 @@ const Score = () => {
 			"img_chosen": emission_chosen,
 			"title": "食物里程",
 			"text": "標示為產銷履歷的產品在產銷履歷資訊公開網可以看到所有產品生產資訊，包含產地及生產者等，消費者可以根據產地選擇在地食材，支持地產地銷不僅能降低碳排，也可以獲得更新鮮的食材。",
+			"additional": "依照您是否有選擇產地距離您最近的食材來評分。",
 			"totalScore": 25,
 			"scoreTitle": "食物里程得分",
 			"color": "#1B71B2",
@@ -375,6 +378,7 @@ const Score = () => {
 			"img_chosen": season_chosen,
 			"title": "當季蔬果",
 			"text": "每一種蔬果都有特定的產季，購買當季蔬果可以避免吃到需要經過特殊保存處理的食材，也可以透過不去選擇國外進口的食材來降低食物從產地到餐桌的距離，減少碳排放。",
+			"additional": "依照您是否有選擇當季蔬果來評分。",
 			"totalScore": 25,
 			"scoreTitle": "當季蔬果得分",
 			"color": "#F46B3B",
@@ -574,9 +578,14 @@ const Score = () => {
 							{type[tab].title}
 						</Typography>
                         <div className={`${bodyContainer}`} style={{marginTop: '10px'}}>
-							<Typography variant="body1" color={theme.palette.secondary[700]} sx={{ fontWeight: '500'}}>
+							<Typography variant="body1" color={theme.palette.secondary[700]} sx={{ fontWeight: '500', marginBottom: '18px' }}>
 								{type[tab].text}
 							</Typography>
+							{ tab > 0 &&
+								<Typography variant="body1" color={theme.palette.secondary[700]} sx={{ fontWeight: '700', marginBottom: '0px' }}>
+									評分標準：{type[tab].additional}
+								</Typography>
+							}
 						</div>
 					</div>
 					<div className={`${additional}`} onClick={handleShowOnClick}>
