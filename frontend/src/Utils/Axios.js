@@ -19,14 +19,15 @@ export const getComments = async () => {
 }
 
 // create a comment
-export const createComment = async (_nickname, _profile_photo, _content, _score, _timestamp, _answer) => {
+export const createComment = async (_nickname, _profile_photo, _content, _score, _timestamp, _answer, _email) => {
     const param = JSON.stringify({
         nickname: _nickname,
         profile_photo: _profile_photo,
         content: _content,
         score: _score,
         timestamp: _timestamp,
-        answer: _answer
+        answer: _answer,
+        email: _email
     });
 
     return await instance.post('/create_comment', param, jsonHeader).then((res) => {
