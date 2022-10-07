@@ -1,4 +1,4 @@
-<img src="https://i.ibb.co/kGw4bzW/cover.png" alt="logo" width="auto">
+<img src="https://i.ibb.co/kGw4bzW/cover.png" alt="logo" width="100%">
 
 <h3 align="center">Official Environment Documentation</h4>
 <h6 align="center">Designed and Develped by EMVERSE at NTU</h5>
