@@ -41,18 +41,24 @@
 - PM: Yarn
 - IDE: Visual Studio Code
 ### Frontend
+<p align="left">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" height="40" align="center"  alt="react">
 <img src="https://cdn.worldvectorlogo.com/logos/redux.svg" height="39" align="center"  alt="redux">
 <img src="https://mui.com/static/logo.png" height="52" align="center"  alt="mui">
+</p>
 
 ### Backend and Database
+<p align="left">
 <img src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" height="42" align="center" alt="fastAPI">
 <img src="https://sendgrid.com/wp-content/themes/sgdotcom/pages/resource/brand/2016/SendGrid-Logomark.png" height="52" align="center" alt="sendgrid">
 <img src="https://img.icons8.com/color/480/mongodb.png" height="50" align="center" alt="mongoDB">
+</p>
 
 ### Deployment
+<p align="left">
 <img src="https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/netlify-512.png" height="42" align="center" alt="netlify">
 <img src="https://cdn-icons-png.flaticon.com/512/873/873120.png" height="43" align="center" alt="mongoDB">
+</p>
 
 ## 其他注意事項
 
