@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import theme from '../Themes/Theme';
-import Header from "./Header.js"
+import Header from "./Header"
 import Footer from './Footer';
 import { getCuisines, getIngredientTypes, updateGameById, getGameById, putGroceryById } from "../Utils/Axios";
 

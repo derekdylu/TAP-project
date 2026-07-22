@@ -188,7 +188,7 @@ const Cart = ({_tab, handleClose}) => {
               {
                 game[0].cart.length > 0 ?
                 game[0].cart.map(x =>(
-                  <CartItem index={x.id} name={x.name} type={"cart"} cuisines={x.forCuisine} onClickDelete={() => deleteItemFromCart(x.id)} loading={loading}/>
+                  <CartItem key={x.id} index={x.id} name={x.name} type={"cart"} cuisines={x.forCuisine} onClickDelete={() => deleteItemFromCart(x.id)} loading={loading}/>
                 ))
                 :
                 <Grid
@@ -209,7 +209,7 @@ const Cart = ({_tab, handleClose}) => {
               {
                 showGrocery.length > 0 ?
                 showGrocery.map(x =>(
-                  <CartItem index={x.id} name={x.source + x.name} type={"tobuy"} added={x.inCart} cuisines={x.forCuisine} />
+                  <CartItem key={x.id} index={x.id} name={x.source + x.name} type={"tobuy"} added={x.inCart} cuisines={x.forCuisine} />
                 ))
                 :
                 <Grid

@@ -167,7 +167,7 @@ const CartItem = ({index, name, cuisines, type, added, onClickDelete, loading}) 
           {name !== undefined ? name : "name"}
         </Typography>
         <Typography variant="body1">
-          用於 {localCuisines.map(x => <span style={{ color: "#A48910" }}>{x}<br /></span>)}
+          用於 {localCuisines.map((cuisine, position) => <span key={`${cuisine}-${position}`} style={{ color: "#A48910" }}>{cuisine}<br /></span>)}
         </Typography>
       </Grid>
       <Grid>

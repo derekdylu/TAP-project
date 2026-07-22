@@ -6,14 +6,11 @@ import { styled, withTheme } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import theme from '../Themes/Theme';
-import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import Stack from '@mui/material/Stack';
-import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { createComment, getGameById, getScoreById } from '../Utils/Axios';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import nameLogo from '../Images/nameLogo.png'
-import CloseIcon from '@mui/icons-material/Close'
 import bunaShimeji from '../Images/IngredientType/鴻喜菇.png'
 import spinach from '../Images/IngredientType/菠菜.png'
 import pepper from '../Images/IngredientType/白蘿蔔.png'
@@ -239,7 +236,7 @@ const submitButton = css`
 `
 
 
-const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
+const Form = ({score, _handleClose, reduxGame}) => {
     const [loading, setLoading] = useState(false)
     const [currIndex, setCurrIndex] = useState(0);
     const [answer, setAnswer] = useState({});
@@ -252,7 +249,6 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         5: true,
         6: true,
     });
-	const [email, setEmail] = useState("");
     const [hideSlide, setHideSlide] = useState(false);
 
     const handleRadio = (e, key) => {
@@ -402,9 +398,7 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         const key = 6;
         const nickname = document.getElementById('nickname');
         const profilePicture = document.querySelector(`input[name=profile]:checked`);
-        const email = document.getElementById('email');
-
-        if (nickname.value !== "" && profilePicture !== null && email.value !== "") {
+        if (nickname.value !== "" && profilePicture !== null) {
             document.getElementById('text' + key).style.color = '#143A24';
             setButtonDisabled(prevState => ({...prevState, [key]: false}));
         } else {
@@ -412,10 +406,6 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
             setButtonDisabled(prevState => ({...prevState, [key]: true}));
         }
     }
-
-    const sendAgain = async() => {
-		sendEmail(email, cuisineId);
-	}
 
     const identityForm = () => (
         <React.Fragment>
@@ -439,22 +429,10 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                 ))}
             </Grid>
     
-            <div style={{width: '100%',  alignItems: 'center', justifyContent: 'left', display: 'flex'}}>
-                <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px', display: 'inline-block' }}>
-                電子郵件 
+            <div className={`${helpContainer}`} style={{display: 'flex'}}>
+                <Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left'}}>
+                典藏版不會上傳問卷或聯絡資料。暱稱、留言與分數只會保存在這個瀏覽器。
                 </Typography>
-                <HelpOutlineIcon fontSize='small' sx={{ pl: '5px', display: 'inline-block'}} onClick={e => handleHelpOnClick(e, 0)}/>
-            </div>
-
-            <input type="text" placeholder='12345678@123.com' className={`${inputTextStyle}`} id='email' onChange={handleCheckForm} />
-            <div className={`${helpContainer}`} id='help' style={{display: 'none'}}>
-                <Typography variant="body2" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', width: '80%', display: 'inline-block'}}>
-                食譜會以電子郵件寄送給您，並不會將您的郵件地址另作他用，請放心。
-                </Typography>
-                <div onClick={e => handleHelpOnClick(e, 1)} 
-                    style={{ borderRadius: '50%', background:'#FEF6D1', width: '40px', height: '40px', marginLeft: '10px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <CloseIcon />
-                </div>
             </div>
         </React.Fragment>
     )
@@ -540,25 +518,8 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         </React.Fragment>
     )
 
-    const handleHelpOnClick = (e, type) => {
-		const helpElement = document.getElementById('help');
-        if (type === 0) {
-			helpElement.style.display = 'flex';
-        }
-        else {
-			helpElement.style.display = 'none';
-        }
-	}
-
     const handleSubmit = async() => {
         setLoading(true);
-        // add API
-        const emailInput = document.getElementById("email");
-        sendEmail(emailInput.value, cuisineId);
-        setEmail(emailInput.value);
-
-        // TODO: menu type for email
-
         const nickname = document.getElementById("nickname");
         const profile_photo = document.querySelector('input[name="profile"]:checked');
 
@@ -568,12 +529,11 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
         sessionStorage.setItem('cuisine', reduxGame[0].cuisine)
 
         // createComment(nickname.value, profile_photo.value, comment.value, score[0])
-        createComment(nickname.value, profile_photo.value, answer[5], score, Date.now(), answer, emailInput.value)
+        createComment(nickname.value, profile_photo.value, answer[5], score, Date.now())
         .then((res) => {
             // nickname.value = "";
             // profile_photo.checked = false;
             // comment.value = "";
-            // emailInput.value = "";
             setHideSlide(true);
             setLoading(false);
         }).catch((error) => {
@@ -584,15 +544,14 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
 
     const handleClose = () => {
         _handleClose();
-        _setEmail(email);
     }
 
     return (
         <ThemeProvider theme={theme}>
             <Page>
                 <div style={{ width: '100%', position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: '2' }}>
-                    <SwipeableViews index={currIndex} onChangeIndex={handleChangeIndex} disabled style={{ height: '100%' }} hidden={hideSlide}>
-                        {Object.keys(content).map(key => (
+                    <div style={{ height: '100%' }} hidden={hideSlide}>
+                        {Object.keys(content).filter(key => Number(key) === currIndex).map(key => (
                             <div className={`${cardContainer}`}>
                                 { (content[key].type === 'single') ? singleChoice(content[key], key) :
                                   (content[key].type === 'singleOther') ? singleChoiceWithOther(content[key], key) :
@@ -648,21 +607,14 @@ const Form = ({score, _handleClose, _setEmail, cuisineId, reduxGame}) => {
                                 </div>
                             </div>
                         ))}
-                    </SwipeableViews>
+                    </div>
                     <div className={`${cardContainer}`} style={{ paddingBottom: '20px' }} hidden={!hideSlide}>
                         <img src={done} style={{ marginBottom: '20px' }} width="100%" />
                         <Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
-                        問卷填寫完成！
+                        本機留言已儲存！
                         </Typography>
                         <Typography variant='body1' color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-                        感謝你願意利用寶貴時間留下你的想法。按照約定，我們已經將食譜寄到你的電子郵件信箱。記得去看看喔～
-                        </Typography>
-
-                        <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline' }}>
-                            沒收到？
-                        </Typography>
-                        <Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline', textDecoration: 'underline' }} onClick={sendAgain}>
-                            再寄一次
+                        感謝你留下想法。典藏版只把暱稱、留言與分數保存在這個瀏覽器，不會傳送到伺服器。
                         </Typography>
 
                         <Button variant='primary' sx={{ display: 'block', width: '100%', mt: '20px'}} onClick={handleClose}>

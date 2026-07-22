@@ -31,8 +31,8 @@ const dev_content = [
 ]
 
 const terms_content = [
-  "資料收集與使用",
-  "本團隊不會將收集到的問卷回覆用於與您個人或本次調查無關的用途。您的回覆將用來進行學術研究、改善我們網站遊戲內容及使用者體驗。遊戲中所收集到的使用者Email，均不會透露在分析研究與統計報告之中。Music by free-stock-music.com"
+  "典藏版資料使用",
+  "這個典藏版本不連接原始研究資料庫，也不會收集電子郵件。遊戲進度、暱稱、留言與分數只會保存在您的瀏覽器。Music by free-stock-music.com"
 ]
 
 const members = [
@@ -41,7 +41,6 @@ const members = [
     img: michelle,
     name: "林奕萱",
     occupation: "專案管理",
-    email: "mailto:contact@example.invalid",
     linkedin: "https://www.linkedin.com/in/JellyMichelle",
     github: "https://jellyfishlin.github.io",
   },{
@@ -49,7 +48,6 @@ const members = [
     img: derek,
     name: "盧德原",
     occupation: "全端工程",
-    email: "mailto:contact@example.invalid",
     linkedin: "https://www.linkedin.com/in/derekdylu",
     github: "https://github.com/derekdylu",
   },{
@@ -57,14 +55,12 @@ const members = [
     img: grace,
     name: "張琪",
     occupation: "全端工程",
-    email: "mailto:contact@example.invalid",
     linkedin: "https://www.linkedin.com/in/gracetheo",
   },{
     color: "#FEF6D1",
     img: posuke,
     name: "張育綸",
     occupation: "設計",
-    email: "mailto:contact@example.invalid",
     behance: "https://www.behance.net/lnd870929178d",
   }
 ]
@@ -145,7 +141,7 @@ const About = () => {
           sx={{ mt: 4 }}
         >
           {
-            members.map(m => (<Grid item><Info props={m}/></Grid>))
+            members.map(m => (<Grid item key={m.name}><Info props={m}/></Grid>))
           }
         </Grid>
         <Grid

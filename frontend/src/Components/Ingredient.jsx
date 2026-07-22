@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import TabsUnstyled from '@mui/base/TabsUnstyled';
 import NativeSelect from '@mui/material/NativeSelect';
 import { useSelector } from 'react-redux';
 import { selectAllGames, gameCartAdded } from '../Features/GamesSlice'

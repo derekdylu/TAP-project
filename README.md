@@ -1,65 +1,79 @@
-<img src="https://i.ibb.co/kGw4bzW/cover.png" alt="logo" width="100%">
+# Tonight, What Should We Eat? — Archived Edition
 
-<h3 align="center">Official Environment Documentation</h4>
-<h6 align="center">Designed and Develped by EMVERSE at NTU</h5>
+![Game artwork](frontend/src/Images/tap_share.png)
 
-<p align="center">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" height="40" align="center"  alt="react">
-    <img src="https://cdn.worldvectorlogo.com/logos/redux.svg" height="39" align="center"  alt="redux">
-    <img src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" height="42" align="center" alt="fastAPI">
-    <img src="https://img.icons8.com/color/480/mongodb.png" height="50" align="center" alt="mongoDB">
-</p>
+An educational mobile web game about Taiwan Agricultural Product Production and Certification (TAP), originally created in 2022 for a National Taiwan University agricultural economics research project.
 
-<p align="center">
-  <a href="https://ntu-tap-game.netlify.app">
-    <img src="https://img.shields.io/badge/PLAY-NOW-green"
-         alt="play now">
-  </a>
-</p>
+## Archive status
 
-## Table of Contents
+This repository preserves the game as a browser-only historical archive. The original MongoDB, SendGrid, and Heroku services have been retired and are not required to play this edition.
 
-- [Table of Contents](#table-of-contents)
-- [Introduction](#introduction)
-- [Development](#development)
-  - [Frontend](#frontend)
-  - [Backend and Database](#backend-and-database)
-  - [Deployment](#deployment)
-- [其他注意事項](#其他注意事項)
+The archival build:
 
-## Introduction
+- bundles the original cuisine and ingredient catalog with the frontend;
+- stores game progress, optional nicknames, scores, and comments only in the player's browser;
+- does not collect email addresses or send survey responses to a server;
+- does not provide a supported production backend or research-data pipeline.
 
-<p align="center">
-  <a href="https://ibb.co/jzX2Wgq"><img src="https://i.ibb.co/SJpVG2h/i-Phone-14-Pro.png" alt="mockup" border="0" height="320"></a>
-</p>
+The interface and educational content remain primarily in Traditional Chinese.
 
-本專案由農經系研究室委託螺絲福祿團隊製作，希望能藉由一款俐落且極富趣味的小品遊戲，向大眾傳達生產履歷在採買農產品所扮演的關鍵角色，以及它對我們的飲食生活能帶來的好處。
+## Play and controls
 
-## Development 
-![](https://img.shields.io/badge/Platform-macOS-lightgrey)
-- OS: macOS 
-- PM: Yarn
-- IDE: Visual Studio Code
-### Frontend
-<p align="left">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" height="40" align="center"  alt="react">
-<img src="https://cdn.worldvectorlogo.com/logos/redux.svg" height="39" align="center"  alt="redux">
-<img src="https://mui.com/static/logo.png" height="52" align="center"  alt="mui">
-</p>
+Use a portrait-oriented browser window at least 320 pixels wide. The game is controlled by touch or mouse input. Press `F` to enter or leave fullscreen mode; `Esc` also exits fullscreen.
 
-### Backend and Database
-<p align="left">
-<img src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" height="42" align="center" alt="fastAPI">
-<img src="https://sendgrid.com/wp-content/themes/sgdotcom/pages/resource/brand/2016/SendGrid-Logomark.png" height="52" align="center" alt="sendgrid">
-<img src="https://img.icons8.com/color/480/mongodb.png" height="50" align="center" alt="mongoDB">
-</p>
+Browser data can be removed at any time by clearing local storage for the site.
 
-### Deployment
-<p align="left">
-<img src="https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/netlify-512.png" height="42" align="center" alt="netlify">
-<img src="https://cdn-icons-png.flaticon.com/512/873/873120.png" height="43" align="center" alt="mongoDB">
-</p>
+## Requirements
 
-## 其他注意事項
+- Node.js 24 or newer
+- npm, included with Node.js
 
-本團隊不會將收集到的問卷回覆用於與您個人或本次調查無關的用途。您的回覆將用來進行學術研究、改善我們網站遊戲內容及使用者體驗。遊戲中所收集到的使用者Email，均不會透露在分析研究與統計報告之中。Music by free-stock-music.com
+## Local development
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+Open the local URL printed by Vite. The development server does not need environment variables or external services.
+
+## Tests and production build
+
+```bash
+cd frontend
+npm test
+npm run build
+npm audit --audit-level=high
+```
+
+The static production output is written to `frontend/dist/`. To inspect it locally:
+
+```bash
+cd frontend
+npm run preview
+```
+
+## Repository layout
+
+- `frontend/src/Components/` — game screens and reusable interface components
+- `frontend/src/Containers/` — top-level game, score, feed, and about views
+- `frontend/src/data/` — bundled archival cuisine and ingredient catalog
+- `frontend/src/Utils/Axios.js` — compatibility-named browser storage adapter; it makes no HTTP requests
+- `frontend/src/Images/` — original visual and audio assets
+- `.github/workflows/ci.yml` — reproducible test, build, and dependency-audit checks
+- `netlify.toml` — static archive deployment configuration
+
+## Preservation policy
+
+This is an archival project. Contributions should focus on security, build reproducibility, accessibility, documentation, and faithful preservation rather than new online services or data collection. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Please use private vulnerability reporting when it is available, and never disclose live credentials in an issue. See [SECURITY.md](SECURITY.md).
+
+## Credits and third-party material
+
+The original project was commissioned by an NTU agricultural economics research group and developed by a student team. The owner has confirmed redistribution permission for the retained project code and assets. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the preserved music attribution and dependency notice.
+
+## License
+
+The software source code is available under the [MIT License](LICENSE). Original images, animation, and audio under `frontend/src/Images/` are not covered by the MIT License; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

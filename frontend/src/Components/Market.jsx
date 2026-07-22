@@ -9,7 +9,7 @@ import theme from '../Themes/Theme';
 import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Header from "./Header.js"
+import Header from "./Header"
 import Footer from './Footer';
 import Snackbar from '@mui/material/Snackbar';
 import { useSelector } from 'react-redux';
@@ -364,8 +364,7 @@ const Market = () => {
         radio_0.checked = true;
 
         const init = async() => {
-            // const gameId = sessionStorage.getItem('gameId')
-            const gameId = '631715de971d50827ee63b11';
+            const gameId = sessionStorage.getItem('gameId');
             const game = await getGameById(gameId);
             setTotalGrocery(game.cart.length);
 
@@ -501,10 +500,10 @@ const Market = () => {
             
             <div className={`${typeList}`}>
                 { Object.keys(type).map(key => (
-                    <React.Fragment>
+                    <React.Fragment key={key}>
                         <input type="radio" id={key} value={key} name="tab" className={`${radio}`} onClick={handleRadioOnClick}/>
                         <label htmlFor={key} className={`${tabContainer}`}>
-                            <img src={labelImg[key]} style={{marginRight: '4px'}}/>
+                            <img src={labelImg[key]} style={{marginRight: '4px'}} alt=""/>
                             <Typography variant="body1" color={theme.palette.secondary[700]} sx={{ fontWeight: '500' }} className='tabContent'>
                                 {type[key].name}
                             </Typography>
@@ -517,8 +516,8 @@ const Market = () => {
                 <Grid container direction="column" spacing={0}>
                 { sortedId.map(id => (
                     ["_1", "_2", "_3"].map(val => (
-                    <Grid item xs='auto' onClick={handleClickOpenIngredient} sx={{height: imageSize }}>
-                        <img src={img[id + val]} style={{ height: '100%' }} id={id + val} />
+                    <Grid item xs='auto' key={id + val} onClick={handleClickOpenIngredient} sx={{height: imageSize }}>
+                        <img src={img[id + val]} style={{ height: '100%' }} id={id + val} alt="" />
                         { ingredients[id + val] !== undefined && 
                             <div className={`${labelContainer}`} id={id + val}>
                                 <Typography variant='body1' color={theme.palette.secondary[400]} sx={{fontWeight: 500}} id={id + val}>
@@ -534,7 +533,7 @@ const Market = () => {
 
             <div className={`${footer}`}>
                 <Grid container px={2} width="100%" direction="row" justifyContent="space-around" alignItems="center">
-                    <Grid container xs={3} justifyContent="flex-start" alignItems="center">
+                    <Grid container item xs={3} justifyContent="flex-start" alignItems="center">
                         <div className={`${listButton}`} onClick={handleClickOpenCart} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <ShoppingCartRoundedIcon />
                         </div>
