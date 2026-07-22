@@ -8,7 +8,6 @@ import { ThemeProvider } from "@emotion/react";
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import theme from '../Themes/Theme';
-import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import Stack from '@mui/material/Stack';
 import MobileStepper from '@mui/material/MobileStepper';
 import Button from '@mui/material/Button';
@@ -102,11 +101,11 @@ const MarketInstruction = ({_handleClose}) => {
     }
 
     return (
-        <SwipeableViews index={currIndex} onChangeIndex={handleChangeIndex} style={{ borderRadius: '32px' }} disabled>
-            {Object.keys(content).map(key => (
-                <div className={`${cardContainer}`}>
+        <div style={{ borderRadius: '32px' }}>
+            {Object.keys(content).filter(key => Number(key) === currIndex).map(key => (
+                <div key={key} className={`${cardContainer}`}>
                     {/* <p style={{textAlign: 'center'}}> */}
-                        <img src={content[key].img} style={{width: '50%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}} />
+                        <img src={content[key].img} style={{width: '50%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}} alt="" />
                     {/* </p> */}
                     {/* <MobileStepper
                         style={stepperStyle}
@@ -148,7 +147,7 @@ const MarketInstruction = ({_handleClose}) => {
                     </div>
                 </div>      
             ))}
-        </SwipeableViews>
+        </div>
 
     )
 }

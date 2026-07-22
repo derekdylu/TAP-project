@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query'
 import './App.css';
 import useWindowDimensions from './Hooks/useWindowDimensions'
 import Dialog from '@mui/material/Dialog';
@@ -27,8 +26,6 @@ import Ingredient from './Components/Ingredient';
 import ScoreDrawer from './Components/ScoreDrawer';
 
 import theme from './Themes/Theme';
-
-const queryClient = new QueryClient()
 
 const testData = {img: '3', nickname: "tester", score: 33, cuisine: [1,2,3]}
 
@@ -56,9 +53,24 @@ const App = () => {
     }
   }, [ratio])
 
+  useEffect(() => {
+    const toggleFullscreen = async (event) => {
+      const tagName = event.target?.tagName?.toLowerCase();
+      if (event.key.toLowerCase() !== 'f' || tagName === 'input' || tagName === 'textarea') return;
+
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await document.documentElement.requestFullscreen();
+      }
+    };
+
+    window.addEventListener('keydown', toggleFullscreen);
+    return () => window.removeEventListener('keydown', toggleFullscreen);
+  }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
         <Dialog aria-labelledby="window-size" open={open} fullScreen>
           <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
             {
@@ -78,7 +90,7 @@ const App = () => {
             }
           </Grid>
         </Dialog>
-        <Router>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
 
             <Route path="/" element={<Game />} forceRefresh={true} />
@@ -102,8 +114,7 @@ const App = () => {
 
           </Routes>
         </Router>
-      </ThemeProvider>
-    </QueryClientProvider>
+    </ThemeProvider>
   )
 }
 

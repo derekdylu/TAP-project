@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Footer from './Footer';
@@ -235,24 +234,17 @@ function Tutorial() {
           </Typography>
         </div>
       </Header>
-      <SwipeableViews
-        index={activeStep}
-        style={styles.swipeable}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ minWidth: 304, margin: "auto", ...styles.swipeable }}
       >
-        {cardContents.map(x => 
-          <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ minWidth: 304, margin: "auto" }}
-          >
-            <Card sx={{ width: 304, borderRadius: '16px', margin: "auto" }}>{x}</Card>
-          </Grid>
-        )}
-      </SwipeableViews>
+        <Card sx={{ width: 304, borderRadius: '16px', margin: "auto" }}>
+          {cardContents[activeStep]}
+        </Card>
+      </Grid>
       <MobileStepper
         style={styles.stepper}
         steps={maxSteps}

@@ -103,15 +103,15 @@ const Story = ({ id }) => {
         <ThemeProvider theme={theme}>
             <Page>
                 <Header /*_returnLink={ content[id].hrefPrev }*/ _linkColor={ theme.palette.grey[700] } _loading={loading} />
-                <img src={ content[id].logo } className={`${imageContainer}`} />
+                <img src={ content[id].logo } className={`${imageContainer}`} alt="" />
                 <div className={`${headerContainer}`}>
                     <Typography variant="h1" color={theme.palette.grey[800]} sx={{ fontWeight: '900' }}>
                         { content[id].title }
                     </Typography>
                 </div>
                 <div className={`${bodyContainer}`}>
-                { content[id].text.map(key => 
-                    <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>{ key }</Typography>) }
+                { content[id].text.map((paragraph, index) =>
+                    <Typography key={index} variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '400' }}>{ paragraph }</Typography>) }
                 </div>
                 <div className={`${buttonContainer}`}>
                     <Button variant="primary" style={{ width: '50%'}} onClick={handleOnClick} disabled={loading}>

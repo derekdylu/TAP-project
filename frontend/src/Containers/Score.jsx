@@ -3,19 +3,18 @@ import { Grid } from '@mui/material'
 import { css } from "@emotion/css";
 import { styled } from '@mui/material/styles';
 import { Typography } from "@mui/material";
-import { ThemeProvider, withTheme } from "@emotion/react";
+import { ThemeProvider } from "@emotion/react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from '@mui/material';
 import theme from '../Themes/Theme';
 import CircularProgress from '@mui/material/CircularProgress';
-import { createComment, getGameById, getScoreById, sendEmail } from '../Utils/Axios';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { getGameById, getScoreById } from '../Utils/Axios';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectAllGames, gameCartDeleted } from '../Features/GamesSlice'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { gameScoreUpdated, selectAllGames } from '../Features/GamesSlice'
 import { selectAllPlayings } from '../Features/PlayingsSlice';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import sound from '../Images/sound.mp3'
@@ -53,9 +52,7 @@ import pot from '../Images/Score/pot.gif'
 import nameLogo from '../Images/nameLogo.png'
 import manyEggplants from '../Images/Score/manyEggplants.png'
 import done from '../Images/Score/done.png'
-import CloseIcon from '@mui/icons-material/Close'
 
-import { Chart } from 'primereact/chart';
 import Form from '../Components/Form';
 
 const content = {
@@ -333,6 +330,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Score = () => {
+	const dispatch = useDispatch();
 	const refBottom = useRef(null);
 	const reduxGame = useSelector(selectAllGames)
   const [rank, setRank] = useState(1);
@@ -345,7 +343,6 @@ const Score = () => {
 	const [hideAll, setHideAll] = useState(false);
 	const [score, setScore] = useState([0]);
 	const [scoreToDeg, setScoreToDeg] = useState([]);
-	const [email, setEmail] = useState("");
 	const [renderStatus, setRenderStatus] = useState(false);
 	const [countRender, setRender] = useState(0);
 	const [hidePot, setHidePot] = useState(false);
@@ -449,10 +446,6 @@ const Score = () => {
 		}
 	}
 
-	const sendAgain = async() => {
-		sendEmail(email, cuisineId);
-	}
-
 	useEffect(() => {
 		if (notMute) {
 			hidePot ? sfx.pause() : sfx.play()
@@ -471,10 +464,11 @@ const Score = () => {
 
 		const calculateScore = async() => {
 			await getScoreById(gameId)
-			.then((res) => {
+				.then((res) => {
 
-				let originalScore = [...res]
-				setScore(originalScore);
+					let originalScore = [...res]
+					setScore(originalScore);
+					dispatch(gameScoreUpdated(originalScore[0]));
 	
 				if (originalScore[0] <= 20) {
 					setRank(5);
@@ -521,18 +515,18 @@ const Score = () => {
     return (
         <ThemeProvider theme={theme}>
 			<Dialog open={openForm} onClose={handleCloseForm} fullScreen TransitionComponent={Transition}>
-                <Form score={score[0]} _handleClose={handleCloseForm} _setEmail={setEmail} cuisineId={cuisineId} reduxGame={reduxGame}/>
+                <Form score={score[0]} _handleClose={handleCloseForm} reduxGame={reduxGame}/>
             </Dialog>
             {/* <Page> */}
 			<Page hidden={hidePot}>
 				<div style={{ width: '100%', position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -40%)' }}>
-					<img src={pot} style={{ width: '70%' }} />
+						<img src={pot} style={{ width: '70%' }} alt="" />
 					<Typography variant='h2' color={theme.palette.secondary[900]} sx={{fontWeight: 700}}>
 						煮菜中...
 					</Typography>
 				</div>
 				<div style={{ width: '100%', position: 'absolute', bottom: '75px' }}>
-					<img src={nameLogo} style={{ width: '60%' }} />
+						<img src={nameLogo} style={{ width: '60%' }} alt="" />
 				</div>
 			</Page>
             {/* <Page hidden> */}
@@ -543,7 +537,7 @@ const Score = () => {
                         <Typography variant="h3" color={theme.palette.grey[800]} sx={{ fontWeight: '700' }}>
                             室友評語
                         </Typography>
-                        <img src={content[rank].img} style={{ width: '80%', margin: '0px' }}/>
+						<img src={content[rank].img} style={{ width: '80%', margin: '0px' }} alt=""/>
                         <div className={`${button}`}>
                             <div className={`${leftButton}`} />
                             <div className={`${middleButton}`}>
@@ -557,8 +551,8 @@ const Score = () => {
 						<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }}>
 							"{ content[rank].quote }"
 						</Typography>
-                        { content[rank].comment.map(key => 
-                            <Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }}>{ key }</Typography>) }
+						{ content[rank].comment.map((comment, index) =>
+							<Typography key={index} variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: '500' }}>{ comment }</Typography>) }
                         </div>
                     </div>
                     <div className={`${scoreContainer}`}> {/*calculate degree*/}
@@ -566,19 +560,13 @@ const Score = () => {
 							{/* <div style={ scoreCircle(tab, scoreToDeg[tab]) } />
 							<div className={`${whiteCircle}`} /> */}
 							{ score[tab] !== null &&
-								<Chart type="doughnut"
-									data={{
-										datasets: [{
-											data: [scoreToDeg[tab], 360 - scoreToDeg[tab]],
-											backgroundColor: [
-												type[tab].color,
-												'#FEF6D1'
-											],
-											borderWidth: 0,
-										}]
-									}}
+								<div
 									className={`${scoreCircle}`}
-									style={{ pointerEvents: 'none' }}
+									style={{
+										background: `conic-gradient(${type[tab].color} 0deg ${scoreToDeg[tab]}deg, #FEF6D1 ${scoreToDeg[tab]}deg 360deg)`,
+										borderRadius: '50%',
+										pointerEvents: 'none',
+									}}
 								/>
 							}
 
@@ -601,8 +589,9 @@ const Score = () => {
 					<div style={{ width: '100%' }}>
 						<Tabs value={tab} indicatorColor="none" textColor="secondary" onChange={handleTabChange} centered variant='fullWidth' style={{ background: '#FDE475', borderRadius: '32px' }}>
 							{ Object.keys(type).map(key => (
-								<Tab
-									label={ tab == key ? <img src={type[key].img_chosen} style={{height: '24px', backgroundColor: '#fff', padding: '8px', borderRadius: '64px'}} /> : <img src={type[key].img} style={{ height: '24px', backgroundColor: 'transparent', padding: '8px', borderRadius: '64px' }} /> } 
+									<Tab
+										key={key}
+										label={ tab == key ? <img src={type[key].img_chosen} style={{height: '24px', backgroundColor: '#fff', padding: '8px', borderRadius: '64px'}} /> : <img src={type[key].img} style={{ height: '24px', backgroundColor: 'transparent', padding: '8px', borderRadius: '64px' }} /> }
 									style={{ padding: '10px', minWidth: '40px' }}/>
 							))}
 						</Tabs>
@@ -673,8 +662,8 @@ const Score = () => {
 					<div hidden={!hideForm}>
 						<Grid container>
 							{ Object.keys(cuisineId).map(key => (
-								<Grid item xs={4}>
-									<img src={cuisineImg[cuisineId[key]]} style={{width: '80%'}}/>
+									<Grid item xs={4} key={key}>
+										<img src={cuisineImg[cuisineId[key]]} style={{width: '80%'}} alt=""/>
 								</Grid>
 							))}
 						</Grid>
@@ -715,7 +704,7 @@ const Score = () => {
 					好奇自己與其他玩家的差異？
 					</Typography>
 					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-					按一下下方的神奇按鈕，你可以看到大家的得分，同時也可以看到大家對TAP的想法。聽起來很棒對吧!
+					按一下下方的按鈕，可以查看這個瀏覽器中保存的得分與留言。
 					</Typography>
 					
 					<Link to="/feeds" style={{ pointerEvents: 'none' }} id="linkToFeeds" className={`${linkStyle}`}>
@@ -732,17 +721,10 @@ const Score = () => {
 				<div className={`${container}`} style={{ margin: '8px 24px 24px 24px' }} hidden={!hideAll}>
 					<img src={done} style={{ marginBottom: '20px' }} width="100%"/>
 					<Typography variant='h6' color={theme.palette.grey[800]} sx={{fontWeight: '700'}}>
-					問卷填寫完成！
+					本機留言已儲存！
 					</Typography>
 					<Typography variant='body1' color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'left', my: '10px' }}>
-					感謝你願意利用寶貴時間留下你的想法。按照約定，我們已經將食譜寄到你的電子郵件信箱。記得去看看喔～
-					</Typography>
-
-					<Typography variant="body1" color={theme.palette.grey[700]} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline' }}>
-						沒收到？
-					</Typography>
-					<Typography variant="body1" color={theme.palette.primary.main} sx={{ fontWeight: 500, textAlign: 'center', my: '10px', display: 'inline', textDecoration: 'underline' }} onClick={sendAgain}>
-						再寄一次
+					感謝你留下想法。典藏版不會上傳問卷、電子郵件或其他聯絡資料。
 					</Typography>
 				</div>
             </Page>

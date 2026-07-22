@@ -11,9 +11,8 @@ import Icon from '@mui/material/Icon';
 import behance from '../Images/About/about_icon/icon-behance.svg'
 import github from '../Images/About/about_icon/icon-github.svg'
 import linkedin from '../Images/About/about_icon/icon-linkedin.svg'
-import mail from '../Images/About/about_icon/icon-mail.svg'
 
-// color, img, name, occupation, email, linkedin, github, behance
+// color, img, name, occupation, linkedin, github, behance
 
 const Info = ({props}) => {
   return (
@@ -26,6 +25,7 @@ const Info = ({props}) => {
         sx={{}}
       >
         <Grid
+          container
           direction="column"
           justifyContent="center"
           alignItems="center"
@@ -45,7 +45,6 @@ const Info = ({props}) => {
           justifyContent="center"
           alignItems="center"
         >
-          {props.email && <a href={props.email}><Icon><img src={mail} alt="mail" /></Icon></a>}
           {props.linkedin && <a href={props.linkedin}><Icon><img src={linkedin} alt="linkedin" /></Icon></a>}
           {props.github && <a href={props.github}><Icon><img src={github} alt="github" /></Icon></a>}
           {props.behance && <a href={props.behance}><Icon><img src={behance} alt="behance" /></Icon></a>}

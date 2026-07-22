@@ -9,6 +9,7 @@ scripts/flow/*/.flowconfig
 _SpecRunner.html
 __benchmarks__
 build/
+dist/
 remote-repo/
 coverage/
 .module-cache
@@ -62,6 +63,9 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-frontend/yarn.lock
 # Local Netlify folder
 .netlify
+
+# Local release-preparation notes (not part of the archive)
+progress.md
+HISTORY_REWRITE_PLAN.md

@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import CircularProgress from '@mui/material/CircularProgress';
 import theme from '../Themes/Theme';
-import Header from "./Header.js"
+import Header from "./Header"
 import Footer from './Footer';
 import { getCuisines, getIngredientTypes, getGameById } from '../Utils/Axios';
 import cuisine_0 from "../Images/Cuisine/cuisine_0.png"
