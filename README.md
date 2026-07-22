@@ -1,14 +1,14 @@
-# Tonight, What Should We Eat? — Archived Edition
+# Tonight, What Should We Eat?
 
 ![Game artwork](frontend/src/Images/tap_share.png)
 
 An educational mobile web game about Taiwan Agricultural Product Production and Certification (TAP), originally created in 2022 for a National Taiwan University agricultural economics research project.
 
-## Archive status
+## Project status
 
-This repository preserves the game as a browser-only historical archive. The original MongoDB, SendGrid, and Heroku services have been retired and are not required to play this edition.
+This repository contains a self-contained, browser-only version of the game. The original MongoDB, SendGrid, and Heroku services are no longer used and are not required to play.
 
-The archival build:
+The current build:
 
 - bundles the original cuisine and ingredient catalog with the frontend;
 - stores game progress, optional nicknames, scores, and comments only in the player's browser;
@@ -58,21 +58,21 @@ npm run preview
 
 - `frontend/src/Components/` — game screens and reusable interface components
 - `frontend/src/Containers/` — top-level game, score, feed, and about views
-- `frontend/src/data/` — bundled archival cuisine and ingredient catalog
+- `frontend/src/data/` — bundled cuisine and ingredient catalog
 - `frontend/src/Utils/Axios.js` — compatibility-named browser storage adapter; it makes no HTTP requests
 - `frontend/src/Images/` — original visual and audio assets
 - `.github/workflows/ci.yml` — reproducible test, build, and dependency-audit checks
-- `netlify.toml` — static archive deployment configuration
+- `netlify.toml` — static-site deployment configuration
 
-## Preservation policy
+## Contribution scope
 
-This is an archival project. Contributions should focus on security, build reproducibility, accessibility, documentation, and faithful preservation rather than new online services or data collection. See [CONTRIBUTING.md](CONTRIBUTING.md).
+This project is maintained as a browser-only web game. Contributions should focus on security, build reproducibility, accessibility, documentation, and the existing educational experience rather than new online services or data collection. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Please use private vulnerability reporting when it is available, and never disclose live credentials in an issue. See [SECURITY.md](SECURITY.md).
 
 ## Credits and third-party material
 
-The original project was commissioned by an NTU agricultural economics research group and developed by a student team. The owner has confirmed redistribution permission for the retained project code and assets. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the preserved music attribution and dependency notice.
+The original project was commissioned by an NTU agricultural economics research group and developed by a student team. The owner has confirmed redistribution permission for the retained project code and assets. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the music attribution and dependency notice.
 
 ## License
 
