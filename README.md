@@ -64,12 +64,6 @@ npm run preview
 - `.github/workflows/ci.yml` — reproducible test, build, and dependency-audit checks
 - `netlify.toml` — static-site deployment configuration
 
-## Contribution scope
-
-This project is maintained as a browser-only web game. Contributions should focus on security, build reproducibility, accessibility, documentation, and the existing educational experience rather than new online services or data collection. See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-Please use private vulnerability reporting when it is available, and never disclose live credentials in an issue. See [SECURITY.md](SECURITY.md).
-
 ## Credits and third-party material
 
 The original project was commissioned by an NTU agricultural economics research group and developed by a student team. The owner has confirmed redistribution permission for the retained project code and assets. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the music attribution and dependency notice.
