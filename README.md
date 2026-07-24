@@ -1,6 +1,6 @@
-# Tonight, What Should We Eat?
+# ㄟ今晚吃什麼 (Cooking Game)
 
-![Game artwork](frontend/src/Images/tap_share.png)
+<img width="1920" height="1080" alt="1776402359104-proj_TAP" src="https://github.com/user-attachments/assets/9b45e6dd-f227-488a-8c5a-eb984d96a68a" />
 
 An educational mobile web game about Taiwan Agricultural Product Production and Certification (TAP), originally created in 2022 for a National Taiwan University agricultural economics research project.
 
